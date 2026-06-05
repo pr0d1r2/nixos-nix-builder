@@ -85,6 +85,7 @@ environment
 etc
 europe
 eval
+exclude
 exec
 execute
 exists

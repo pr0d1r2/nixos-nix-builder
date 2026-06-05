@@ -6,7 +6,7 @@ setup() {
     cp scripts/test-boot/smoke-mark.sh "$TEST_DIR/scripts/test-boot/"
     cd "$TEST_DIR" || return
     git init -q
-    git commit --allow-empty -m "init" -q
+    git -c user.name=test -c user.email=test@test commit --allow-empty -m "init" -q
 }
 
 teardown() {

@@ -293,6 +293,7 @@
 
           ci = devPkgs.mkShell {
             buildInputs = hookPackages;
+            LEFTHOOK_EXCLUDE = "changelog-touched";
           };
         }
       );

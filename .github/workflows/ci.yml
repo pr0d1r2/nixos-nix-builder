@@ -14,3 +14,5 @@ jobs:
       - uses: pr0d1r2/nix-lefthook-ci-action@e5076886865ac3aed148127ea3aa7269ffcf6989
         with:
           skip-build: true
+        env:
+          LEFTHOOK_EXCLUDE: changelog-touched
