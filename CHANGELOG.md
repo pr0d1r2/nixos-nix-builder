@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2026-06-05
+
 ### Storage
 
 - NVMe > SATA tier detection with largest ext4 per tier
