@@ -94,6 +94,7 @@
 ### Project
 
 - Add MIT license
+- Update architecture diagrams with all current features
 - Configure lefthook agentic output: no output on success, show only failures
 - Configure new lefthook hooks (narrow-language, skill-registered, changelog-touched)
 - Exclude LICENSE, config files, and SPEC.md from changelog-touched hook

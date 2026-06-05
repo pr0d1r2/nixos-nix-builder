@@ -49,16 +49,24 @@ nix.settings.substituters = [ "http://nix-builder.local:5000" ];
 
 ```mermaid
 graph LR
-    USB[USB pendrive<br>stateless NixOS] --> Boot
-    Boot --> Storage[Storage detection<br>NVMe > SATA]
-    Storage --> Overlay[Nix store overlay<br>disk > RAM]
+    USB[USB pendrive<br>stateless NixOS] --> GRUB[GRUB text mode<br>headless boot]
+    GRUB --> Storage[Storage detection<br>NVMe > SATA]
+    Storage --> Overlay[Nix store overlay<br>disk-backed ~458G]
     Overlay --> Services
 
     subgraph Services
-        SSH[SSH :22<br>remote builds]
+        SSH[SSH :22<br>key-only, local fwd]
         Cache[nix-serve :5000<br>binary cache]
         QEMU[QEMU/KVM<br>smoke tests]
+        Avahi[Avahi mDNS<br>.local discovery]
     end
+
+    subgraph Security
+        FW[Firewall<br>:22 :5000 :5353]
+        Udev[USB udev<br>builder burn access]
+    end
+
+    Services --> FW
 ```
 
 ## Development architecture
