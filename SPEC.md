@@ -204,7 +204,11 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 | T93 | x | smoke.exp: add storage-link to expected service list | V3 |
 | T94 | x | smoke.exp: add nix-store-overlay to expected service list | V1 |
 
+| T95 | | CI: dedicated x86_64-linux builder accessible from GitHub Actions | C11,C16 |
+
 ## §B BUGS
+
+- B10: GitHub Actions CI fails — needs dedicated x86_64-linux builder with nix + secrets access. Current CI only runs lefthook linters (skip-build: true). Full ISO build + smoke requires opensourced self-hosted runner or remote builder SSH tunnel from Actions.
 
 | id | date | cause | fix |
 |----|------|-------|-----|
