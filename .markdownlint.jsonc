@@ -1,0 +1,16 @@
+{
+  // Spec tables and invariant lines exceed 80 chars by design.
+  "MD013": false,
+  // Inline code blocks in numbered lists break with blank-line rule.
+  "MD031": false,
+  // Fenced code blocks in CLAUDE.md use no language (project structure).
+  "MD040": false,
+  // Agent skill files are prose fragments, not standalone documents.
+  "MD041": false,
+  // Pipe-table alignment varies between compact and aligned styles.
+  "MD060": false,
+  // GitHub inline video requires bare URL (not markdown link).
+  "MD034": false,
+  // Video embeds require inline HTML.
+  "MD033": { "allowed_elements": ["video"] }
+}

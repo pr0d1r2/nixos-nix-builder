@@ -1,0 +1,24 @@
+allowlist = ".coverage-allowlist"
+
+[[rules]]
+glob = "*.sh"
+dirs = ["scripts", "fragments", "nix/dev"]
+exclude = ["scripts/lefthook"]
+test_dir = "tests/unit"
+pattern = "mirror"
+test_ext = "bats"
+strip = "scripts"
+
+[[rules]]
+glob = "*.sh"
+dirs = ["scripts/lefthook"]
+test_dir = "tests/unit/lefthook"
+pattern = "flat"
+test_ext = "bats"
+
+[[rules]]
+glob = "*.sh"
+dirs = ["fragments"]
+test_dir = "tests/unit/fragments"
+pattern = "flat"
+test_ext = "bats"

@@ -1,0 +1,9 @@
+/iso/
+/result
+/result-*
+/secrets/
+.direnv/
+*.qcow2
+*.img
+.smoke-passed-*
+.burn-done-*

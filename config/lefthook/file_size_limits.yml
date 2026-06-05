@@ -1,0 +1,9 @@
+---
+default: 102400
+limits:
+  lock: 10485760
+  md: 51200
+  nix: 51200
+  sh: 51200
+  yml: 51200
+  bats: 51200

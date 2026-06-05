@@ -1,0 +1,60 @@
+#!/usr/bin/env expect -f
+# Integration test: verify a live nix-builder node via SSH.
+#
+# Usage: expect live.exp [host] [port]
+#   host  -- target hostname (default: nix-builder.local)
+#   port  -- SSH port (default: 22)
+
+set timeout 300
+
+set repo_root [file normalize [file join [file dirname [info script]] ".." ".."]]
+cd $repo_root
+
+set lib_dir [file join [file dirname [info script]] lib]
+source [file join $lib_dir remote.tcl]
+source [file join $lib_dir checks.tcl]
+source [file join $lib_dir health-checks.tcl]
+
+set test_label "live-test"
+set log_path ""
+set ssh_host [lindex $argv 0]
+set ssh_port [lindex $argv 1]
+if {$ssh_host eq ""} { set ssh_host "nix-builder.local" }
+if {$ssh_port eq ""} { set ssh_port 22 }
+set ssh_user "builder"
+
+proc cleanup {} {}
+set cleanup_proc cleanup
+
+puts "live-test: testing $ssh_host:$ssh_port"
+puts "live-test: waiting for SSH on $ssh_host:$ssh_port"
+
+if {[catch {exec bash scripts/lib/ssh-wait.sh $ssh_host $ssh_port $ssh_user 2>@stderr}]} {
+    puts stderr "live-test: FAILED: SSH not reachable"
+    exit 1
+}
+
+set mu_ready 0
+for {set i 0} {$i < 30} {incr i} {
+    if {![catch {exec ssh -o BatchMode=yes -o ConnectTimeout=5 \
+        -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+        -o LogLevel=ERROR \
+        -p $ssh_port builder@$ssh_host systemctl is-active multi-user.target 2>/dev/null} result]} {
+        if {[string trim $result] eq "active"} {
+            set mu_ready 1
+            break
+        }
+    }
+    after 2000
+}
+
+if {!$mu_ready} {
+    puts stderr "live-test: FAILED: multi-user.target not active after 60s"
+    exit 1
+}
+
+puts "live-test: SSH connected, running health checks"
+
+run_health_checks "live-test" "nix-builder" {boot}
+
+exit 0

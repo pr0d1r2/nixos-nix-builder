@@ -1,0 +1,24 @@
+{
+  imports = [
+    ./activation-fixes.nix
+    ./avahi.nix
+    ./base.nix
+    ./boot.nix
+    ./builder.nix
+    ./firewall.nix
+    ./hardware.nix
+    ./machine-id.nix
+    ./nix-serve.nix
+    ./power.nix
+    ./qemu-hostname.nix
+    ./qemu-nix-cache.nix
+    ./qemu.nix
+    ./ssh.nix
+    ./usb-permissions.nix
+    ./storage/link.nix
+    ./storage/nvme.nix
+    ./storage/overlay.nix
+    ./storage/sata.nix
+    ./users.nix
+  ];
+}

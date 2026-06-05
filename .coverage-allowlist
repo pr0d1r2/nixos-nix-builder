@@ -1,0 +1,5 @@
+fragments/nix-store-overlay-stop.sh
+scripts/burn/list-isos.sh
+scripts/burn/list-usb.sh
+scripts/burn/list-usb-linux.sh
+scripts/burn/list-usb-macos.sh

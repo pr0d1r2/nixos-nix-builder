@@ -1,0 +1,187 @@
+#!/usr/bin/env expect -f
+#
+# Smoke test: boot nixos-nix-builder ISO in QEMU, validate boot milestones,
+# run shared health checks via SSH, shut down.
+#
+# Usage: expect tests/integration/smoke.exp [iso-path]
+
+set timeout 600
+set env(TERM) dumb
+
+log_user 0
+set log_path "/tmp/nix-builder-smoke-[clock format [clock seconds] -format %Y%m%d-%H%M%S].log"
+log_file -a -noappend $log_path
+
+set repo_root [file normalize [file join [file dirname [info script]] ".." ".."]]
+cd $repo_root
+
+source [file join [file dirname [info script]] lib/checks.tcl]
+source [file join [file dirname [info script]] lib/services.tcl]
+source [file join [file dirname [info script]] lib/remote.tcl]
+source [file join [file dirname [info script]] lib/health-checks.tcl]
+
+set test_label "smoke-test"
+
+set iso_arg ""
+if {[llength $argv] > 0} {
+    set iso_arg [lindex $argv 0]
+}
+
+puts "=== smoke-test starting at [clock format [clock seconds]] ==="
+puts "Log: $log_path"
+
+set host_os [exec uname -s]
+if {$host_os eq "Darwin"} {
+    if {$iso_arg ne ""} {
+        spawn bash scripts/test-boot/smoke-remote.sh $iso_arg
+    } else {
+        spawn bash scripts/test-boot/smoke-remote.sh
+    }
+} else {
+    if {$iso_arg ne ""} {
+        spawn bash scripts/test-boot/smoke-local.sh $iso_arg
+    } else {
+        spawn bash scripts/test-boot/smoke-local.sh
+    }
+}
+
+set boot_pid [exp_pid]
+puts "Spawned PID: $boot_pid"
+
+# -- Early-death guard --------------------------------------------
+expect {
+    -timeout 5
+    timeout {}
+    eof {
+        bail "smoke script exited before producing any boot output (QEMU failed to start?)"
+    }
+}
+
+# -- NixOS Stage 1 -----------------------------------------------
+puts "\n--- Phase 1: Kernel boot ---"
+
+expect {
+    -timeout 360
+    timeout { bail "'NixOS Stage 1' not visible within 360s" }
+    eof { bail "smoke script exited before NixOS Stage 1 (check $log_path)" }
+    -re {Stage 1}
+}
+puts "\[OK\]   NixOS Stage 1"
+
+# -- NixOS Stage 2 -----------------------------------------------
+expect {
+    -timeout 30
+    timeout { bail "'NixOS Stage 2' not visible within 30s" }
+    -re {Stage 2}
+}
+puts "\[OK\]   NixOS Stage 2"
+
+# -- systemd services -> Multi-User System ------------------------
+puts "\n--- Phase 2: systemd services ---"
+
+set services [dict create \
+    "Nix Daemon"                   1 \
+    "Network Time Synchronization" 1 \
+    "Avahi"                        1 \
+    "nix-serve as substituter"     1 \
+    "/mnt/storage"                 1 \
+    "nix store overlay"            1 \
+]
+
+set milestone_re {login:}
+expect_services_then_milestone $services $milestone_re 300
+puts "\[OK\]   Autologin reached"
+
+# -- Phase 4: Health checks via SSH --------------------------------
+puts "\n--- Phase 4: Health checks (SSH) ---"
+
+if {$host_os eq "Darwin"} {
+    set ssh_host "localhost"
+    set ssh_port 2222
+    set ssh_proxy "builder@nix-builder.local"
+} else {
+    set ssh_host "localhost"
+    set ssh_port 2222
+    set ssh_proxy ""
+}
+set ssh_user "builder"
+
+if {$ssh_proxy ne ""} {
+    puts "smoke-test: waiting for SSH on $ssh_host:$ssh_port via $ssh_proxy"
+} else {
+    puts "smoke-test: waiting for SSH on $ssh_host:$ssh_port"
+}
+set ssh_ready 0
+set ssh_max 30
+for {set i 0} {$i < $ssh_max} {incr i} {
+    set ssh_cmd [list ssh -o BatchMode=yes -o ConnectTimeout=3 \
+        -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+        -o LogLevel=ERROR]
+    if {$ssh_proxy ne ""} {
+        lappend ssh_cmd -o "ProxyJump=$ssh_proxy"
+    }
+    lappend ssh_cmd -p $ssh_port ${ssh_user}@${ssh_host} true
+    if {![catch {exec {*}$ssh_cmd 2>/dev/null}]} {
+        set ssh_ready 1
+        puts "smoke-test: SSH connected after [expr {$i + 1}] attempt(s)"
+        break
+    }
+    # Drain serial output to prevent pipe buffer filling and blocking QEMU
+    expect {
+        -timeout 2
+        timeout {}
+        -re {.+} { exp_continue }
+        eof {
+            puts "smoke-test: QEMU exited unexpectedly during SSH wait"
+            exit 1
+        }
+    }
+}
+
+if {$ssh_ready} {
+    run_health_checks "smoke-test" "nix-builder-qemu" {hardware network mdns boot}
+} else {
+    puts "smoke-test: FAILED: SSH unreachable after $ssh_max attempts (${ssh_max}x2s)"
+    if {$ssh_proxy ne ""} {
+        puts "smoke-test: route: Mac -> $ssh_proxy -> $ssh_host:$ssh_port"
+    }
+    exit 1
+}
+
+# -- Shutdown -----------------------------------------------------
+puts "\n--- Phase 5: Shutdown ---"
+
+send_cmd "shutdown now"
+
+set pid [exp_pid]
+
+expect {
+    -timeout 30
+    timeout {
+        puts "smoke-test: guest did not shut down within 30s -- killing"
+        catch { exec kill -9 $pid }
+    }
+    eof {}
+}
+
+puts "\n=== smoke-test PASSED ==="
+puts "Log: $log_path"
+
+wait -nowait
+
+catch { exec stty sane </dev/tty >/dev/tty 2>/dev/null }
+
+if {$host_os eq "Darwin"} {
+    catch { exec dscacheutil -flushcache }
+    catch { exec killall -HUP mDNSResponder }
+    puts "smoke-test: waiting for builder mDNS to re-resolve..."
+    for {set i 0} {$i < 12} {incr i} {
+        if {![catch {exec ping -c 1 -W 2 nix-builder.local 2>/dev/null}]} {
+            puts "smoke-test: builder reachable"
+            break
+        }
+        after 5000
+    }
+}
+
+exit 0
