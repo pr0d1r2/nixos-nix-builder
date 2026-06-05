@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix broken mermaid diagram in storage tier detection section
+
 ## 2026-06-05
 
 ### Storage
