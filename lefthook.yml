@@ -9,8 +9,6 @@ pre-commit:
     file-size-check: {}
     missing-final-newline: {}
     changelog-touched:
-      skip:
-        - run: test -n "$CI"
       files: git diff --cached --name-only -- ':!LICENSE' ':!lefthook.yml' ':!.narrow-language-*.dic' ':!.github/**' ':!SPEC.md' ':!tests/**' ':!agent/**'
       run: timeout 30 lefthook-changelog-touched {files}
     nix-flake-check:
@@ -110,8 +108,6 @@ pre-push:
     ascii-only:
       glob: '*.{sh,nix,yml,toml,bats,dic,txt,just,jsonc}'
     changelog-touched:
-      skip:
-        - run: test -n "$CI"
       files: git diff --cached --name-only -- ':!LICENSE' ':!lefthook.yml' ':!.narrow-language-*.dic' ':!.github/**' ':!SPEC.md' ':!tests/**' ':!agent/**'
       run: timeout 30 lefthook-changelog-touched {files}
     file-size-check: {}
