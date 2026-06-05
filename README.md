@@ -199,14 +199,14 @@ config/user/                 # Build-time preferences
 
 ```mermaid
 flowchart TD
-    Start[Boot] --> NVMe{NVMe ext4<br>partition?}
-    NVMe -->|found| MountNVMe[Mount /mnt/nvme]
-    NVMe -->|absent| SATA{SATA ext4<br>partition?}
-    SATA -->|found| MountSATA[Mount /mnt/sata]
+    Start[Boot] --> NVMe{"NVMe ext4 partition?"}
+    NVMe -->|found| MountNVMe["Mount mnt/storage-nvme"]
+    NVMe -->|absent| SATA{"SATA ext4 partition?"}
+    SATA -->|found| MountSATA["Mount mnt/storage-sata"]
     SATA -->|absent| RAMOnly[tmpfs only]
-    MountNVMe --> Link[/mnt/storage symlink<br>fastest tier]
+    MountNVMe --> Link["mnt/storage bind mount to fastest tier"]
     MountSATA --> Link
-    Link --> Overlay[Nix store overlay<br>upper + work on disk]
+    Link --> Overlay["Nix store overlay — upper + work on disk"]
 ```
 
 At boot, the system automatically detects and mounts the fastest
