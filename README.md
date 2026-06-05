@@ -77,6 +77,9 @@ graph TD
     Builder -->|ISO / cache| Dev
     Builder -->|QEMU boot| Guest[Guest ISO<br>smoke test]
     Guest -->|cache :5000| Builder
+    Dev -->|ProxyJump| Builder -->|SSH mux :2222| Guest
+    Dev -->|remote-first| Builder
+    Builder -->|USB burn| Pendrive[USB pendrive]
 ```
 
 ## Prerequisites
