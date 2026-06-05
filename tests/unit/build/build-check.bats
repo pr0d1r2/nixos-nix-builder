@@ -12,7 +12,7 @@
         cp scripts/lib/find-builder.sh "$tmp/scripts/lib/"
     }
     git -C "$tmp" add -A
-    git -C "$tmp" commit -q -m "init"
+    git -C "$tmp" -c user.name=test -c user.email=test@test commit -q -m "init"
     run bash "$tmp/scripts/build/build-check.sh"
     [ "$status" -eq 1 ]
     rm -rf "$tmp"
