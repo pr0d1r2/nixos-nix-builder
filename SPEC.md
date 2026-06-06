@@ -98,6 +98,7 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 - V32: nix-serve binds `0.0.0.0:5000` — LAN clients connect via mDNS, ⊥ localhost-only
 - V33: dual mDNS: `nix-builder.local` & `nix-serve.local` both resolve to appliance
 - V34: activation hashes script disabled — ⊥ ERR trap on locked-down user provisioning
+- V35: QEMU shares host nix store via virtio-9p — guest reads host's store paths w/o rw overlay writes
 
 ## §T TASKS
 

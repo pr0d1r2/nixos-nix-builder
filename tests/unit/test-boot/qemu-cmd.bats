@@ -73,6 +73,11 @@ teardown() {
     grep -q '\-smp 4' "$WORK_DIR/run-qemu.sh"
 }
 
+@test "shares host nix store via virtio-9p" {
+    bash scripts/test-boot/qemu-cmd.sh /tmp/test.iso "$WORK_DIR"
+    grep -q 'virtfs local,path=/nix/store,mount_tag=nix-host-store,security_model=none,readonly=on' "$WORK_DIR/run-qemu.sh"
+}
+
 @test "bakes full QEMU binary path" {
     bash scripts/test-boot/qemu-cmd.sh /tmp/test.iso "$WORK_DIR"
     grep -q '/.*qemu-system-x86_64' "$WORK_DIR/run-qemu.sh"

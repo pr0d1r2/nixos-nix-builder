@@ -11,6 +11,7 @@
     ./nix-serve.nix
     ./power.nix
     ./qemu-hostname.nix
+    ./qemu-9p-store.nix
     ./qemu-nix-cache.nix
     ./qemu.nix
     ./ssh.nix

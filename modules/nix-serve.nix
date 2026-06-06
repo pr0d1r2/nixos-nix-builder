@@ -19,7 +19,7 @@
     serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.nix-serve}/bin/nix-serve -p 5000 --sign-key-path /etc/nix/signing-key.sec";
-      Restart = "on-failure";
+      Restart = "always";
       RestartSec = 5;
     };
   };

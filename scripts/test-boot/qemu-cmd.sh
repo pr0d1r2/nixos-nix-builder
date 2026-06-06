@@ -66,6 +66,7 @@ $QEMU_BIN \\
     $BOOT_ARGS \\
     $APPEND_LINE \\
     $DRIVE_ARGS \\
+    -virtfs local,path=/nix/store,mount_tag=nix-host-store,security_model=none,readonly=on \\
     -fw_cfg name=opt/nixos-nix-builder/fw_test_gw,string=10.0.2.2 \\
     -fw_cfg name=opt/nixos-nix-builder/nix_cache_url,string=http://10.0.2.2:5000 \\
     -fw_cfg name=opt/nixos-nix-builder/hostname,string=nix-builder-qemu \\

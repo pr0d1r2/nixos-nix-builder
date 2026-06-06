@@ -10,9 +10,10 @@ skip_tags control environment-specific sections:
 - `hardware` — KVM device, microcode, real storage tiers
 - `network` — interface UP, default route
 - `mdns` — avahi publish/resolve
+- `qemu` — 9p host store mount (only present in QEMU guests)
 
 Smoke tests skip hardware/network/mdns (QEMU SLIRP differs).
-Live tests run all checks.
+Live tests skip boot/qemu (bare metal, no 9p).
 
 When adding a new health check, add it to health-checks.tcl —
 not to individual .exp files. The .exp files are thin wrappers
