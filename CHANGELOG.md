@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Link nix-config-example in README for client builder config
 - Fix broken mermaid diagram in storage tier detection section
 - Fix TDD order hook spec dir to match `tests/unit/` layout
 - Add 9p host store health check to smoke tests (mountpoint + overlay lower layer)

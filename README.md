@@ -11,9 +11,14 @@ support for smoke-testing other NixOS ISOs.
 
 ## Use case
 
-Primary consumer: [nixos-poe2](https://github.com/pr0d1r2/nixos-poe2) --
-builds its gaming ISO via `nix-builder.local` over SSH. Any flake-based
-NixOS project can use this builder the same way.
+Projects using this builder:
+
+- [nixos-poe2](https://github.com/pr0d1r2/nixos-poe2) -- builds its gaming ISO via `nix-builder.local` over SSH
+
+Any flake-based NixOS project can use this builder the same way.
+See [nix-config-example](https://github.com/pr0d1r2/nix-config-example)
+for a template showing how to configure `nix.buildMachines` in your
+darwin or NixOS config.
 
 ## Using as a remote builder
 
