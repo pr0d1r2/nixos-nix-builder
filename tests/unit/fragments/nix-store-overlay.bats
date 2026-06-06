@@ -12,6 +12,10 @@
     grep -q 'rw-store.*not ready\|\.rw-store/store.*not.*exist\|! -d.*/nix/.rw-store' fragments/nix-store-overlay.sh
 }
 
+@test "checks for 9p host store mount" {
+    grep -q 'mountpoint.*nix-host-store' fragments/nix-store-overlay.sh
+}
+
 @test "preStop fragment exists and is valid" {
     run bash -n fragments/nix-store-overlay-stop.sh
     [ "$status" -eq 0 ]

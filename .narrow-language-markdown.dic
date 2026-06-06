@@ -1234,6 +1234,7 @@ setup
 sha
 share
 shared
+shares
 shell
 shellcheck
 shells
@@ -1552,6 +1553,7 @@ wrapping
 wraps
 writable
 write
+writes
 writing
 written
 wrong

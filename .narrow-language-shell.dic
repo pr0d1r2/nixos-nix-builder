@@ -526,6 +526,7 @@ quit
 raw
 reachable
 read
+readonly
 reads
 ready
 real
@@ -573,6 +574,7 @@ script
 scripts
 sec
 secrets
+security
 sed
 select
 selected
@@ -592,6 +594,7 @@ settings
 setup
 sfdisk
 sha
+shares
 shell
 shellcheck
 shift

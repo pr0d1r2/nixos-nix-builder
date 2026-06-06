@@ -19,8 +19,14 @@ mkdir -p "$UPPER" "$WORK"
 
 cp -a /nix/.rw-store/store/. "$UPPER/" 2>/dev/null || true
 
+LOWER="/nix/.ro-store"
+if mountpoint -q /mnt/nix-host-store 2>/dev/null; then
+    LOWER="/nix/.ro-store:/mnt/nix-host-store"
+    echo "nix-store-overlay: including host nix store (9p) as lower layer" >&2
+fi
+
 mount -t overlay overlay \
-    -o "lowerdir=/nix/.ro-store,upperdir=$UPPER,workdir=$WORK" \
+    -o "lowerdir=$LOWER,upperdir=$UPPER,workdir=$WORK" \
     /nix/store
 
 echo "nix-store-overlay: overlay mounted with disk-backed upper from $STORAGE" >&2
