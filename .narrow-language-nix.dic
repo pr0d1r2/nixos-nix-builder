@@ -1,6 +1,7 @@
 aarch
 action
 activation
+active
 add
 addresses
 after
@@ -47,6 +48,8 @@ checker
 ckia
 class
 cmdline
+collect
+collection
 command
 commit
 commits
@@ -66,6 +69,7 @@ darwin
 date
 deadnix
 default
+delay
 derived
 description
 desktop
@@ -86,6 +90,7 @@ environment
 etc
 europe
 eval
+exceeds
 exclude
 exec
 execute
@@ -119,6 +124,7 @@ fsprogs
 fstype
 full
 functions
+garbage
 gawk
 gen
 getty
@@ -196,6 +202,7 @@ max
 menu
 merged
 microcode
+min
 minimal
 missing
 mode
@@ -238,6 +245,7 @@ password
 path
 paths
 pciutils
+periodic
 permissions
 permit
 point
@@ -254,6 +262,7 @@ publish
 purpose
 qemu
 qim
+randomized
 raw
 read
 rebase
@@ -323,6 +332,8 @@ then
 tier
 time
 timeout
+timer
+timers
 timesyncd
 timezone
 tmpfiles
@@ -343,6 +354,7 @@ unit
 unmount
 update
 url
+usage
 usb
 usbutils
 use
@@ -356,6 +368,7 @@ wanted
 wants
 warsaw
 wheel
+when
 whitespace
 with
 workstation

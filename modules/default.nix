@@ -9,6 +9,7 @@
     ./hardware.nix
     ./machine-id.nix
     ./nix-serve.nix
+    ./nix-store-gc.nix
     ./power.nix
     ./qemu-hostname.nix
     ./qemu-9p-store.nix

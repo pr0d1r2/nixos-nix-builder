@@ -206,6 +206,7 @@ codes
 coding
 coherent
 cohesive
+collect
 colliding
 collision
 collisions
@@ -312,6 +313,7 @@ defined
 defines
 delegated
 delete
+deletes
 delimiter
 delivers
 demonstrate
@@ -559,6 +561,7 @@ game
 gaming
 gap
 gaps
+garbage
 gate
 gawk
 gbit
@@ -640,6 +643,7 @@ hosted
 hostname
 hostnamed
 hosts
+hourly
 how
 htop
 hub
@@ -727,6 +731,7 @@ jump
 just
 justfile
 keep
+keeping
 keeps
 kernel
 key
@@ -930,6 +935,7 @@ obvious
 off
 offenses
 offload
+older
 omitting
 once
 one
@@ -997,6 +1003,7 @@ pci
 pendrive
 per
 performance
+periodic
 perl
 permanently
 permissions
@@ -1175,6 +1182,7 @@ right
 road
 roles
 root
+roots
 route
 rule
 rules
@@ -1402,6 +1410,7 @@ tight
 time
 timeout
 timeouts
+timer
 timesyncd
 timezone
 tiny

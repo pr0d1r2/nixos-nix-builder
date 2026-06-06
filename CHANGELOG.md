@@ -8,6 +8,7 @@
 - Add 9p host store health check to smoke tests (mountpoint + overlay lower layer)
 - Fix nix-serve restart policy: `always` instead of `on-failure` to survive clean exits
 - Share host nix store with QEMU guest via virtio-9p — guest reads host store paths as overlay lower layer without consuming disk
+- Add periodic nix store GC: systemd timer runs hourly, triggers `nix-collect-garbage --delete-older-than 1d` when disk usage exceeds 80%, keeping 20% free for builds
 
 ## 2026-06-05
 
