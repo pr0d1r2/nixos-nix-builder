@@ -205,6 +205,7 @@ grep
 group
 grub
 guest
+guests
 hardening
 hardware
 head
@@ -219,6 +220,7 @@ idle
 ignore
 img
 import
+inactive
 includes
 incr
 info
@@ -251,6 +253,7 @@ lappend
 lassign
 last
 latest
+layer
 lefthook
 length
 level
@@ -276,6 +279,8 @@ log
 logind
 loopback
 lost
+lower
+lowerdir
 machine
 main
 management
@@ -297,6 +302,7 @@ missing
 mode
 mount
 mounted
+mountpoint
 must
 mutable
 mux
@@ -331,6 +337,7 @@ overlay
 pager
 parse
 passed
+passthrough
 password
 path
 paths
@@ -349,6 +356,7 @@ poweroff
 pre
 preferences
 prefix
+present
 print
 private
 proc

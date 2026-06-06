@@ -11,6 +11,7 @@
 #   "network"  — interface UP, default route (not meaningful in QEMU SLIRP)
 #   "mdns"     — avahi publish/resolve (QEMU guest mDNS differs)
 #   "boot"     — GRUB config (not accessible from live ISO rootfs)
+#   "qemu"     — 9p host store mount (only present in QEMU guests)
 
 proc run_health_checks {label expected_hostname {skip_tags {}}} {
 
@@ -184,6 +185,28 @@ proc run_health_checks {label expected_hostname {skip_tags {}}} {
     } else {
         puts "FAIL (expected overlay, got $overlay_type)"
         bail "nix store overlay not active"
+    }
+
+    if {"qemu" ni $skip_tags} {
+        puts -nonewline "  check: 9p host store mounted ... "
+        lassign [remote_sh "mountpoint -q /mnt/nix-host-store && echo mounted || echo missing"] rc output
+        set output [string trim $output]
+        if {$output eq "mounted"} {
+            puts "ok"
+        } else {
+            puts "FAIL"
+            bail "/mnt/nix-host-store not mounted — 9p passthrough inactive"
+        }
+
+        puts -nonewline "  check: overlay includes 9p lower layer ... "
+        lassign [remote_sh "findmnt -n -o OPTIONS /nix/store 2>/dev/null"] rc opts
+        set opts [string trim $opts]
+        if {[string first "nix-host-store" $opts] != -1} {
+            puts "ok"
+        } else {
+            puts "FAIL"
+            bail "overlay lowerdir missing nix-host-store: $opts"
+        }
     }
 
     if {"hardware" ni $skip_tags} {

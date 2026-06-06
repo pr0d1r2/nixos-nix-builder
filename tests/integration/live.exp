@@ -55,6 +55,6 @@ if {!$mu_ready} {
 
 puts "live-test: SSH connected, running health checks"
 
-run_health_checks "live-test" "nix-builder" {boot}
+run_health_checks "live-test" "nix-builder" {boot qemu}
 
 exit 0
