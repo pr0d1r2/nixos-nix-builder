@@ -10,6 +10,7 @@ all
 allow
 allowed
 alphabetical
+always
 amd
 append
 appliance

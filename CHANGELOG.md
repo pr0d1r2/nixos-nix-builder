@@ -4,6 +4,7 @@
 
 - Fix broken mermaid diagram in storage tier detection section
 - Fix TDD order hook spec dir to match `tests/unit/` layout
+- Fix nix-serve restart policy: `always` instead of `on-failure` to survive clean exits
 - Share host nix store with QEMU guest via virtio-9p — guest reads host store paths as overlay lower layer without consuming disk
 
 ## 2026-06-05
