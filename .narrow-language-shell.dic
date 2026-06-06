@@ -71,6 +71,7 @@ builders
 building
 builds
 built
+builtins
 burn
 burned
 burner
@@ -282,6 +283,7 @@ gid
 git
 gitsha
 glob
+gracefully
 grep
 group
 grub
@@ -312,7 +314,9 @@ image
 images
 img
 import
+imported
 includes
+including
 info
 init
 initrd
@@ -351,6 +355,7 @@ largest
 launch
 launches
 launching
+layer
 left
 lefthook
 level
@@ -359,6 +364,7 @@ line
 lineno
 lines
 link
+lint
 linux
 list
 live
@@ -373,7 +379,9 @@ loglevel
 logs
 long
 loop
+loose
 losetup
+lower
 lowerdir
 mac
 macbook
@@ -390,6 +398,7 @@ maxdepth
 media
 memory
 message
+metal
 minimal
 missing
 mkdir
@@ -398,11 +407,14 @@ mock
 mode
 model
 modprobe
+module
+modules
 monitor
 mount
 mounted
 mountpoint
 mounts
+msize
 mtime
 multiple
 myhost
@@ -436,6 +448,7 @@ nvmetest
 oflag
 old
 one
+oneshot
 only
 opt
 orchestrator
@@ -461,6 +474,7 @@ passes
 path
 paths
 pci
+performance
 physical
 pick
 picks
@@ -473,6 +487,7 @@ platform
 plist
 plistlib
 plug
+pnet
 poe
 point
 port
@@ -511,6 +526,7 @@ quit
 raw
 reachable
 read
+reads
 ready
 real
 reboot
@@ -568,6 +584,7 @@ sent
 seq
 serial
 serve
+service
 set
 sets
 setting
@@ -640,6 +657,7 @@ symlink
 syncing
 system
 systemctl
+tag
 tail
 takes
 target
@@ -661,12 +679,15 @@ timeouts
 timestamp
 timezone
 tmpdir
+tolerates
 too
 total
 touch
 tpab
 tran
+trans
 transient
+transport
 trap
 tree
 tried
@@ -707,6 +728,7 @@ value
 variables
 version
 via
+virtfs
 virtio
 virtual
 wait

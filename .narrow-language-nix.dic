@@ -180,6 +180,7 @@ link
 lint
 linter
 linux
+load
 loader
 local
 locale
@@ -290,6 +291,7 @@ split
 stable
 start
 statix
+status
 stop
 storage
 store
@@ -300,6 +302,7 @@ substituter
 substituters
 substring
 subsystem
+success
 sum
 supported
 suspend
@@ -336,6 +339,7 @@ udpports
 uid
 unicode
 unit
+unmount
 update
 url
 usb

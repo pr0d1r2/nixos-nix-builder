@@ -5,6 +5,7 @@ echo "nixos-nix-builder dev shell"
 
 export LEFTHOOK_TDD_PATHS=":(glob)scripts/**/*.sh :(glob)fragments/*.sh :(glob)nix/dev/*.sh"
 export LEFTHOOK_TDD_EXCLUDE="scripts/lefthook/*"
+export LEFTHOOK_TDD_SPEC_DIR="tests/unit"
 export LEFTHOOK_SKILL_REGISTERED_FILE="CLAUDE.md"
 export LEFTHOOK_SKILL_REGISTERED_PREFIX="@agent/set/"
 export LEFTHOOK_SKILL_REGISTERED_STRIP="agent/set/"
