@@ -2,7 +2,8 @@
   description = "Bootable NixOS USB -- purpose-built nix builder appliance. No desktop, headless.";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-lock.url = "github:pr0d1r2/nixpkgs-lock";
+    nixpkgs.follows = "nixpkgs-lock/nixpkgs";
 
     nix-lefthook = {
       url = "github:pr0d1r2/nix-lefthook";
