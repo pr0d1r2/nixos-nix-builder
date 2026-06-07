@@ -1,5 +1,6 @@
 accessible
 action
+actions
 active
 aed
 after
@@ -22,6 +23,7 @@ are
 args
 ascii
 auth
+author
 authentication
 auto
 avahi
@@ -42,6 +44,7 @@ blank
 blo
 blocks
 boot
+branch
 booted
 branches
 break
@@ -66,6 +69,8 @@ changelog
 chars
 check
 checker
+checkout
+chore
 checking
 checks
 chmod
@@ -77,6 +82,7 @@ com
 command
 commands
 commit
+committer
 commits
 compact
 complete
@@ -91,6 +97,8 @@ conflict
 connect
 connection
 contains
+contents
+cron
 control
 core
 cores
@@ -107,6 +115,8 @@ deadnix
 declarative
 def
 default
+delete
+dispatch
 desc
 design
 dev
@@ -150,6 +160,7 @@ error
 errors
 etc
 eval
+evans
 exceed
 exclude
 exec
@@ -200,6 +211,7 @@ github
 gitleaks
 glob
 global
+gmail
 got
 grep
 group
@@ -225,6 +237,7 @@ includes
 incr
 info
 inline
+install
 integer
 integration
 interactive
@@ -248,6 +261,7 @@ key
 keys
 known
 label
+labels
 language
 lappend
 lassign
@@ -285,6 +299,7 @@ machine
 main
 management
 manager
+marcin
 mark
 markdown
 markdownlint
@@ -294,7 +309,9 @@ master
 match
 max
 meaningful
+merge
 merged
+message
 microcode
 milestone
 mirror
@@ -314,6 +331,8 @@ networkmanager
 newline
 nix
 nixfmt
+nixpkgs
+nowicki
 nixfs
 node
 non
@@ -345,7 +364,9 @@ pattern
 pending
 permissions
 persist
+peter
 picker
+pin
 pid
 pipe
 point
@@ -394,6 +415,7 @@ remote
 remotes
 repo
 request
+requests
 require
 requires
 resmoke
@@ -415,6 +437,7 @@ running
 runs
 sandbox
 sata
+schedule
 scripts
 secrets
 sections
@@ -487,6 +510,7 @@ tiers
 timed
 timeout
 timesyncd
+title
 toml
 total
 touched
@@ -513,6 +537,7 @@ unicode
 unit
 unknown
 unmount
+update
 unset
 upper
 url
@@ -538,6 +563,8 @@ while
 whitespace
 wired
 with
+workflow
+write
 xmllint
 yaml
 yamllint
