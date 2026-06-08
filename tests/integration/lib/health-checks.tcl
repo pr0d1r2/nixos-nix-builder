@@ -12,6 +12,8 @@
 #   "mdns"     — avahi publish/resolve (QEMU guest mDNS differs)
 #   "boot"     — GRUB config (not accessible from live ISO rootfs)
 #   "qemu"     — 9p host store mount (only present in QEMU guests)
+#   "gc"       — nix-store-gc timer (skip on live until builder reburned
+#                with an ISO containing the module)
 
 proc run_health_checks {label expected_hostname {skip_tags {}}} {
 
@@ -346,6 +348,27 @@ proc run_health_checks {label expected_hostname {skip_tags {}}} {
 
     check_sh_contains "overlay preStop wired" "ExecStop" \
         "systemctl cat nix-store-overlay 2>/dev/null"
+
+    # -- Periodic maintenance ----------------------------------------------
+
+    if {"gc" ni $skip_tags} {
+        puts "\n${label}: --- periodic maintenance ---"
+
+        check_contains "nix-store-gc timer active" "active" \
+            systemctl is-active nix-store-gc.timer
+
+        check_sh_contains "nix-store-gc timer fires 03:00 UTC" "03:00:00" \
+            "systemctl show -p TimersCalendar nix-store-gc.timer"
+
+        check_sh_contains "nix-store-gc timer persistent" "Persistent=yes" \
+            "systemctl show -p Persistent nix-store-gc.timer"
+
+        check_sh_contains "nix-store-gc service loaded" "loaded" \
+            "systemctl show -p LoadState --value nix-store-gc.service"
+
+        check_sh_contains "nix-store-gc no-op under threshold" "no action needed" \
+            {NIX_GC_THRESHOLD=100 $(systemctl show -p ExecStart --value nix-store-gc.service | grep -oP 'path=\K[^ ;]+')}
+    }
 
     # -- Headless ----------------------------------------------------------
 

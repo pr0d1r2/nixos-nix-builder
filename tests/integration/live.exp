@@ -55,6 +55,8 @@ if {!$mu_ready} {
 
 puts "live-test: SSH connected, running health checks"
 
-run_health_checks "live-test" "nix-builder" {boot qemu}
+# "gc" skipped until the builder is reburned with an ISO containing
+# the nix-store-gc module (deployed live node predates the feature).
+run_health_checks "live-test" "nix-builder" {boot qemu gc}
 
 exit 0
