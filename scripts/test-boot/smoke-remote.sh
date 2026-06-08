@@ -78,11 +78,18 @@ else
         bash '$WORK_DIR/scripts/qemu-cmd.sh' '$REMOTE_ISO' '$WORK_DIR' '$WORK_DIR/boot'" >&2
 fi
 
+SESSION="nix-builder-smoke-${SHORT_SHA}"
 # shellcheck disable=SC2029
-ssh "$BUILDER" "pkill -f 'qemu-system-x86_64.*hostfwd=tcp.*:2222' 2>/dev/null; sleep 0.5" || true
+ssh "$BUILDER" "pkill -f 'qemu-system-x86_64.*hostfwd=tcp.*:2222' 2>/dev/null; pkill -f '$SESSION' 2>/dev/null; sleep 0.5" || true
 
 echo >&2
 echo "smoke-remote: booting $ISO_NAME in QEMU on $BUILDER (Ctrl-C to exit)" >&2
 echo >&2
 
-exec ssh -t "$BUILDER" "bash '$WORK_DIR/run-qemu.sh'"
+# Run QEMU in a DETACHED builder tmux session so a transient mac<->builder
+# ssh drop no longer SIGHUPs it mid-boot. qemu-remote-tmux.sh streams the
+# serial back with reconnect and holds the -L 2222 forward for the SSH
+# health checks. Shutdown is over SSH (smoke.exp), so the stream is
+# read-only.
+exec bash "$REPO_ROOT/scripts/test-boot/qemu-remote-tmux.sh" \
+    "$BUILDER" "$SESSION" 2222 "$WORK_DIR/run-qemu.sh"

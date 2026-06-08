@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add qemu-remote-tmux helper: detach remote smoke QEMU into a builder tmux session so it survives transient SSH drops (serial streamed back with reconnect)
+- Wire remote smoke onto the tmux-detach helper and power the guest off over SSH, ending the intermittent boot-time flake that forced re-runs
 - Keep built ISOs on the builder instead of downloading 1.7G to the Mac each build; smoke, burn, and boot-remote all read the ISO from the builder store (remote-first, stops the Mac disk filling up)
 - Link nix-config-example in README for client builder config
 - Fix broken mermaid diagram in storage tier detection section

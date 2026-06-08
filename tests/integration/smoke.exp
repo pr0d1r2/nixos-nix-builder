@@ -151,7 +151,25 @@ if {$ssh_ready} {
 # -- Shutdown -----------------------------------------------------
 puts "\n--- Phase 5: Shutdown ---"
 
-send_cmd "shutdown now"
+# On Darwin the remote QEMU runs detached in a builder tmux session and
+# the serial we read is a one-way stream (qemu-remote-tmux.sh). Type
+# `poweroff` into the guest's autologin root console via tmux send-keys
+# -- no SSH privilege needed, and faithful to the old serial shutdown.
+# The guest powering off makes QEMU exit, ending the stream (eof below).
+# The local Linux path drives a two-way serial console, so it keeps the
+# direct serial shutdown.
+if {$host_os eq "Darwin"} {
+    set builder [string trim [exec bash scripts/lib/find-builder.sh]]
+    set short_sha [string trim [exec git rev-parse --short=7 HEAD]]
+    set session "nix-builder-smoke-$short_sha"
+    set sock "/tmp/$session.tmux.sock"
+    catch {exec ssh -o BatchMode=yes -o ConnectTimeout=5 \
+        -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+        -o LogLevel=ERROR $builder \
+        "tmux -S $sock send-keys -t $session 'poweroff' Enter" 2>/dev/null}
+} else {
+    send_cmd "shutdown now"
+}
 
 set pid [exp_pid]
 
