@@ -183,6 +183,7 @@ delete
 design
 designed
 destructive
+detach
 detached
 detaches
 detaching
@@ -351,6 +352,7 @@ has
 hash
 head
 health
+helper
 here
 hold
 holds
@@ -449,6 +451,7 @@ logfile
 loglevel
 logs
 long
+longer
 loop
 loose
 losetup
@@ -730,6 +733,7 @@ show
 shutdown
 side
 sighup
+sighups
 sigkill
 signal
 signing

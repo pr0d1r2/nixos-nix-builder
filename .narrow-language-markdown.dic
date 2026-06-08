@@ -414,6 +414,7 @@ empty
 enable
 enabled
 end
+ending
 enforcement
 enforces
 ensure
@@ -535,6 +536,7 @@ follows
 foo
 for
 force
+forced
 forces
 fork
 form
@@ -701,6 +703,7 @@ interactive
 interest
 interface
 interfaces
+intermittent
 internal
 internally
 interpret

@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Add qemu-remote-tmux helper: detach remote smoke QEMU into a builder tmux session so it survives transient SSH drops (serial streamed back with reconnect)
+- Wire remote smoke onto the tmux-detach helper and power the guest off over SSH, ending the intermittent boot-time flake that forced re-runs
 - Link nix-config-example in README for client builder config
 - Fix broken mermaid diagram in storage tier detection section
 - Fix TDD order hook spec dir to match `tests/unit/` layout

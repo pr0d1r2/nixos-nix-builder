@@ -151,7 +151,23 @@ if {$ssh_ready} {
 # -- Shutdown -----------------------------------------------------
 puts "\n--- Phase 5: Shutdown ---"
 
-send_cmd "shutdown now"
+# On Darwin the remote QEMU runs detached in a builder tmux session and
+# the serial we read is a one-way stream (qemu-remote-tmux.sh), so the
+# poweroff goes over SSH, not the serial. The guest powering off makes
+# QEMU exit, ending the stream (eof below). The local Linux path still
+# drives a two-way serial console, so it keeps the serial shutdown.
+if {$host_os eq "Darwin"} {
+    set off_cmd [list ssh -o BatchMode=yes -o ConnectTimeout=5 \
+        -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+        -o LogLevel=ERROR]
+    if {$ssh_proxy ne ""} {
+        lappend off_cmd -o "ProxyJump=$ssh_proxy"
+    }
+    lappend off_cmd -p $ssh_port ${ssh_user}@${ssh_host} poweroff
+    catch {exec {*}$off_cmd 2>/dev/null}
+} else {
+    send_cmd "shutdown now"
+}
 
 set pid [exp_pid]
 
