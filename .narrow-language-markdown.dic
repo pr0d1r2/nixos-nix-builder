@@ -73,6 +73,7 @@ args
 arm
 around
 aspect
+asserts
 assigned
 attached
 attaches
@@ -1006,6 +1007,7 @@ periodic
 perl
 permanently
 permissions
+persistence
 persistent
 personal
 philosophy
@@ -1416,6 +1418,7 @@ tiny
 today
 token
 tokens
+tolerate
 toml
 too
 tool

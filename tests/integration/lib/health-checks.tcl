@@ -12,6 +12,9 @@
 #   "mdns"     — avahi publish/resolve (QEMU guest mDNS differs)
 #   "boot"     — GRUB config (not accessible from live ISO rootfs)
 #   "qemu"     — 9p host store mount (only present in QEMU guests)
+#   "gc-optional" — tolerate an absent nix-store-gc timer (node on a
+#                pre-feature ISO); when the unit is present it is still
+#                asserted. Smoke omits this tag so a missing unit fails.
 
 proc run_health_checks {label expected_hostname {skip_tags {}}} {
 
@@ -346,6 +349,43 @@ proc run_health_checks {label expected_hostname {skip_tags {}}} {
 
     check_sh_contains "overlay preStop wired" "ExecStop" \
         "systemctl cat nix-store-overlay 2>/dev/null"
+
+    # -- Periodic maintenance ----------------------------------------------
+
+    # GC timer presence gates the assertions. A node running an ISO that
+    # predates the feature lacks the unit; with "gc-optional" set the
+    # section skips instead of failing, and auto-activates once the node
+    # is reburned — no manual tag removal. Without "gc-optional" (smoke)
+    # an absent unit is a build regression and fails hard.
+
+    puts "\n${label}: --- periodic maintenance ---"
+
+    lassign [remote_sh "systemctl cat nix-store-gc.timer >/dev/null 2>&1 && echo present || echo absent"] _ gc_present
+    set gc_present [string trim $gc_present]
+
+    if {$gc_present eq "absent"} {
+        if {"gc-optional" in $skip_tags} {
+            puts "  check: nix-store-gc timer ... skip (not deployed on this node)"
+        } else {
+            puts "  check: nix-store-gc timer ... FAIL (unit absent)"
+            bail "nix-store-gc.timer not present — ISO is missing the module"
+        }
+    } else {
+        check_contains "nix-store-gc timer active" "active" \
+            systemctl is-active nix-store-gc.timer
+
+        check_sh_contains "nix-store-gc timer fires 03:00 UTC" "03:00:00" \
+            "systemctl show -p TimersCalendar nix-store-gc.timer"
+
+        check_sh_contains "nix-store-gc timer persistent" "Persistent=yes" \
+            "systemctl show -p Persistent nix-store-gc.timer"
+
+        check_sh_contains "nix-store-gc service loaded" "loaded" \
+            "systemctl show -p LoadState --value nix-store-gc.service"
+
+        check_sh_contains "nix-store-gc no-op under threshold" "no action needed" \
+            {NIX_GC_THRESHOLD=100 $(systemctl show -p ExecStart --value nix-store-gc.service | grep -oP 'path=\K[^ ;]+')}
+    }
 
     # -- Headless ----------------------------------------------------------
 

@@ -9,6 +9,7 @@
 - Fix nix-serve restart policy: `always` instead of `on-failure` to survive clean exits
 - Share host nix store with QEMU guest via virtio-9p — guest reads host store paths as overlay lower layer without consuming disk
 - Add periodic nix store GC: systemd timer runs daily at 03:00 UTC, triggers `nix-collect-garbage --delete-older-than 1d` when disk usage exceeds 80%, keeping 20% free for builds
+- Add nix-store-gc timer health checks to smoke tests (schedule, persistence, non-destructive no-op run)
 
 ## 2026-06-05
 
