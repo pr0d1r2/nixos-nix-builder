@@ -73,6 +73,7 @@ args
 arm
 around
 aspect
+asserts
 assigned
 attached
 attaches
@@ -1114,7 +1115,6 @@ reasoning
 reboot
 rebuild
 reburn
-reburned
 recipe
 recipes
 recommended
@@ -1418,6 +1418,7 @@ tiny
 today
 token
 tokens
+tolerate
 toml
 too
 tool
@@ -1475,7 +1476,6 @@ unreachable
 unreleased
 unsigned
 unstable
-until
 unused
 unwelcome
 update

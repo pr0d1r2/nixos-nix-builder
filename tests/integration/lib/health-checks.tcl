@@ -12,8 +12,9 @@
 #   "mdns"     — avahi publish/resolve (QEMU guest mDNS differs)
 #   "boot"     — GRUB config (not accessible from live ISO rootfs)
 #   "qemu"     — 9p host store mount (only present in QEMU guests)
-#   "gc"       — nix-store-gc timer (skip on live until builder reburned
-#                with an ISO containing the module)
+#   "gc-optional" — tolerate an absent nix-store-gc timer (node on a
+#                pre-feature ISO); when the unit is present it is still
+#                asserted. Smoke omits this tag so a missing unit fails.
 
 proc run_health_checks {label expected_hostname {skip_tags {}}} {
 
@@ -351,9 +352,25 @@ proc run_health_checks {label expected_hostname {skip_tags {}}} {
 
     # -- Periodic maintenance ----------------------------------------------
 
-    if {"gc" ni $skip_tags} {
-        puts "\n${label}: --- periodic maintenance ---"
+    # GC timer presence gates the assertions. A node running an ISO that
+    # predates the feature lacks the unit; with "gc-optional" set the
+    # section skips instead of failing, and auto-activates once the node
+    # is reburned — no manual tag removal. Without "gc-optional" (smoke)
+    # an absent unit is a build regression and fails hard.
 
+    puts "\n${label}: --- periodic maintenance ---"
+
+    lassign [remote_sh "systemctl cat nix-store-gc.timer >/dev/null 2>&1 && echo present || echo absent"] _ gc_present
+    set gc_present [string trim $gc_present]
+
+    if {$gc_present eq "absent"} {
+        if {"gc-optional" in $skip_tags} {
+            puts "  check: nix-store-gc timer ... skip (not deployed on this node)"
+        } else {
+            puts "  check: nix-store-gc timer ... FAIL (unit absent)"
+            bail "nix-store-gc.timer not present — ISO is missing the module"
+        }
+    } else {
         check_contains "nix-store-gc timer active" "active" \
             systemctl is-active nix-store-gc.timer
 

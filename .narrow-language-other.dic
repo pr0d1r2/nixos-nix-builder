@@ -1,6 +1,8 @@
+absent
 accessible
 action
 actions
+activates
 active
 aed
 after
@@ -22,6 +24,8 @@ any
 are
 args
 ascii
+asserted
+assertions
 auth
 authentication
 author
@@ -118,6 +122,7 @@ declarative
 def
 default
 delete
+deployed
 desc
 design
 dev
@@ -178,9 +183,12 @@ ext
 extends
 fail
 failed
+failing
+fails
 failure
 failures
 false
+feature
 features
 fenced
 file
@@ -206,6 +214,7 @@ fstype
 full
 fully
 functions
+gates
 gawk
 get
 gid
@@ -221,6 +230,7 @@ group
 grub
 guest
 guests
+hard
 hardening
 hardware
 head
@@ -241,6 +251,7 @@ incr
 info
 inline
 install
+instead
 integer
 integration
 interactive
@@ -265,6 +276,7 @@ keys
 known
 label
 labels
+lacks
 language
 lappend
 lassign
@@ -304,6 +316,7 @@ main
 maintenance
 management
 manager
+manual
 marcin
 mark
 markdown
@@ -348,6 +361,8 @@ nowicki
 null
 numbered
 nvme
+omits
+once
 only
 open
 optional
@@ -384,8 +399,10 @@ positive
 power
 poweroff
 pre
+predates
 preferences
 prefix
+presence
 present
 print
 private
@@ -420,9 +437,11 @@ redirected
 ref
 regexp
 registered
+regression
 regsub
 remote
 remotes
+removal
 repo
 request
 requests
@@ -450,6 +469,7 @@ sata
 schedule
 scripts
 secrets
+section
 sections
 seen
 send
@@ -492,6 +512,7 @@ statix
 stderr
 stdin
 steps
+still
 stop
 storage
 store
@@ -509,6 +530,7 @@ systemctl
 systemd
 table
 tables
+tag
 tags
 tail
 taplo
@@ -516,8 +538,10 @@ target
 terraform
 test
 tests
+that
 the
 then
+this
 threshold
 tier
 tiers
@@ -527,6 +551,7 @@ timer
 timers
 timesyncd
 title
+tolerate
 toml
 total
 touched
@@ -555,7 +580,6 @@ unit
 unknown
 unmount
 unset
-until
 update
 upper
 url
@@ -578,10 +602,12 @@ waiting
 warn
 watch
 wheel
+when
 while
 whitespace
 wired
 with
+without
 workflow
 write
 xmllint

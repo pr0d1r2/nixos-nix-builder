@@ -11,7 +11,7 @@ skip_tags control environment-specific sections:
 - `network` — interface UP, default route
 - `mdns` — avahi publish/resolve
 - `qemu` — 9p host store mount (only present in QEMU guests)
-- `gc` — nix-store-gc timer (skip on live until builder reburned)
+- `gc-optional` — tolerate absent nix-store-gc timer (live node on a pre-feature ISO); auto-asserts once present
 
 Smoke tests skip hardware/network/mdns (QEMU SLIRP differs).
 Live tests skip boot/qemu (bare metal, no 9p).

@@ -55,8 +55,9 @@ if {!$mu_ready} {
 
 puts "live-test: SSH connected, running health checks"
 
-# "gc" skipped until the builder is reburned with an ISO containing
-# the nix-store-gc module (deployed live node predates the feature).
-run_health_checks "live-test" "nix-builder" {boot qemu gc}
+# "gc-optional": tolerate a missing nix-store-gc timer on a live node
+# still running a pre-feature ISO. The check auto-asserts once the node
+# is reburned — no tag removal needed.
+run_health_checks "live-test" "nix-builder" {boot qemu gc-optional}
 
 exit 0
