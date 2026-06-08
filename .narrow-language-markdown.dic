@@ -332,6 +332,7 @@ descriptions
 desktop
 despite
 destructive
+detach
 details
 detected
 detection
@@ -389,6 +390,7 @@ driven
 driver
 drives
 drop
+drops
 dscacheutil
 dual
 due
@@ -630,6 +632,7 @@ health
 healthcheck
 hello
 help
+helper
 hibernate
 hidden
 hides
@@ -1120,6 +1123,7 @@ recipes
 recommended
 reconfig
 reconfigure
+reconnect
 reconnecting
 red
 redirect
@@ -1327,6 +1331,7 @@ stop
 storage
 store
 stored
+streamed
 streamline
 streamlined
 string
@@ -1357,6 +1362,7 @@ supported
 sure
 surfaces
 survive
+survives
 suspend
 symlink
 symlinked
@@ -1415,6 +1421,7 @@ timer
 timesyncd
 timezone
 tiny
+tmux
 today
 token
 tokens
@@ -1434,6 +1441,7 @@ track
 tracked
 traditional
 trailing
+transient
 trap
 traveler
 tree
