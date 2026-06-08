@@ -49,19 +49,10 @@ ssh "$builder" "cd '$remote_dir' && nix build \
     '.#nixosConfigurations.nixos-nix-builder.config.system.build.isoImage' \
     --out-link '$remote_dir/.result'"
 
-SKIP_DOWNLOAD=0
-[ "${NIX_BUILDER_BURN_BUILD:-0}" = "1" ] && SKIP_DOWNLOAD=1
-if [ "$SKIP_DOWNLOAD" = "1" ]; then
-    echo "build: ISO kept on builder -- skipping download"
-else
-    if [ -e "$REPO_ROOT/iso/.result" ]; then
-        chmod -R u+w "$REPO_ROOT/iso/.result" 2>/dev/null || true
-        rm -rf "$REPO_ROOT/iso/.result"
-    fi
-    mkdir -p "$REPO_ROOT/iso/.result/iso"
-    rsync -rlptDLz --no-owner --no-group --chmod=Du+w,Fu+w \
-        "$builder:$remote_dir/.result/iso/" "$REPO_ROOT/iso/.result/iso/"
-fi
+# Remote-first: the ISO stays on the builder. We never rsync it back to
+# the Mac -- every consumer (smoke, burn, boot-remote) reads it from the
+# builder store. Downloading 1.7G per build only filled the Mac disk.
+echo "build: ISO kept on builder -- not downloaded to this host"
 
 store_dir="$(ssh "$builder" sh <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
 # shellcheck disable=SC2029

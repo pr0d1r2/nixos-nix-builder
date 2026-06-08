@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Keep built ISOs on the builder instead of downloading 1.7G to the Mac each build; smoke, burn, and boot-remote all read the ISO from the builder store (remote-first, stops the Mac disk filling up)
 - Link nix-config-example in README for client builder config
 - Fix broken mermaid diagram in storage tier detection section
 - Fix TDD order hook spec dir to match `tests/unit/` layout

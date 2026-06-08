@@ -74,10 +74,12 @@ case "$HOST_OS-$HOST_ARCH" in
         ;;
 esac
 
-SKIP_DOWNLOAD=0
-[ "${NIX_BUILDER_BURN_BUILD:-0}" = "1" ] && SKIP_DOWNLOAD=1
-if [ "$SKIP_DOWNLOAD" = "1" ] && [ "$HOST_OS" = "Darwin" ]; then
-    echo "build: ISO kept on builder (not downloaded)"
+# Remote-first: a Darwin host builds on the builder and the ISO stays
+# there (build-remote.sh stages it in the builder store). We never copy
+# it back -- downloading 1.7G per build only filled the Mac disk. A Linux
+# host builds locally, so it keeps the ISO under iso/.
+if [ "$HOST_OS" = "Darwin" ]; then
+    echo "build: ISO kept on builder -- not downloaded to this host"
 else
     RESULT_LINK="$REPO_ROOT/iso/.result"
     if [ ! -e "$RESULT_LINK" ]; then
