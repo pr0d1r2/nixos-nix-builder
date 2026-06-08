@@ -3,8 +3,8 @@ abcdef
 aborted
 about
 absent
+across
 action
-active
 add
 adding
 address
@@ -84,6 +84,7 @@ but
 bytes
 cache
 cached
+calendar
 called
 caller
 calling
@@ -154,12 +155,12 @@ current
 custom
 cut
 daemon
+daily
 darwin
 data
 date
 day
 default
-delay
 delete
 designed
 destructive
@@ -314,7 +315,6 @@ host
 hostfwd
 hostname
 hosts
-hourly
 human
 hup
 ide
@@ -414,6 +414,7 @@ memory
 message
 metal
 minimal
+missed
 missing
 mkdir
 mktemp
@@ -495,6 +496,7 @@ pci
 percentage
 performance
 periodic
+persistent
 phase
 physical
 pick
@@ -544,7 +546,6 @@ qemu
 qeof
 quiet
 quit
-randomized
 raw
 reachable
 read
@@ -562,7 +563,6 @@ rel
 remote
 remove
 removes
-repeats
 replaces
 replacing
 repo
@@ -757,6 +757,7 @@ username
 uses
 using
 usr
+utc
 utf
 valid
 value

@@ -16,16 +16,12 @@
     grep -q 'builtins.readFile.*fragments/nix-store-gc.sh' modules/nix-store-gc.nix
 }
 
-@test "timer triggers on boot" {
-    grep -q 'OnBootSec' modules/nix-store-gc.nix
+@test "timer triggers daily at 03:00 UTC" {
+    grep -q 'OnCalendar.*03:00:00 UTC' modules/nix-store-gc.nix
 }
 
-@test "timer repeats hourly" {
-    grep -q 'OnUnitActiveSec.*1h' modules/nix-store-gc.nix
-}
-
-@test "timer has randomized delay" {
-    grep -q 'RandomizedDelaySec' modules/nix-store-gc.nix
+@test "timer is persistent across missed runs" {
+    grep -q 'Persistent.*=.*true' modules/nix-store-gc.nix
 }
 
 @test "timer wanted by timers.target" {

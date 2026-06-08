@@ -1,7 +1,6 @@
 aarch
 action
 activation
-active
 add
 addresses
 after
@@ -41,6 +40,7 @@ builtins
 bus
 cache
 cachix
+calendar
 changed
 changelog
 check
@@ -69,7 +69,6 @@ darwin
 date
 deadnix
 default
-delay
 derived
 description
 desktop
@@ -202,7 +201,6 @@ max
 menu
 merged
 microcode
-min
 minimal
 missing
 mode
@@ -248,6 +246,7 @@ pciutils
 periodic
 permissions
 permit
+persistent
 point
 port
 power
@@ -262,7 +261,6 @@ publish
 purpose
 qemu
 qim
-randomized
 raw
 read
 rebase
@@ -360,6 +358,7 @@ usbutils
 use
 user
 users
+utc
 utf
 util
 via
