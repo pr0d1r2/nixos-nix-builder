@@ -99,6 +99,7 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 - V33: dual mDNS: `nix-builder.local` & `nix-serve.local` both resolve to appliance
 - V34: activation hashes script disabled — ⊥ ERR trap on locked-down user provisioning
 - V35: QEMU shares host nix store via virtio-9p — guest reads host's store paths w/o rw overlay writes
+- V36: nix store GC runs daily at 03:00 UTC, triggers when disk usage >80%, deletes roots older than 1 day — keeps 20% free for builds
 
 ## §T TASKS
 
@@ -206,6 +207,7 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 | T94 | x | smoke.exp: add nix-store-overlay to expected service list | V1 |
 
 | T95 | | CI: dedicated x86_64-linux builder accessible from GitHub Actions | C11,C16 |
+| T96 | x | modules/nix-store-gc.nix: periodic systemd timer + service, GC when disk >80%, delete-older-than 1d | V36 |
 
 ## §B BUGS
 

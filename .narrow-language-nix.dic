@@ -40,6 +40,7 @@ builtins
 bus
 cache
 cachix
+calendar
 changed
 changelog
 check
@@ -47,6 +48,8 @@ checker
 ckia
 class
 cmdline
+collect
+collection
 command
 commit
 commits
@@ -86,6 +89,7 @@ environment
 etc
 europe
 eval
+exceeds
 exclude
 exec
 execute
@@ -119,6 +123,7 @@ fsprogs
 fstype
 full
 functions
+garbage
 gawk
 gen
 getty
@@ -239,8 +244,10 @@ password
 path
 paths
 pciutils
+periodic
 permissions
 permit
+persistent
 point
 port
 power
@@ -324,6 +331,8 @@ then
 tier
 time
 timeout
+timer
+timers
 timesyncd
 timezone
 tmpfiles
@@ -344,11 +353,13 @@ unit
 unmount
 update
 url
+usage
 usb
 usbutils
 use
 user
 users
+utc
 utf
 util
 via
@@ -357,6 +368,7 @@ wanted
 wants
 warsaw
 wheel
+when
 whitespace
 with
 workstation
