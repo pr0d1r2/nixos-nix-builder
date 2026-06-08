@@ -8,7 +8,7 @@ boot:
 
 # Boot ISO in QEMU on remote builder.
 boot-remote:
-    bash scripts/test-boot/boot-remote.sh "$(pwd)" "$(ls -t iso/*.iso | head -1)" 2222 nix-builder.local
+    bash scripts/test-boot/boot-remote.sh "$(pwd)" 2222 nix-builder.local
 
 # Build ISO (skips if SHA already built).
 build: config _build-or-skip
