@@ -16,6 +16,23 @@ SHORT_SHA="$(git -C "$REPO_ROOT" rev-parse --short=7 HEAD)"
 WORK_DIR="/mnt/storage/tmp/nix-builder-qemu-test-${SHORT_SHA}"
 STORE_DIR="$(ssh "$BUILDER" sh <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
 
+# Sweep stale smoke artifacts from prior runs before starting. WORK_DIRs
+# live on /mnt/storage (not /nix/store), so the GC timer never reclaims
+# them -- without this they accumulate unbounded (~94M each). Skip any
+# workdir a live QEMU still has open (a concurrent smoke -- e.g. an
+# overlapping pre-push run -- references its drive paths on its cmdline),
+# so we never pull files out from under a running guest. This run
+# recreates its own WORK_DIR below.
+ssh "$BUILDER" '
+    shopt -s nullglob
+    for d in /mnt/storage/tmp/nix-builder-qemu-test-*; do
+        pgrep -af qemu-system-x86_64 | grep -qF "$d" && continue
+        sha=${d##*-}
+        rm -rf "$d" "/tmp/nix-builder-smoke-$sha.tmux.sock" \
+            "/tmp/nix-builder-smoke-$sha.serial.log" "/tmp/nix-builder-smoke-$sha.rc"
+    done
+' 2>/dev/null || true
+
 ISO="${1:-}"
 if [ -z "$ISO" ]; then
     # shellcheck disable=SC2012

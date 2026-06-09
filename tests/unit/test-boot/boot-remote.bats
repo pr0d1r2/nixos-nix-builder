@@ -26,6 +26,10 @@
     run ! grep -q 'ssh -t' scripts/test-boot/boot-remote.sh
 }
 
+@test "skips the workdir sweep when a live QEMU has it open" {
+    grep -q "pgrep -af qemu-system-x86_64 | grep -qF '\$WORK_DIR' || rm -rf" scripts/test-boot/boot-remote.sh
+}
+
 @test "passes nix-serve to the helper for the guest cache" {
     grep -q 'boot-run.sh" "nix-serve"' scripts/test-boot/boot-remote.sh
 }

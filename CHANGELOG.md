@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Sweep stale smoke/boot QEMU workdirs on the builder before each run (they live on /mnt/storage, outside /nix/store, so the GC timer never reclaimed them and they grew unbounded); the sweep skips any workdir a live QEMU still has open, so a concurrent run is never disturbed
+
 - Detach `just boot-remote` QEMU into a builder tmux session too (via qemu-remote-tmux), so a transient SSH drop no longer kills the boot guest mid-boot; nix-serve rides along for the guest cache
 
 - Add qemu-remote-tmux helper: detach remote smoke QEMU into a builder tmux session so it survives transient SSH drops (serial streamed back with reconnect)

@@ -38,6 +38,14 @@ work_parent="$(ssh "$builder_ssh" 'if mountpoint -q /mnt/storage 2>/dev/null; th
 WORK_DIR="$work_parent/nix-builder-boot"
 SESSION="nix-builder-boot"
 
+# Sweep stale boot artifacts (workdir on /mnt/storage + helper session
+# files) before starting; they sit outside /nix/store, so the GC timer
+# never reclaims them. Skip the rm if a live QEMU still has this workdir
+# open, so a running boot guest is never disturbed. mkdir below recreates
+# a fresh WORK_DIR.
+# shellcheck disable=SC2029
+ssh "$builder_ssh" "pgrep -af qemu-system-x86_64 | grep -qF '$WORK_DIR' || rm -rf '$WORK_DIR' /tmp/nix-builder-boot.tmux.sock /tmp/nix-builder-boot.serial.log /tmp/nix-builder-boot.rc 2>/dev/null" || true
+
 # shellcheck disable=SC2029
 ssh "$builder_ssh" "mkdir -p '$WORK_DIR/scripts'"
 echo "boot: syncing scripts to $BUILDER"
