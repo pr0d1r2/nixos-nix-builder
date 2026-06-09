@@ -253,6 +253,7 @@ common
 commonly
 community
 compact
+comparable
 compiler
 complementary
 complete
@@ -309,6 +310,7 @@ copy
 core
 cores
 coreutils
+corpora
 corpus
 correct
 correctness
@@ -396,6 +398,7 @@ dict
 dictionaries
 dictionary
 differ
+difference
 different
 differs
 dir
@@ -1018,6 +1021,7 @@ nomodeset
 non
 nonexistent
 normal
+normalization
 not
 notes
 nothing
@@ -1244,6 +1248,7 @@ redirect
 redistributable
 reduces
 redundant
+ref
 refactors
 reference
 referenced
