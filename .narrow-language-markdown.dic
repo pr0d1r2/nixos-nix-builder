@@ -36,6 +36,7 @@ advertiser
 advertises
 advertising
 advocating
+aes
 after
 against
 agent
@@ -79,6 +80,7 @@ appliance
 application
 applies
 apply
+arch
 architecture
 are
 args
@@ -89,6 +91,8 @@ assert
 assertion
 asserts
 assigned
+asymmetric
+asymmetry
 attached
 attaches
 attempt
@@ -124,6 +128,7 @@ begins
 behave
 behavior
 behavioral
+bench
 benchmark
 best
 big
@@ -222,6 +227,7 @@ clears
 cli
 client
 clients
+clock
 clone
 cluster
 cmdline
@@ -249,12 +255,15 @@ common
 commonly
 community
 compact
+compile
 compiler
 complementary
 complete
 completing
 complicated
 compound
+compress
+compute
 concept
 concepts
 concern
@@ -287,6 +296,7 @@ constraints
 consumer
 consumers
 consuming
+contained
 containing
 contains
 content
@@ -310,7 +320,6 @@ covered
 covering
 covers
 cpu
-cpuinfo
 cpus
 create
 created
@@ -319,6 +328,7 @@ creation
 credentials
 critical
 cross
+crypto
 current
 customization
 cut
@@ -368,7 +378,6 @@ despite
 destructive
 detach
 details
-detect
 detected
 detection
 detects
@@ -621,6 +630,7 @@ gate
 gawk
 gbit
 gen
+general
 generate
 generated
 generator
@@ -693,6 +703,7 @@ hibernate
 hidden
 hides
 history
+hit
 hold
 holding
 holds
@@ -752,6 +763,7 @@ installer
 installs
 instance
 instead
+instruction
 instructions
 integer
 integration
@@ -778,6 +790,7 @@ invocation
 invocations
 invoked
 iotop
+ipc
 irrelevant
 iso
 isolated
@@ -921,6 +934,7 @@ max
 maximum
 may
 means
+measured
 mechanism
 mem
 memgb
@@ -932,6 +946,7 @@ message
 messages
 meta
 metal
+micro
 microcode
 microcodes
 mid
@@ -1014,6 +1029,7 @@ noun
 now
 nproc
 number
+numbers
 numeric
 numerically
 nvme
@@ -1150,6 +1166,7 @@ prevent
 previous
 previously
 primary
+prime
 principles
 print
 printf
@@ -1157,7 +1174,6 @@ prints
 private
 probability
 problem
-proc
 proceed
 processes
 produce
@@ -1225,7 +1241,6 @@ reconfigure
 reconnect
 reconnecting
 record
-recorded
 red
 redirect
 redistributable
@@ -1237,7 +1252,6 @@ referenced
 references
 reflect
 reflective
-refs
 refusals
 refuse
 refused
@@ -1268,6 +1282,7 @@ report
 reporting
 reports
 repository
+representative
 represents
 reproduce
 reproducible
@@ -1323,7 +1338,6 @@ scenarios
 schedule
 scheme
 scope
-score
 scperf
 script
 scripts
@@ -1359,6 +1373,8 @@ session
 sessions
 set
 settings
+settle
+settles
 setup
 sha
 share
@@ -1379,6 +1395,7 @@ shown
 shows
 shutdown
 siblings
+sieve
 sigkill
 signed
 signing
@@ -1392,6 +1409,7 @@ single
 size
 sized
 sizing
+skew
 skill
 skills
 skip
@@ -1495,6 +1513,7 @@ symlinked
 symlinks
 synonyms
 syntax
+sysbench
 system
 systemd
 systems
@@ -1508,6 +1527,7 @@ target
 targeting
 task
 tasks
+taskset
 tell
 template
 tense
@@ -1533,7 +1553,6 @@ think
 third
 this
 those
-thread
 threads
 three
 throat
@@ -1707,6 +1726,7 @@ workdirs
 workflow
 workflows
 working
+workload
 works
 world
 worth
