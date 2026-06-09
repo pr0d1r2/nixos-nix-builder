@@ -159,14 +159,22 @@ puts "\n--- Phase 5: Shutdown ---"
 # The local Linux path drives a two-way serial console, so it keeps the
 # direct serial shutdown.
 if {$host_os eq "Darwin"} {
-    set builder [string trim [exec bash scripts/lib/find-builder.sh]]
-    set short_sha [string trim [exec git rev-parse --short=7 HEAD]]
-    set session "nix-builder-smoke-$short_sha"
-    set sock "/tmp/$session.tmux.sock"
-    catch {exec ssh -o BatchMode=yes -o ConnectTimeout=5 \
-        -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-        -o LogLevel=ERROR $builder \
-        "tmux -S $sock send-keys -t $session 'poweroff' Enter" 2>/dev/null}
+    # Best-effort graceful poweroff. The running guest advertises the
+    # builder's mDNS name and can transiently poison resolution, so
+    # find-builder may fail here -- that's fine: we skip the send-keys and
+    # fall through to the kill path below, where the helper reaps the
+    # detached guest on exit. A find-builder failure must not abort a
+    # smoke that already passed all its health checks.
+    if {![catch {exec bash scripts/lib/find-builder.sh} builder]} {
+        set builder [string trim $builder]
+        set short_sha [string trim [exec git rev-parse --short=7 HEAD]]
+        set session "nix-builder-smoke-$short_sha"
+        set sock "/tmp/$session.tmux.sock"
+        catch {exec ssh -o BatchMode=yes -o ConnectTimeout=5 \
+            -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+            -o LogLevel=ERROR $builder \
+            "tmux -S $sock send-keys -t $session 'poweroff' Enter" 2>/dev/null}
+    }
 } else {
     send_cmd "shutdown now"
 }
