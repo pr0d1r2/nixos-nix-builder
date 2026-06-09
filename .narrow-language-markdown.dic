@@ -32,6 +32,7 @@ adjusted
 admin
 advertise
 advertised
+advertisement
 advertiser
 advertises
 advocating
@@ -332,6 +333,7 @@ declaring
 dedicated
 default
 defaults
+deferred
 define
 defined
 defines
@@ -434,7 +436,6 @@ editors
 edits
 effect
 efi
-else
 embedded
 embeds
 empty
@@ -575,6 +576,8 @@ format
 formats
 formatted
 formatting
+formula
+formulas
 forwarding
 found
 fpat
@@ -703,8 +706,8 @@ implementations
 import
 imports
 improvements
-inactive
 inbound
+incl
 include
 including
 incompatible
@@ -723,6 +726,7 @@ injects
 inline
 input
 inputs
+inside
 install
 installation
 installer
@@ -891,6 +895,7 @@ matching
 matters
 max
 maximum
+maxstoregb
 may
 means
 mechanism
@@ -1050,6 +1055,7 @@ pass
 passed
 passes
 passive
+passthrough
 password
 past
 paste
@@ -1088,8 +1094,6 @@ poe
 point
 pointer
 points
-poison
-poisoned
 poisons
 policy
 port
@@ -1425,6 +1429,7 @@ subject
 submitting
 substituter
 substituters
+subtract
 succeeds
 success
 successful
@@ -1438,7 +1443,7 @@ supersedes
 supplies
 support
 supported
-suppressed
+suppression
 sure
 surfaces
 survive
@@ -1517,6 +1522,7 @@ topic
 topics
 toplevel
 total
+totalramgb
 traces
 track
 tracked
@@ -1553,6 +1559,7 @@ unavailable
 unblock
 unbounded
 unchanged
+unconditionally
 undebuggable
 under
 underlying
@@ -1603,6 +1610,8 @@ vendor
 ver
 verb
 verbs
+verified
+verifies
 verify
 version
 versioned
