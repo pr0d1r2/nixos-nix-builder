@@ -118,10 +118,15 @@ just reburn
 | `just build` | Build ISO (skips if SHA already built) |
 | `just rebuild` | Force rebuild ISO for current SHA |
 | `just smoke` | QEMU smoke test (builds first if needed) |
+| `just resmoke` | Force re-run QEMU smoke test |
 | `just boot` | Boot ISO in QEMU locally (Linux x86_64 only) |
 | `just boot-remote` | Boot ISO in QEMU on remote builder |
-| `just reburn` | Burn ISO to USB (interactive device picker) |
+| `just burn` | Build + smoke + burn to USB (skips done steps) |
+| `just burn-confirmed` | Full non-interactive burn pipeline |
+| `just reburn` | Burn any ISO to USB (interactive picker) |
 | `just reconfig` | Reconfigure all user preferences |
+| `just live` | Run health checks against live booted node |
+| `just poweroff` | Shut down live booted node |
 
 ## NixOS module map
 
@@ -143,8 +148,11 @@ graph TD
     subgraph Services
         builder.nix
         nix-serve.nix
+        nix-store-gc.nix
         qemu.nix
         qemu-nix-cache.nix
+        qemu-hostname.nix
+        qemu-9p-store.nix
     end
 
     subgraph Storage
@@ -154,13 +162,11 @@ graph TD
         overlay.nix
     end
 
-    subgraph Power
+    subgraph Power/Fixes
         power.nix
-    end
-
-    subgraph Fixes
         machine-id.nix
         activation-fixes.nix
+        usb-permissions.nix
     end
 ```
 
@@ -170,16 +176,23 @@ graph TD
 flake.nix                    # ISO builder + devShell
 modules/
   base.nix                   # Hostname, locale, headless config
-  hardware.nix               # Ryzen 3700X (no GPU)
+  boot.nix                   # Kernel params, GRUB text mode
+  hardware.nix               # CPU microcode, kernel, tmpfs
   ssh.nix                    # SSH server + baked authorized keys
-  avahi.nix                  # mDNS (nix-builder.local)
+  avahi.nix                  # mDNS (nix-builder.local + nix-serve.local)
   builder.nix                # Nix config, trusted-users, flakes
+  firewall.nix               # Firewall: :22 :5000 :5353
   nix-serve.nix              # Binary cache on :5000
+  nix-store-gc.nix           # Periodic nix store garbage collection
   qemu.nix                   # QEMU packages
   qemu-nix-cache.nix         # fw_cfg-based cache for guests
+  qemu-hostname.nix          # QEMU guest hostname override
+  qemu-9p-store.nix          # Host nix store via virtio-9p
   users.nix                  # builder + nixos users
+  usb-permissions.nix        # USB udev rules for burn
   power.nix                  # Disable sleep/suspend/hibernate
   machine-id.nix             # Stable machine-id
+  activation-fixes.nix       # Disable hashes activation script
   storage/
     nvme.nix                 # Mount largest NVMe ext4
     sata.nix                 # Mount largest SATA ext4
@@ -191,7 +204,13 @@ fragments/
   storage-mount-target.sh    # Shared mount + log
   storage-link.sh            # Tier preference resolver
   nix-store-overlay.sh       # Bind-mount nix store to disk
+  nix-store-overlay-stop.sh  # Overlay cleanup on stop
+  nix-store-gc.sh            # Garbage collection script
   nix-cache-qemu.sh          # QEMU guest cache discovery
+  avahi-alias-nix-serve.sh   # Publish nix-serve.local mDNS
+  qemu-hostname.sh           # QEMU hostname override
+  qemu-9p-store-mount.sh     # Mount host store via 9p
+  qemu-9p-store-unmount.sh   # Unmount host store
 scripts/
   build/                     # SHA-versioned ISO build
   test-boot/                 # QEMU smoke testing
@@ -274,8 +293,8 @@ quickly with store paths.
 
 ## Binary cache
 
-nix-serve runs on port 5000, serving the local nix store as an
-unsigned binary cache. QEMU guests auto-discover it via fw_cfg
+nix-serve runs on port 5000, serving the local nix store as a
+signed binary cache. QEMU guests auto-discover it via fw_cfg
 injection -- no hardcoded URLs in guest ISOs.
 
 ### QEMU guest cache discovery
@@ -302,7 +321,7 @@ The appliance ships with a locked-down configuration out of the box:
 - **Users:** `mutableUsers = false` -- no runtime user creation or password changes
 - **Nix:** `sandbox = true` -- all builds run in isolated sandboxes
 - **Credentials:** no secrets baked into the ISO -- the pendrive is stateless
-- **Boot:** no desktop environment, no GUI, headless serial console only
+- **Boot:** no desktop environment, no GUI, headless
 
 ## Environment variables
 
@@ -313,7 +332,7 @@ The appliance ships with a locked-down configuration out of the box:
 
 ## Hardware
 
-- **Target:** Ryzen 7 3700X, 32 GB RAM, NVMe + SATA storage
+- **Target:** any modern x86_64 host (tested: T440p 4c/16GB, Ryzen 3800X 8c/32GB)
 - **Dev host:** MacBook Air M4 (aarch64-darwin)
 - **USB:** Kingston DataTraveler Kyson 128 GB (USB 3.2 Gen 1)
 
