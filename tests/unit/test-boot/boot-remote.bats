@@ -17,3 +17,15 @@
 @test "does not upload an ISO to the builder" {
     run ! grep -q 'rsync.*\.iso' scripts/test-boot/boot-remote.sh
 }
+
+@test "boots QEMU via the tmux-detach helper" {
+    grep -q 'qemu-remote-tmux.sh' scripts/test-boot/boot-remote.sh
+}
+
+@test "does not run QEMU under a bare ssh -t" {
+    run ! grep -q 'ssh -t' scripts/test-boot/boot-remote.sh
+}
+
+@test "passes nix-serve to the helper for the guest cache" {
+    grep -q 'boot-run.sh" "nix-serve"' scripts/test-boot/boot-remote.sh
+}

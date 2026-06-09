@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Detach `just boot-remote` QEMU into a builder tmux session too (via qemu-remote-tmux), so a transient SSH drop no longer kills the boot guest mid-boot; nix-serve rides along for the guest cache
+
 - Add qemu-remote-tmux helper: detach remote smoke QEMU into a builder tmux session so it survives transient SSH drops (serial streamed back with reconnect)
 - Wire remote smoke onto the tmux-detach helper and power the guest off over SSH, ending the intermittent boot-time flake that forced re-runs
 - Keep built ISOs on the builder instead of downloading 1.7G to the Mac each build; smoke, burn, and boot-remote all read the ISO from the builder store (remote-first, stops the Mac disk filling up)
