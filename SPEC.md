@@ -2,13 +2,13 @@
 
 ## §G GOAL
 
-Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix builder appliance. SSH + nix-serve binary cache on :5000 + QEMU for ISO smoke testing. Stick stateless — nix store overlaid onto host's largest ext4 partition. Primary consumer: nixos-poe2.
+Bootable NixOS USB pendrive. Turns any modern x86_64 host into headless nix builder appliance. SSH + nix-serve binary cache on :5000 + QEMU for ISO smoke testing. Stick stateless — nix store overlaid onto host's largest ext4 partition. Primary consumer: nixos-poe2.
 
 ## §C CONSTRAINTS
 
 - C1: NixOS flake, minimal installer ISO base (`installation-cd-minimal.nix`), pinned `nixos-25.11`
 - C2: headless — no X11, no GPU driver, no desktop, no display manager
-- C3: target = any modern x86_64 host w/ enough resources (references: T440p low-end 4c/8t 16 GB | Ryzen 3700X mid-range 8c/16t 32 GB); microcode auto per CPU (C36) — superseded by C35
+- C3: target = any modern x86_64 host w/ enough resources (references: T440p low-end 4c/8t 16 GB | Ryzen 3800X mid-range 8c/16t 32 GB); microcode auto per CPU (C36) — superseded by C35
 - C4: storage tiers: NVMe > SATA, largest ext4 wins per tier, symlinked `/mnt/storage`
 - C4a: no USB storage — pendrive stateless, ⊥ game/build storage
 - C5: nix store overlay ! redirect tmpfs → disk — host RAM stays free for builds
@@ -44,7 +44,7 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 - C32: nix `build-dir` on `/mnt/storage` — large builds ⊥ exhaust the `/tmp` tmpfs
 - C33: `system.activationScripts.hashes` disabled — breaks w/ `mutableUsers=false` locked-down config
 - C34: firewall LAN-only: :5000 + :22 open to local network, ⊥ WAN exposure
-- C35: builder = any modern x86_64 host w/ enough resources — references T440p (low-end, Intel Haswell 4c/8t, 16 GB) | Ryzen 3700X (mid-range, 8c/16t, 32 GB); single `nix-builder.local` (one machine at a time, ⊥ both at once), consumers size to it (supersedes C3). External `nix.buildMachines` configs target the stable `nix-builder.local` unchanged
+- C35: builder = any modern x86_64 host w/ enough resources — references T440p (low-end, Intel Haswell 4c/8t, 16 GB) | Ryzen 3800X (mid-range, 8c/16t, 32 GB); single `nix-builder.local` (one machine at a time, ⊥ both at once), consumers size to it (supersedes C3). External `nix.buildMachines` configs target the stable `nix-builder.local` unchanged
 - C36: both CPU microcodes in initrd — `hardware.cpu.{intel,amd}.updateMicrocode` (redistributable firmware, NixOS handles it, ⊥ `allowUnfree`); kernel early-loader auto-applies the matching vendor (Intel | AMD), ⊥ AMD-only
 - C37: guest QEMU sized to builder by direct passthrough — `mem` = `memgb` (ceil of MemTotal to GB — matches the advertised laptop size, e.g. 15.57→16), `cpus` = nproc (all cores); store ⊥ a guest knob; ⊥ formulas, ⊥ hardcoded 16G/8 (KVM `-m` demand-paged, light guests never claim it all)
 - C38: builder tmpfs `/tmp` = NixOS default (50 % RAM) — remove the explicit `tmp.tmpfsSize` (was 16G, broke a 16 GB host); fits 16 GB & 32 GB alike
@@ -53,7 +53,7 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 - C41: a job whose CPU/RAM/DISK exceeds the builder's advertised capacity ! error loudly — ⊥ silent under-provision; no pre-filtering, just announce + block
 - C42: the capability advertiser is a persistent service (avahi-publish stays running to hold the mDNS record, like avahi-alias-nix-serve — ⊥ oneshot), runs unconditionally incl. inside QEMU guests (same ISO) — ⊥ suppression; correctness pinned by integration testing (smoke verifies the advertised TXT)
 - C43: only `nix-builder.local` advertises/answers resources — find-builder prefers it, falls to other candidates (poe2.local) only when it is unreachable; a non-`nix-builder.local` builder → skip the resource check & size the guest from qemu-cmd defaults
-- C44: `scperf` = single-core decompress throughput — stream a fixed, already-present compressed corpus (the kernel `.ko.xz` set, ~129 MB) to `/dev/null` with the in-closure `xz -dc -T1` (⊥ added pkg — `unsquashfs` is absent so ⊥ squashfs-tools; ⊥ baked fixture; ⊥ disk via `/dev/null`). Reuses real boot-decompression work; LZMA ≈ compiler-like (dict-match, pointer/branch/cache), no crypto/SIMD asymmetry; ⊥ gcc bloat. ~1-2 s after boot settles, `taskset`-pinned, measured once + cached at `/run/nix-builder-scperf`. Self-contained, ⊥ external table / hardcoded per-CPU numbers. Consumers scale timeouts (smoke/build/lefthook) by `baseline/scperf` — slower CPU → longer timeout
+- C44: `scperf` = single-core decompress throughput — stream a fixed, already-present compressed corpus (the kernel `.ko.xz` set, ~129 MB) to `/dev/null` with the in-closure `xz -dc -T1` (⊥ added pkg — `unsquashfs` is absent so ⊥ squashfs-tools; ⊥ baked fixture; ⊥ disk via `/dev/null`). Reuses real boot-decompression work; LZMA ≈ compiler-like (dict-match, pointer/branch/cache), no crypto/SIMD asymmetry; ⊥ gcc bloat. **Warm-then-time**: the `.ko.xz` sit inside the (32-threaded, USB-backed) squashfs, so an untimed read warms page-cache first, then only the decompress is timed — else USB/squashfs taints a single-core metric. ~5 s for the full ~706 MB corpus (or a fixed subset for ~1-2 s) after boot settles, `taskset`-pinned, measured once + cached at `/run/nix-builder-scperf`. Self-contained, ⊥ external table / hardcoded per-CPU numbers. Consumers scale timeouts (smoke/build/lefthook) by `baseline/scperf` — baseline = the Ryzen reference that consumer repos already build against (**3800X ≈ 141 MB/s single-core**, measured 2026-06-09); slower CPU → lower MB/s → longer timeout
 
 ## §I INTERFACES
 
@@ -117,7 +117,7 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 - V41: smoke/boot/burn serialized via SSH lock — acquire before long op (fail fast on contention), release in ensure block (success & failure); locked = unavailable. `build` & external daemon builds intentionally unlocked
 - V42: a job exceeding builder CPU/RAM/DISK → loud error — ⊥ silent failure / under-provision
 - V43: capability advertisement verified by smoke integration test — TXT `cores`/`memgb`/`scperf` present & correct in the booted guest
-- V44: `scperf` advertised + SSH-readable; consumers scale timeouts vs a baseline — ⊥ fixed timeouts on slow hardware
+- V44: `scperf` advertised + SSH-readable; consumers scale timeouts vs the baseline (Ryzen 3800X ≈ 141 MB/s, measured) — ⊥ fixed timeouts on slow hardware
 
 ## §T TASKS
 
@@ -125,7 +125,7 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 |----|-----|------|-------|
 | T1 | x | flake.nix: ISO builder + devShell w/ lefthook inputs | C1,C16 |
 | T2 | x | modules/base.nix: headless, hostname `nix-builder.local`, locale config | C2,C21,I.tty |
-| T3 | x | modules/hardware.nix: Ryzen 3700X, no GPU, latest kernel, tmpfs (superseded by T97 — any-host, both microcode, default tmpfs) | C3,C10 |
+| T3 | x | modules/hardware.nix: Ryzen 3800X, no GPU, latest kernel, tmpfs (superseded by T97 — any-host, both microcode, default tmpfs) | C3,C10 |
 | T4 | x | modules/users.nix: builder (1000) + nixos users, autologin | V13,V16,I.tty |
 | T5 | x | modules/ssh.nix: key-only auth, baked host key + authorized_keys | C8,V6,V9,I.ssh |
 | T6 | x | modules/avahi.nix: mDNS publish `nix-builder.local` | C9 |
@@ -238,7 +238,7 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 | T105 | | flake devShell: add `avahi` (avahi-browse) for Linux discovery/debug | C39 |
 | T106 | | agent/set/concepts/hardware.md: variable builder (T440p \| Ryzen), single `nix-builder.local`, SSH-query sizing, SSH lock | C35 |
 | T107 | | tests: bats coverage for builder-resources.sh, builder-lock.sh, avahi advertiser fragment | T98,T99,T102,V12 |
-| T108 | | fragment: boot-time single-core decompress bench — sorted `.ko.xz` set \| `xz -dc -T1` → `/dev/null`, after settle, `taskset` 1 core → `scperf` cached at `/run/nix-builder-scperf`; advertiser + SSH-query read it; ⊥ added pkg (no unsquashfs/squashfs-tools), ⊥ fixture, ⊥ disk, ⊥ crypto, ⊥ gcc bloat | C44 |
+| T108 | | fragment: boot-time single-core decompress bench — warm-then-time (untimed cache-warm read, THEN timed `xz -dc -T1` of the sorted `.ko.xz` set → `/dev/null`, ⊥ I/O taint), after settle, `taskset` 1 core → `scperf` (throughput) cached at `/run/nix-builder-scperf`; advertiser + SSH-query read it (default no-scaling if absent); ⊥ added pkg, ⊥ fixture, ⊥ disk, ⊥ crypto, ⊥ gcc bloat | C44 |
 | T109 | | consumers scale timeouts by `scperf` vs a baseline — smoke.exp, build, lefthook bracing timeouts | C44,V44 |
 | T110 | | scripts/lib/builder-unlock.sh + justfile `unlock`: force-clear a stale `/run/nix-builder.lock` (SIGKILL escape hatch) | C40 |
 

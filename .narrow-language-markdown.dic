@@ -943,6 +943,7 @@ message
 messages
 meta
 metal
+metric
 microcode
 microcodes
 mid
@@ -1079,6 +1080,7 @@ owner
 ownership
 package
 packages
+page
 paged
 pair
 paragraphs
@@ -1277,6 +1279,7 @@ repo
 report
 reporting
 reports
+repos
 repository
 represents
 reproduce
@@ -1328,6 +1331,7 @@ satisfy
 saturate
 says
 scale
+scaling
 scan
 scans
 scenarios
@@ -1402,6 +1406,7 @@ similar
 simple
 simply
 single
+sit
 size
 sized
 sizing
@@ -1481,6 +1486,7 @@ subdirectories
 subgraph
 subject
 submitting
+subset
 substituter
 substituters
 subtract
@@ -1516,6 +1522,8 @@ table
 tables
 tag
 tags
+taint
+taints
 take
 taplo
 target
@@ -1548,6 +1556,7 @@ think
 third
 this
 those
+threaded
 threads
 three
 throat
@@ -1557,6 +1566,7 @@ tier
 tiers
 tight
 time
+timed
 timeout
 timeouts
 timer
@@ -1634,6 +1644,7 @@ unreleased
 unsigned
 unsquashfs
 unstable
+untimed
 unused
 unwelcome
 update
@@ -1690,6 +1701,8 @@ waiting
 wan
 want
 wants
+warm
+warms
 was
 watch
 watched
