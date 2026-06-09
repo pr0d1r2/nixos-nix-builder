@@ -14,16 +14,23 @@ Bootable NixOS USB -- purpose-built nix builder appliance. No desktop, headless.
 flake.nix                    # ISO builder + devShell
 modules/
   base.nix                   # Hostname, locale, headless
-  hardware.nix               # Ryzen 3700X (no GPU)
+  boot.nix                   # Kernel params, GRUB text mode
+  hardware.nix               # CPU microcode, kernel, tmpfs
   ssh.nix                    # SSH server + baked keys
   avahi.nix                  # mDNS discovery
   builder.nix                # Nix config, trusted-users
+  firewall.nix               # Firewall: :22 :5000 :5353
   nix-serve.nix              # Binary cache on :5000
+  nix-store-gc.nix           # Periodic nix store GC
   qemu.nix                   # QEMU packages
   qemu-nix-cache.nix         # fw_cfg cache for guests
+  qemu-hostname.nix          # QEMU guest hostname override
+  qemu-9p-store.nix          # Host store via virtio-9p
   users.nix                  # builder + nixos users
+  usb-permissions.nix        # USB udev rules for burn
   power.nix                  # Disable sleep/suspend/hibernate
   machine-id.nix             # Stable machine-id
+  activation-fixes.nix       # Disable hashes script
   storage/
     nvme.nix                 # Mount largest NVMe ext4
     sata.nix                 # Mount largest SATA ext4
