@@ -227,14 +227,14 @@ Bootable NixOS USB pendrive. Turns any modern x86_64 host into headless nix buil
 | T95 | | CI: dedicated x86_64-linux builder accessible from GitHub Actions | C11,C16 |
 | T96 | x | modules/nix-store-gc.nix: periodic systemd timer + service, GC when disk >80%, delete-older-than 1d | V36 |
 |     |   | **-- variable builder + resource sizing (2026-06-09) --** | |
-| T97 | | modules/hardware.nix: enable both intel+amd microcode (⊥ AMD-only); remove explicit `tmp.tmpfsSize` (inherit 50% default); verify T440p NIC `e1000e` + AHCI already in ISO (⊥ redundant initrd edit) | C36,C38,V38,V39 |
+| T97 | x | modules/hardware.nix: enable both intel+amd microcode (⊥ AMD-only); remove explicit `tmp.tmpfsSize` (inherit 50% default); verify T440p NIC `e1000e` + AHCI already in ISO (⊥ redundant initrd edit) | C36,C38,V38,V39 |
 | T98 | | scripts/lib/builder-resources.sh: SSH-query `nproc` + `MemTotal` → `CORES`/`MEMGB` (ceil MemTotal→GB) — only for `nix-builder.local`; portable macOS+Linux | C39,C43,V40 |
 | T99 | | modules/avahi-builder-capability.nix + fragment: PERSISTENT service (avahi-publish stays running, like avahi-alias-nix-serve — ⊥ oneshot) advertising `_nixbuilder._tcp` TXT (`cores`=nproc, `memgb`=ceil MemTotal→GB, `scperf`=table lookup) — static values, ⊥ disk | C39,C42,V40 |
 | T100 | | integration test (smoke health-checks.tcl): ssh guest → `avahi-browse -rpt _nixbuilder._tcp`, assert TXT `cores`/`memgb`/`scperf` present & well-formed | C42,V43 |
 | T101 | | sizing (direct, no formula): mem=memgb (ceil), cpus=nproc → export `QEMU_MEMORY`/`QEMU_SMP`; smoke-remote.sh + boot-remote.sh wire it before qemu-cmd — only when builder is `nix-builder.local`, else qemu-cmd defaults | C37,C43,V37 |
 | T102 | | scripts/lib/builder-lock.sh: acquire (fail fast on contention) before the long op, release in an ensure/trap block (success & failure); smoke/boot/burn wrap their op (⊥ build; external daemon builds intentionally unlocked) | C40,V41 |
 | T103 | | (deferred — ⊥ on this build) requirements check: job errors loudly when builder CPU/RAM/DISK < stated need | C41,V42 |
-| T104 | | health-checks.tcl: microcode check vendor-agnostic (Intel\|AMD); drop/relax tmpfs `=16G` assertion (now 50% default, T84/T85) | V38,V39 |
+| T104 | x | health-checks.tcl: microcode check vendor-agnostic (Intel\|AMD); drop/relax tmpfs `=16G` assertion (now 50% default, T84/T85) | V38,V39 |
 | T105 | | flake devShell: add `avahi` (avahi-browse) for Linux discovery/debug | C39 |
 | T106 | | agent/set/concepts/hardware.md: variable builder (T440p \| Ryzen), single `nix-builder.local`, SSH-query sizing, SSH lock | C35 |
 | T107 | | tests: bats coverage for builder-resources.sh, builder-lock.sh, avahi advertiser fragment | T98,T99,T102,V12 |
