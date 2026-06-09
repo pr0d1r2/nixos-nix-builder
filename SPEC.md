@@ -53,7 +53,7 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 - C41: a job whose CPU/RAM/DISK exceeds the builder's advertised capacity ! error loudly — ⊥ silent under-provision; no pre-filtering, just announce + block
 - C42: the capability advertiser is a persistent service (avahi-publish stays running to hold the mDNS record, like avahi-alias-nix-serve — ⊥ oneshot), runs unconditionally incl. inside QEMU guests (same ISO) — ⊥ suppression; correctness pinned by integration testing (smoke verifies the advertised TXT)
 - C43: only `nix-builder.local` advertises/answers resources — find-builder prefers it, falls to other candidates (poe2.local) only when it is unreachable; a non-`nix-builder.local` builder → skip the resource check & size the guest from qemu-cmd defaults
-- C44: `scperf` = single-core perf measured by a boot-time micro-benchmark — a fixed **integer/general-compute** workload on 1 core (e.g. `sysbench cpu` prime sieve, or a fixed compress); ⊥ crypto (sha256/aes hit asymmetric SHA-NI/AES-NI and skew cross-arch, ⊥ compile-representative). ~1-2 s after boot settles, `taskset`-pinned, measured once + cached. Real (clock+IPC+arch), self-contained, ⊥ external table / hardcoded per-CPU numbers. Consumers scale timeouts (smoke/build/lefthook) by `baseline/scperf` — slower CPU → longer timeout
+- C44: `scperf` = single-core decompress throughput — stream a fixed, already-present compressed corpus (the kernel `.ko.xz` set, ~129 MB) to `/dev/null` with the in-closure `xz -dc -T1` (⊥ added pkg — `unsquashfs` is absent so ⊥ squashfs-tools; ⊥ baked fixture; ⊥ disk via `/dev/null`). Reuses real boot-decompression work; LZMA ≈ compiler-like (dict-match, pointer/branch/cache), no crypto/SIMD asymmetry; ⊥ gcc bloat. ~1-2 s after boot settles, `taskset`-pinned, measured once + cached at `/run/nix-builder-scperf`. Self-contained, ⊥ external table / hardcoded per-CPU numbers. Consumers scale timeouts (smoke/build/lefthook) by `baseline/scperf` — slower CPU → longer timeout
 
 ## §I INTERFACES
 
@@ -238,7 +238,7 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 | T105 | | flake devShell: add `avahi` (avahi-browse) for Linux discovery/debug | C39 |
 | T106 | | agent/set/concepts/hardware.md: variable builder (T440p \| Ryzen), single `nix-builder.local`, SSH-query sizing, SSH lock | C35 |
 | T107 | | tests: bats coverage for builder-resources.sh, builder-lock.sh, avahi advertiser fragment | T98,T99,T102,V12 |
-| T108 | | fragment: boot-time single-core micro-bench — fixed integer workload (`sysbench cpu` prime \| fixed compress; ⊥ crypto, instruction asymmetry), after settle, `taskset` 1 core → `scperf`, measured once + cached; advertiser + SSH-query expose it; ⊥ CPU-model table / external numbers | C44 |
+| T108 | | fragment: boot-time single-core decompress bench — sorted `.ko.xz` set \| `xz -dc -T1` → `/dev/null`, after settle, `taskset` 1 core → `scperf` cached at `/run/nix-builder-scperf`; advertiser + SSH-query read it; ⊥ added pkg (no unsquashfs/squashfs-tools), ⊥ fixture, ⊥ disk, ⊥ crypto, ⊥ gcc bloat | C44 |
 | T109 | | consumers scale timeouts by `scperf` vs a baseline — smoke.exp, build, lefthook bracing timeouts | C44,V44 |
 | T110 | | scripts/lib/builder-unlock.sh + justfile `unlock`: force-clear a stale `/run/nix-builder.lock` (SIGKILL escape hatch) | C40 |
 
