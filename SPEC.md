@@ -46,10 +46,10 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 - C34: firewall LAN-only: :5000 + :22 open to local network, ⊥ WAN exposure
 - C35: builder hardware variable — T440p (Intel Haswell 4c/8t, 16 GB) default | Ryzen 3700X (8c/16t, 32 GB); single `nix-builder.local` (whichever machine boots the builder USB — one at a time, ⊥ both at once), consumers size to it (supersedes C3 fixed-Ryzen). External `nix.buildMachines` configs target the stable `nix-builder.local` unchanged
 - C36: both CPU microcodes in initrd — `hardware.cpu.{intel,amd}.updateMicrocode`; kernel early-loader auto-applies the matching vendor (Intel on T440p | AMD on Ryzen), ⊥ AMD-only
-- C37: guest QEMU sized to builder by direct passthrough — `mem` = total RAM (GB), `cpus` = nproc (all cores), `store` = max ext4 (GB); ⊥ formulas, ⊥ hardcoded 16G/8 (KVM `-m` is demand-paged, light guests never claim it all)
+- C37: guest QEMU sized to builder by direct passthrough — `mem` = `memgb` (ceil of MemTotal to GB — matches the advertised laptop size, e.g. 15.57→16), `cpus` = nproc (all cores); store ⊥ a guest knob; ⊥ formulas, ⊥ hardcoded 16G/8 (KVM `-m` demand-paged, light guests never claim it all)
 - C38: builder tmpfs `/tmp` = NixOS default (50 % RAM) — remove the explicit `tmp.tmpfsSize` (was 16G, broke a 16 GB host); fits 16 GB & 32 GB alike
-- C39: builder advertises capacity over avahi — `_nixbuilder._tcp` TXT `cores`/`memmb`/`storemaxmb` (total `/mnt/storage` ext4 tier = max free after GC, 0 if no disk; static, set once at boot). Consumers read capacity via SSH-query (resolve `nix-builder.local` natively, `ssh nproc`/`df`) — portable; `avahi-browse` is Linux-only (needs avahi-daemon, ⊥ on macOS), devShell-provided for Linux/debug
-- C40: builder access serialized via an SSH-reachable lock (`flock` on `/run/nix-builder.lock`) — consumer acquires before use, releases after; locked = busy (e.g. Ryzen claimed for GPU → ⊥ available as builder)
+- C39: builder advertises capacity over avahi — `_nixbuilder._tcp` TXT `cores` + `memgb` only (static, set once at boot); ⊥ disk (fluctuates / misleading). Consumers read capacity via SSH-query (resolve `nix-builder.local` natively, `ssh nproc`/`MemTotal`) — portable; `avahi-browse` provided in the devShell on all platforms (used by the integration test, which browses on the Linux guest; macOS has no avahi-daemon for a local browse)
+- C40: builder access serialized via an SSH-reachable lock — acquire **before** the main long op, **fail fast on contention** (⊥ wait), release in an **ensure block** so it clears on both success & failure; locked = busy (e.g. Ryzen claimed for GPU → ⊥ available as builder)
 - C41: a job whose CPU/RAM/DISK exceeds the builder's advertised capacity ! error loudly — ⊥ silent under-provision; no pre-filtering, just announce + block
 - C42: the capability advertiser runs unconditionally, incl. inside QEMU guests (same ISO) — ⊥ suppression; correctness is pinned by integration testing (smoke verifies the advertised TXT)
 
@@ -108,13 +108,13 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 - V34: activation hashes script disabled — ⊥ ERR trap on locked-down user provisioning
 - V35: QEMU shares host nix store via virtio-9p — guest reads host's store paths w/o rw overlay writes
 - V36: nix store GC runs daily at 03:00 UTC, triggers when disk usage >80%, deletes roots older than 1 day — keeps 20% free for builds
-- V37: guest mem = totalramgb, cpus = nproc, store = maxstoregb — direct from builder specs, ⊥ reserve/subtract; Ryzen → ~2× the guest of T440p
+- V37: guest mem = memgb (ceil MemTotal→GB), cpus = nproc — direct from builder specs, ⊥ reserve/subtract; Ryzen → ~2× the guest of T440p
 - V38: tmpfs `/tmp` = 50 % RAM (NixOS default, no explicit override) — fits 16 GB & 32 GB
 - V39: microcode auto-loaded for the running CPU (Intel on T440p | AMD on Ryzen) — both update paths in initrd, kernel picks the match
-- V40: builder capacity (`cores`/`memmb`/`storemaxmb`) advertised over avahi + readable via SSH-query — ⊥ hardcoded per-host constants
-- V41: builder access serialized via SSH `flock` lock — ⊥ concurrent conflicting use; locked = unavailable
+- V40: builder capacity (`cores`/`memgb`) advertised over avahi + readable via SSH-query — ⊥ disk, ⊥ hardcoded per-host constants
+- V41: builder access serialized via SSH lock — acquire before long op (fail fast on contention), release in ensure block (success & failure); locked = unavailable
 - V42: a job exceeding builder CPU/RAM/DISK → loud error — ⊥ silent failure / under-provision
-- V43: capability advertisement verified by smoke integration test — TXT `cores`/`memmb`/`storemaxmb` present & correct in the booted guest
+- V43: capability advertisement verified by smoke integration test — TXT `cores`/`memgb` present & correct in the booted guest
 
 ## §T TASKS
 
@@ -224,12 +224,12 @@ Bootable NixOS USB pendrive. Turns any Ryzen x86_64 host into headless nix build
 | T95 | | CI: dedicated x86_64-linux builder accessible from GitHub Actions | C11,C16 |
 | T96 | x | modules/nix-store-gc.nix: periodic systemd timer + service, GC when disk >80%, delete-older-than 1d | V36 |
 |     |   | **-- variable builder + resource sizing (2026-06-09) --** | |
-| T97 | | modules/hardware.nix: enable both intel+amd microcode (⊥ AMD-only); remove explicit `tmp.tmpfsSize` (inherit 50% default); ensure T440p NIC `e1000e` + AHCI present in ISO | C36,C38,V38,V39 |
-| T98 | | scripts/lib/builder-resources.sh: SSH-query `nproc` + `MemTotal` + `df /mnt/storage` → `CORES`/`RAMGB`/`STOREGB` (resolves `nix-builder.local`, portable macOS+Linux) | C39,V40 |
-| T99 | | modules/avahi-builder-capability.nix + fragment: advertise `_nixbuilder._tcp` TXT (`cores`=nproc, `memmb`=MemTotal, `storemaxmb`=`df` total of `/mnt/storage`, 0 if no disk) at boot — static | C39,V40 |
-| T100 | | integration test (smoke health-checks.tcl): verify the avahi capability TXT (`cores`/`memmb`/`storemaxmb`) advertised in the booted guest | C42,V43 |
-| T101 | | sizing (direct, no formula): mem=totalramgb, cpus=nproc, store=maxstoregb → export `QEMU_MEMORY`/`QEMU_SMP`; smoke-remote.sh + boot-remote.sh wire it before qemu-cmd | C37,V37 |
-| T102 | | scripts/lib/builder-lock.sh: acquire/release SSH `flock /run/nix-builder.lock`; consumers (build/smoke/boot/burn) lock before use, release after | C40,V41 |
+| T97 | | modules/hardware.nix: enable both intel+amd microcode (⊥ AMD-only); remove explicit `tmp.tmpfsSize` (inherit 50% default); verify T440p NIC `e1000e` + AHCI already in ISO (⊥ redundant initrd edit) | C36,C38,V38,V39 |
+| T98 | | scripts/lib/builder-resources.sh: SSH-query `nproc` + `MemTotal` → `CORES`/`MEMGB` (ceil MemTotal→GB; resolves `nix-builder.local`, portable macOS+Linux) | C39,V40 |
+| T99 | | modules/avahi-builder-capability.nix + fragment: advertise `_nixbuilder._tcp` TXT (`cores`=nproc, `memgb`=ceil MemTotal→GB) at boot — static, ⊥ disk; follow the avahi-alias-nix-serve service pattern | C39,V40 |
+| T100 | | integration test (smoke health-checks.tcl): ssh guest → `avahi-browse -rpt _nixbuilder._tcp`, assert TXT `cores`/`memgb` present & well-formed | C42,V43 |
+| T101 | | sizing (direct, no formula): mem=memgb (ceil), cpus=nproc → export `QEMU_MEMORY`/`QEMU_SMP`; smoke-remote.sh + boot-remote.sh wire it before qemu-cmd | C37,V37 |
+| T102 | | scripts/lib/builder-lock.sh: acquire (fail fast on contention) before the long op, release in an ensure/trap block (success & failure); consumers (build/smoke/boot/burn) wrap their op | C40,V41 |
 | T103 | | (deferred — ⊥ on this build) requirements check: job errors loudly when builder CPU/RAM/DISK < stated need | C41,V42 |
 | T104 | | health-checks.tcl: microcode check vendor-agnostic (Intel\|AMD); drop/relax tmpfs `=16G` assertion (now 50% default, T84/T85) | V38,V39 |
 | T105 | | flake devShell: add `avahi` (avahi-browse) for Linux discovery/debug | C39 |
