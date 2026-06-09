@@ -29,16 +29,21 @@ adds
 adjusted
 admin
 advertise
+advertised
+advertisement
+advertiser
 advocating
 after
 against
 agent
 agentic
 aggregator
+agnostic
 agree
 aim
 air
 alias
+alike
 all
 allocate
 allocated
@@ -74,8 +79,10 @@ args
 arm
 around
 aspect
+assertion
 asserts
 assigned
+assumptions
 attached
 attaches
 attempt
@@ -114,6 +121,7 @@ behavioral
 benchmark
 best
 big
+biggest
 bin
 binary
 bind
@@ -141,6 +149,8 @@ breaks
 bridges
 briefly
 broken
+browse
+browses
 browsing
 bug
 bugs
@@ -165,8 +175,10 @@ call
 calling
 calls
 can
+candidate
 cannot
 capabilities
+capability
 capacity
 captures
 case
@@ -188,6 +200,7 @@ checks
 chmod
 chown
 chowns
+churns
 cites
 clarity
 claude
@@ -261,6 +274,7 @@ console
 consoleblank
 constraints
 consumer
+consumers
 consuming
 containing
 contains
@@ -283,6 +297,7 @@ coverage
 covered
 covering
 cpu
+cpus
 create
 created
 creates
@@ -412,6 +427,8 @@ editors
 edits
 effect
 efi
+either
+else
 embedded
 embeds
 empty
@@ -474,6 +491,7 @@ explicitly
 exploration
 exploring
 exponential
+export
 exposure
 ext
 extension
@@ -531,6 +549,8 @@ flags
 flake
 flakes
 flat
+flight
+floor
 flow
 flowchart
 flush
@@ -552,6 +572,7 @@ formatting
 forwarding
 found
 fpat
+fragment
 fragments
 frame
 framing
@@ -632,10 +653,12 @@ harmful
 has
 hash
 hashes
+haswell
 have
 head
 heading
 headless
+headroom
 health
 healthcheck
 hello
@@ -644,6 +667,7 @@ helper
 hibernate
 hidden
 hides
+highest
 history
 holding
 holds
@@ -675,6 +699,7 @@ implementations
 import
 imports
 improvements
+inactive
 inbound
 include
 including
@@ -745,6 +770,7 @@ justfile
 keep
 keeping
 keeps
+kept
 kernel
 key
 keyboard
@@ -808,6 +834,7 @@ lists
 live
 lives
 loaded
+loader
 loads
 local
 locale
@@ -860,6 +887,8 @@ maximum
 may
 means
 mechanism
+mem
+memmb
 memory
 mention
 menu
@@ -869,6 +898,7 @@ messages
 meta
 metal
 microcode
+microcodes
 mid
 migrate
 mildest
@@ -925,6 +955,7 @@ new
 next
 nextfile
 nix
+nixbuilder
 nixfmt
 nixos
 nixpkgs
@@ -940,6 +971,7 @@ notes
 nothing
 noting
 noun
+nproc
 number
 numeric
 numerically
@@ -1028,6 +1060,7 @@ personal
 philosophy
 picker
 picking
+picks
 piece
 pin
 ping
@@ -1044,6 +1077,8 @@ poe
 point
 pointer
 points
+poison
+poisoned
 poisons
 policy
 port
@@ -1059,6 +1094,7 @@ precision
 prefer
 preference
 preferences
+prefers
 prefix
 prep
 prepend
@@ -1097,6 +1133,7 @@ provides
 provisioning
 proxy
 publish
+publishes
 pull
 punishable
 purpose
@@ -1105,6 +1142,7 @@ pushes
 put
 qemu
 quality
+query
 quick
 quickly
 quite
@@ -1146,6 +1184,7 @@ refactors
 reference
 referenced
 references
+refines
 reflect
 reflective
 refusals
@@ -1190,6 +1229,8 @@ resolution
 resolve
 resolver
 resolves
+resource
+resources
 rest
 restart
 restrict
@@ -1239,6 +1280,7 @@ see
 segment
 select
 selection
+selects
 self
 semantic
 semble
@@ -1290,6 +1332,8 @@ simply
 single
 size
 sized
+sizes
+sizing
 skill
 skills
 skip
@@ -1335,6 +1379,7 @@ starts
 stat
 state
 stateless
+static
 statix
 stay
 stays
@@ -1347,6 +1392,7 @@ stops
 storage
 store
 stored
+storemaxmb
 streamed
 streamline
 streamlined
@@ -1372,9 +1418,11 @@ suggestions
 sum
 summary
 superseded
+supersedes
 supplies
 support
 supported
+suppressed
 sure
 surfaces
 survive
@@ -1533,6 +1581,7 @@ variable
 variables
 variants
 vars
+vendor
 ver
 verb
 verbs
@@ -1555,6 +1604,7 @@ waiting
 wan
 want
 wants
+was
 watch
 watched
 way
@@ -1567,6 +1617,7 @@ when
 whenever
 where
 which
+whichever
 while
 who
 whole
@@ -1603,6 +1654,7 @@ wrong
 xargs
 yaml
 yamllint
+yields
 you
 your
 zero
