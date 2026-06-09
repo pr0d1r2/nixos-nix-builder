@@ -34,6 +34,7 @@ advertised
 advertisement
 advertiser
 advertises
+advertising
 advocating
 after
 against
@@ -309,6 +310,7 @@ covered
 covering
 covers
 cpu
+cpuinfo
 cpus
 create
 created
@@ -366,6 +368,7 @@ despite
 destructive
 detach
 details
+detect
 detected
 detection
 detects
@@ -452,6 +455,7 @@ end
 ending
 enforcement
 enforces
+enough
 ensure
 enter
 entering
@@ -471,6 +475,7 @@ equivalents
 err
 error
 errors
+escape
 etc
 ethernet
 eval
@@ -508,6 +513,7 @@ exploration
 exploring
 exponential
 export
+expose
 exposure
 ext
 extension
@@ -572,7 +578,6 @@ flush
 flushcache
 focus
 focused
-follow
 follows
 foo
 for
@@ -658,6 +663,7 @@ guidance
 guidelines
 hand
 handler
+handles
 hang
 happen
 happened
@@ -673,6 +679,7 @@ has
 hash
 hashes
 haswell
+hatch
 have
 head
 heading
@@ -686,6 +693,7 @@ hibernate
 hidden
 hides
 history
+hold
 holding
 holds
 honor
@@ -722,6 +730,7 @@ include
 including
 incompatible
 independent
+index
 individual
 infrastructure
 inherit
@@ -874,9 +883,11 @@ long
 longer
 look
 looking
+lookup
 losetup
 loud
 loudly
+low
 lower
 lowercase
 mac
@@ -940,6 +951,7 @@ mod
 mode
 model
 models
+modern
 modularity
 modularize
 modularized
@@ -993,6 +1005,7 @@ noise
 nomodeset
 non
 nonexistent
+normal
 not
 notes
 nothing
@@ -1013,6 +1026,7 @@ older
 omitting
 once
 one
+oneshot
 oneshots
 only
 onto
@@ -1079,6 +1093,7 @@ patterns
 pci
 pendrive
 per
+perf
 performance
 periodic
 perl
@@ -1142,6 +1157,7 @@ prints
 private
 probability
 problem
+proc
 proceed
 processes
 produce
@@ -1179,6 +1195,7 @@ quite
 ram
 ramdisk
 ramonly
+range
 rather
 raw
 reach
@@ -1207,8 +1224,11 @@ reconfig
 reconfigure
 reconnect
 reconnecting
+record
+recorded
 red
 redirect
+redistributable
 reduces
 redundant
 refactors
@@ -1217,6 +1237,7 @@ referenced
 references
 reflect
 reflective
+refs
 refusals
 refuse
 refused
@@ -1295,12 +1316,15 @@ sata
 satisfy
 saturate
 says
+scale
 scan
 scans
 scenarios
 schedule
 scheme
 scope
+score
+scperf
 script
 scripts
 search
@@ -1355,6 +1379,7 @@ shown
 shows
 shutdown
 siblings
+sigkill
 signed
 signing
 signs
@@ -1374,6 +1399,8 @@ skipped
 skips
 sleep
 slirp
+slow
+slower
 slurs
 small
 smaller
@@ -1506,6 +1533,7 @@ think
 third
 this
 those
+thread
 threads
 three
 throat
@@ -1577,12 +1605,14 @@ under
 underlying
 unfamiliar
 unfiltered
+unfree
 unicode
 unique
 unit
 units
 unix
 unknown
+unlock
 unlocked
 unreachable
 unreleased
@@ -1592,7 +1622,6 @@ unused
 unwelcome
 update
 updated
-updates
 updating
 upload
 upper
@@ -1615,6 +1644,7 @@ validated
 validates
 validation
 value
+values
 variable
 variables
 variants
@@ -1658,7 +1688,6 @@ when
 whenever
 where
 which
-whichever
 while
 who
 whole
