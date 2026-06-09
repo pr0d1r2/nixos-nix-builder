@@ -59,6 +59,7 @@ basename
 bash
 batch
 bats
+because
 before
 begin
 below
@@ -67,6 +68,7 @@ bigger
 bin
 binary
 bind
+binding
 block
 blocker
 boot
@@ -314,19 +316,20 @@ forever
 format
 formatted
 forward
-forwarded
 forwarding
 forwards
 found
 fragment
 fragments
 free
+frees
 fresh
 from
 fstype
 full
 fullblock
 fully
+fuser
 garbage
 gate
 general
@@ -357,6 +360,7 @@ has
 hash
 head
 health
+held
 helper
 here
 hold
@@ -444,6 +448,7 @@ link
 lint
 linux
 list
+literal
 live
 lives
 lno
@@ -452,6 +457,8 @@ local
 locale
 localhost
 locally
+locates
+locating
 log
 logfile
 loglevel
@@ -474,6 +481,7 @@ mapfile
 mark
 marked
 marker
+match
 matches
 max
 maxdepth
@@ -586,6 +594,7 @@ phase
 physical
 pick
 picks
+pid
 ping
 pins
 pipe
@@ -613,6 +622,7 @@ previously
 print
 printf
 prints
+prior
 priority
 proc
 proceed
@@ -684,15 +694,18 @@ retries
 retry
 retrying
 return
+returning
 returns
 reusing
 rev
+rides
 right
 rmdir
 root
 roots
 rsa
 run
+runner
 running
 runs
 safe
@@ -749,6 +762,7 @@ sigterm
 silently
 simulate
 single
+sits
 size
 skill
 skip
@@ -774,6 +788,7 @@ stages
 staging
 stale
 start
+starts
 status
 stay
 stays
@@ -805,6 +820,7 @@ sum
 surface
 survives
 symlink
+synced
 syncing
 system
 systemctl
@@ -922,6 +938,7 @@ would
 wrap
 write
 writes
+written
 wrong
 wrote
 yes
