@@ -67,6 +67,7 @@ analysis
 and
 announce
 anodyne
+answers
 anti
 any
 anything
@@ -180,6 +181,7 @@ call
 calling
 calls
 can
+candidates
 cannot
 capabilities
 capability
@@ -305,6 +307,7 @@ correctness
 coverage
 covered
 covering
+covers
 cpu
 cpus
 create
@@ -439,6 +442,7 @@ editors
 edits
 effect
 efi
+else
 embedded
 embeds
 empty
@@ -482,6 +486,7 @@ exceeds
 except
 exclude
 excluded
+exclusivity
 exec
 executable
 execution
@@ -743,6 +748,7 @@ integer
 integration
 intel
 intent
+intentionally
 interact
 interactive
 interest
@@ -1117,6 +1123,7 @@ precision
 prefer
 preference
 preferences
+prefers
 prefix
 prep
 prepend
@@ -1317,6 +1324,7 @@ sequence
 sequences
 serial
 serialized
+serializes
 serve
 server
 serves
@@ -1575,6 +1583,7 @@ unit
 units
 unix
 unknown
+unlocked
 unreachable
 unreleased
 unsigned
