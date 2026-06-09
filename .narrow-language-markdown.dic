@@ -11,6 +11,8 @@ access
 accessible
 accumulated
 accurate
+acquire
+acquires
 across
 act
 action
@@ -30,8 +32,8 @@ adjusted
 admin
 advertise
 advertised
-advertisement
 advertiser
+advertises
 advocating
 after
 against
@@ -40,6 +42,7 @@ agentic
 aggregator
 agnostic
 agree
+ahci
 aim
 air
 alias
@@ -62,6 +65,7 @@ amd
 amendments
 analysis
 and
+announce
 anodyne
 anti
 any
@@ -82,7 +86,6 @@ aspect
 assertion
 asserts
 assigned
-assumptions
 attached
 attaches
 attempt
@@ -121,7 +124,6 @@ behavioral
 benchmark
 best
 big
-biggest
 bin
 binary
 bind
@@ -148,9 +150,9 @@ branch
 breaks
 bridges
 briefly
+broke
 broken
 browse
-browses
 browsing
 bug
 bugs
@@ -163,6 +165,7 @@ burn
 burned
 burning
 burns
+busy
 but
 button
 bypasses
@@ -175,7 +178,6 @@ call
 calling
 calls
 can
-candidate
 cannot
 capabilities
 capability
@@ -200,8 +202,9 @@ checks
 chmod
 chown
 chowns
-churns
 cites
+claim
+claimed
 clarity
 claude
 clean
@@ -265,6 +268,7 @@ confirm
 confirmation
 confirmed
 conflict
+conflicting
 connect
 connected
 connection
@@ -272,6 +276,7 @@ connectivity
 consider
 console
 consoleblank
+constants
 constraints
 consumer
 consumers
@@ -317,6 +322,7 @@ data
 date
 day
 deadnix
+debug
 debugging
 decision
 decisions
@@ -334,6 +340,7 @@ delete
 deletes
 delimiter
 delivers
+demand
 demonstrate
 deny
 depend
@@ -427,7 +434,6 @@ editors
 edits
 effect
 efi
-either
 else
 embedded
 embeds
@@ -467,6 +473,7 @@ everything
 exact
 example
 examples
+exceeding
 exceeds
 except
 exclude
@@ -549,8 +556,7 @@ flags
 flake
 flakes
 flat
-flight
-floor
+flock
 flow
 flowchart
 flush
@@ -658,7 +664,6 @@ have
 head
 heading
 headless
-headroom
 health
 healthcheck
 hello
@@ -667,7 +672,6 @@ helper
 hibernate
 hidden
 hides
-highest
 history
 holding
 holds
@@ -707,6 +711,7 @@ incompatible
 independent
 individual
 infrastructure
+inherit
 ini
 init
 initial
@@ -770,7 +775,6 @@ justfile
 keep
 keeping
 keeps
-kept
 kernel
 key
 keyboard
@@ -817,6 +821,7 @@ library
 license
 licensed
 life
+light
 like
 likely
 limited
@@ -853,6 +858,8 @@ longer
 look
 looking
 losetup
+loud
+loudly
 lower
 lowercase
 mac
@@ -940,6 +947,7 @@ naming
 narrow
 narrower
 native
+natively
 natural
 navigateable
 necessary
@@ -954,6 +962,7 @@ never
 new
 next
 nextfile
+nic
 nix
 nixbuilder
 nixfmt
@@ -971,6 +980,7 @@ notes
 nothing
 noting
 noun
+now
 nproc
 number
 numeric
@@ -1024,6 +1034,7 @@ owner
 ownership
 package
 packages
+paged
 pair
 paragraphs
 parallel
@@ -1094,7 +1105,6 @@ precision
 prefer
 preference
 preferences
-prefers
 prefix
 prep
 prepend
@@ -1129,11 +1139,12 @@ prompt
 prompts
 propagate
 protocol
+provided
 provides
+provision
 provisioning
 proxy
 publish
-publishes
 pull
 punishable
 purpose
@@ -1148,6 +1159,7 @@ quickly
 quite
 ram
 ramdisk
+ramgb
 ramonly
 rather
 raw
@@ -1155,6 +1167,7 @@ reach
 reachability
 reachable
 read
+readable
 reader
 reading
 readlink
@@ -1184,7 +1197,6 @@ refactors
 reference
 referenced
 references
-refines
 reflect
 reflective
 refusals
@@ -1194,6 +1206,7 @@ regex
 rel
 related
 relative
+relax
 release
 releases
 relevance
@@ -1222,8 +1235,10 @@ reproducible
 request
 requests
 require
+requirements
 requires
 requiring
+reserve
 resmoke
 resolution
 resolve
@@ -1280,7 +1295,6 @@ see
 segment
 select
 selection
-selects
 self
 semantic
 semble
@@ -1291,6 +1305,7 @@ separately
 sequence
 sequences
 serial
+serialized
 serve
 server
 serves
@@ -1332,7 +1347,6 @@ simply
 single
 size
 sized
-sizes
 sizing
 skill
 skills
@@ -1378,6 +1392,7 @@ starting
 starts
 stat
 state
+stated
 stateless
 static
 statix
@@ -1392,6 +1407,7 @@ stops
 storage
 store
 stored
+storegb
 storemaxmb
 streamed
 streamline
@@ -1533,8 +1549,10 @@ uefi
 uid
 uids
 umount
+unavailable
 unblock
 unbounded
+unchanged
 undebuggable
 under
 underlying
@@ -1654,7 +1672,6 @@ wrong
 xargs
 yaml
 yamllint
-yields
 you
 your
 zero
