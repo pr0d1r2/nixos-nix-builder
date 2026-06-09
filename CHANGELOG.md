@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Enable both Intel and AMD CPU microcode in the ISO so it works on T440p (Intel) and Ryzen (AMD) without changing the image
+- Use NixOS default tmpfs size (50% RAM) instead of hardcoded 16G — fits 16 GB and 32 GB hosts alike
+- Remove baked serial console from ISO kernel params; serial injected by QEMU at runtime only, bare metal boots to tty0
 - Sweep stale smoke/boot QEMU workdirs on the builder before each run (they live on /mnt/storage, outside /nix/store, so the GC timer never reclaimed them and they grew unbounded); the sweep skips any workdir a live QEMU still has open, so a concurrent run is never disturbed
 
 - Detach `just boot-remote` QEMU into a builder tmux session too (via qemu-remote-tmux), so a transient SSH drop no longer kills the boot guest mid-boot; nix-serve rides along for the guest cache
