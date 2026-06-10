@@ -441,6 +441,7 @@ driven
 driver
 drives
 drop
+dropped
 drops
 dscacheutil
 dual
@@ -1652,7 +1653,6 @@ unlocked
 unmount
 unreachable
 unreleased
-unsigned
 unsquashfs
 unstable
 untimed

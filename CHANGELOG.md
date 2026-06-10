@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Inject the QEMU serial console at runtime (qemu-cmd) so the ISO can stay clean (C24) -- fixes smoke after boot.nix dropped the baked console=
 - Enable both Intel and AMD CPU microcode in the ISO so it works on T440p (Intel) and Ryzen (AMD) without changing the image
 - Use NixOS default tmpfs size (50% RAM) instead of hardcoded 16G — fits 16 GB and 32 GB hosts alike
 - Remove baked serial console from ISO kernel params; serial injected by QEMU at runtime only, bare metal boots to tty0

@@ -82,3 +82,24 @@ teardown() {
     bash scripts/test-boot/qemu-cmd.sh /tmp/test.iso "$WORK_DIR"
     grep -q '/.*qemu-system-x86_64' "$WORK_DIR/run-qemu.sh"
 }
+
+@test "injects serial console at runtime when cmdline lacks it (C24)" {
+    boot="$WORK_DIR/boot"
+    mkdir -p "$boot"
+    : >"$boot/bzImage"
+    : >"$boot/initrd"
+    # clean-ISO cmdline with no console= (extract-kernel output)
+    echo "init=/x/init root=LABEL=foo nomodeset loglevel=4" >"$boot/cmdline"
+    bash scripts/test-boot/qemu-cmd.sh /tmp/test.iso "$WORK_DIR" "$boot"
+    grep -q 'console=ttyS0,115200' "$WORK_DIR/run-qemu.sh"
+}
+
+@test "does not duplicate console= when cmdline already has it" {
+    boot="$WORK_DIR/boot"
+    mkdir -p "$boot"
+    : >"$boot/bzImage"
+    : >"$boot/initrd"
+    echo "init=/x/init console=tty0 console=ttyS0,115200n8 loglevel=4" >"$boot/cmdline"
+    bash scripts/test-boot/qemu-cmd.sh /tmp/test.iso "$WORK_DIR" "$boot"
+    [ "$(grep -o 'console=ttyS0' "$WORK_DIR/run-qemu.sh" | wc -l)" -eq 1 ]
+}

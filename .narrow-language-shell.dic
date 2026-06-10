@@ -231,6 +231,7 @@ drives
 driving
 drop
 drops
+duplicate
 duplicates
 each
 early
@@ -316,6 +317,7 @@ flags
 flakes
 flush
 following
+foo
 for
 forever
 format
@@ -345,6 +347,7 @@ generating
 generator
 get
 gets
+getty
 gid
 git
 gitsha
@@ -379,6 +382,7 @@ hosts
 human
 hup
 ide
+idempotent
 idempotently
 identifier
 idx
@@ -397,6 +401,8 @@ info
 inherits
 init
 initrd
+inject
+injects
 input
 inside
 install
@@ -433,6 +439,7 @@ killed
 kills
 known
 label
+lacks
 larger
 largest
 launch
@@ -496,6 +503,7 @@ memory
 message
 metal
 mid
+might
 milestones
 minimal
 missed
@@ -538,6 +546,7 @@ nixbuilder
 nixos
 nixpkgs
 node
+nomodeset
 non
 none
 nonexistent
@@ -722,6 +731,7 @@ run
 runner
 running
 runs
+runtime
 safe
 same
 sanity
