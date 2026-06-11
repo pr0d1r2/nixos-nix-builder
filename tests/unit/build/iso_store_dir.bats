@@ -17,7 +17,11 @@ SCRIPT
 }
 
 @test "outputs a directory path" {
-  run sh scripts/build/iso_store_dir.sh
+  tmp="$(mktemp -d)"
+  run sh -c "
+    sed 's|/mnt/storage-fast|$tmp/mnt/storage-fast|g;s|/mnt/storage|$tmp/mnt/storage|g;s|/tmp/|$tmp/tmp/|g' scripts/build/iso_store_dir.sh | sh
+  "
   [ "$status" -eq 0 ]
   [ -n "$output" ]
+  rm -rf "$tmp"
 }
