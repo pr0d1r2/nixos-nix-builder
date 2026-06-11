@@ -16,3 +16,4 @@ jobs:
           skip-build: true
         env:
           LEFTHOOK_EXCLUDE: changelog-touched
+          LEFTHOOK_TDD_SPEC_DIR: tests/unit

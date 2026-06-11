@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- CI: set LEFTHOOK_TDD_SPEC_DIR=tests/unit (the devShell already sets it) + reformat 6 scripts for shfmt 3.12.0, both surfaced by the flake input bump
 - Update flake.lock: dedup pinned inputs (shared nixpkgs), shrinking it from ~6.1M to ~0.8M
 - Inject the QEMU serial console at runtime (qemu-cmd) so the ISO can stay clean (C24) -- fixes smoke after boot.nix dropped the baked console=
 - Enable both Intel and AMD CPU microcode in the ISO so it works on T440p (Intel) and Ryzen (AMD) without changing the image
