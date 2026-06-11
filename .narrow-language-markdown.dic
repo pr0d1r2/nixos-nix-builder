@@ -352,6 +352,7 @@ declaring
 decompress
 decompression
 dedicated
+dedup
 default
 defaults
 deferred
@@ -1403,6 +1404,7 @@ show
 showing
 shown
 shows
+shrinking
 shut
 shutdown
 siblings
