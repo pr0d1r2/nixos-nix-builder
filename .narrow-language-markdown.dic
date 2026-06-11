@@ -201,6 +201,7 @@ change
 changed
 changelog
 changes
+changing
 characters
 cheap
 check
@@ -236,6 +237,7 @@ coding
 coherent
 cohesive
 collect
+collection
 colliding
 collision
 collisions
@@ -439,6 +441,7 @@ driven
 driver
 drives
 drop
+dropped
 drops
 dscacheutil
 dual
@@ -752,6 +755,7 @@ initial
 initialize
 initrd
 inject
+injected
 injection
 injects
 inline
@@ -1152,6 +1156,7 @@ possible
 posture
 power
 powered
+poweroff
 pre
 precision
 prefer
@@ -1398,6 +1403,7 @@ show
 showing
 shown
 shows
+shut
 shutdown
 siblings
 sigkill
@@ -1644,9 +1650,9 @@ unix
 unknown
 unlock
 unlocked
+unmount
 unreachable
 unreleased
-unsigned
 unsquashfs
 unstable
 untimed

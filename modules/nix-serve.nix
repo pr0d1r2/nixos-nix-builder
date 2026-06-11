@@ -23,6 +23,4 @@
       RestartSec = 5;
     };
   };
-
-  networking.firewall.allowedTCPPorts = [ 5000 ];
 }

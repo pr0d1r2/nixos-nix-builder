@@ -33,8 +33,15 @@ if [ -n "$boot_dir" ] && [ -f "$boot_dir/bzImage" ]; then
     if [ -f "$boot_dir/cmdline" ]; then
         CMDLINE="$(cat "$boot_dir/cmdline")"
     elif [ -f "$boot_dir/init-path" ]; then
-        CMDLINE="init=$(cat "$boot_dir/init-path") console=tty0 console=ttyS0,115200n8 loglevel=4"
+        CMDLINE="init=$(cat "$boot_dir/init-path") loglevel=4"
     fi
+    # C24: inject the serial console at QEMU runtime so the ISO stays
+    # clean (bare metal has no serial-getty). Idempotent -- the extracted
+    # grub cmdline no longer bakes console=, but an older ISO might.
+    case "$CMDLINE" in
+        *console=ttyS0*) ;;
+        *) CMDLINE="$CMDLINE console=tty0 console=ttyS0,115200n8" ;;
+    esac
     CMDLINE="$CMDLINE nixbuilder.hostname=nix-builder-qemu"
     APPEND_LINE="-append \"$CMDLINE\""
 else

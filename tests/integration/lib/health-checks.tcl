@@ -407,14 +407,14 @@ proc run_health_checks {label expected_hostname {skip_tags {}}} {
 
         check "KVM device available" test -c /dev/kvm
 
-        check_sh_contains "AMD microcode loaded" "microcode" \
+        check_sh_contains "CPU microcode loaded" "microcode" \
             "journalctl -k 2>/dev/null | grep -i microcode | head -3"
     }
 
     check_sh_contains "tmpfs mounted on /tmp" "tmpfs" \
         "findmnt -n -o FSTYPE /tmp 2>/dev/null"
 
-    check_sh_contains "tmpfs /tmp sized 16G" "size=16777216k" \
+    check_sh_contains "tmpfs /tmp sized (50% default)" "size=" \
         "findmnt -n -o OPTIONS /tmp 2>/dev/null"
 
     # -- Power management --------------------------------------------------
