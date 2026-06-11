@@ -12,8 +12,8 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 HOST="${NIX_BUILDER_HOST:-nix-builder.local}"
 
 if ! bash "$REPO_ROOT/scripts/lib/ping-wait.sh" "$HOST" 2>/dev/null; then
-    echo "live-conditional: node unreachable, skipping"
-    exit 0
+  echo "live-conditional: node unreachable, skipping"
+  exit 0
 fi
 
 echo "live-conditional: node reachable, running live integration"

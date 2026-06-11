@@ -13,8 +13,8 @@ set -Eeuo pipefail
 trap 'rc=$?; echo "boot: FAILED at scripts/test-boot/boot-remote.sh:${LINENO} (exit $rc): ${BASH_COMMAND}" >&2' ERR
 
 if [ $# -ne 3 ]; then
-    echo "Usage: boot-remote.sh <repo-root> <ssh-port> <builder-host>" >&2
-    exit 2
+  echo "Usage: boot-remote.sh <repo-root> <ssh-port> <builder-host>" >&2
+  exit 2
 fi
 
 REPO_ROOT="$1"
@@ -29,8 +29,8 @@ store_dir="$(ssh "$builder_ssh" sh <"$REPO_ROOT/scripts/build/iso_store_dir.sh")
 # shellcheck disable=SC2029
 remote_iso="$(ssh "$builder_ssh" "ls -t '$store_dir/'*.iso 2>/dev/null | head -n1" || true)"
 if [ -z "$remote_iso" ]; then
-    echo "boot: no ISO in $BUILDER store ($store_dir) -- run 'just build' first" >&2
-    exit 1
+  echo "boot: no ISO in $BUILDER store ($store_dir) -- run 'just build' first" >&2
+  exit 1
 fi
 ISO_NAME="$(basename "$remote_iso")"
 
@@ -67,4 +67,4 @@ echo
 # Detach the boot guest into a builder tmux session. nix-serve rides on
 # PATH (extra pkg) for the guest's binary cache; boot-run.sh starts it.
 exec bash "$REPO_ROOT/scripts/test-boot/qemu-remote-tmux.sh" \
-    "$builder_ssh" "$SESSION" "$SSH_PORT" "$WORK_DIR/scripts/boot-run.sh" "nix-serve"
+  "$builder_ssh" "$SESSION" "$SSH_PORT" "$WORK_DIR/scripts/boot-run.sh" "nix-serve"

@@ -39,8 +39,8 @@ extra_pkgs="${5:-}"
 # loudly if it is missing rather than detaching an empty tmux session.
 # shellcheck disable=SC2029  # run_script must expand locally into the remote test
 if ! ssh -o ConnectTimeout=10 "$builder" "[ -f '$run_script' ]" 2>/dev/null; then
-    echo "qemu-remote-tmux: remote run script not found on $builder: $run_script" >&2
-    exit 2
+  echo "qemu-remote-tmux: remote run script not found on $builder: $run_script" >&2
+  exit 2
 fi
 
 logfile="/tmp/${session}.serial.log"
@@ -70,29 +70,29 @@ ssh -o ConnectTimeout=10 "$builder" "rm -f '$logfile' '$rcfile'; nix-shell -p tm
 # Stream with reconnect until the guest exits (rc file appears).
 rc=1
 while true; do
-    if ssh -o ConnectTimeout=5 "$builder" "[ -f '$rcfile' ]" 2>/dev/null; then
-        # Flush any tail we missed, then read the exit code and stop.
-        ssh -o ConnectTimeout=5 "$builder" "cat '$logfile' 2>/dev/null" || true
-        rc="$(ssh -o ConnectTimeout=5 "$builder" "cat '$rcfile' 2>/dev/null" || echo 1)"
-        break
-    fi
-    # Hold the -L port-forward for the caller's health checks while we
-    # stream the serial log. `tail -F` never reaches EOF on its own, so
-    # the remote side also watches for the rc file and kills tail the
-    # moment the guest exits -- otherwise the stream would block forever
-    # after the guest is gone and we'd never re-check the rc file. On a
-    # network drop this remote watcher gets SIGHUP and dies too, so the
-    # loop reconnects and replays.
-    ssh -L "${ssh_port}:localhost:${ssh_port}" \
-        -o ServerAliveInterval=10 -o ServerAliveCountMax=3 -o ConnectTimeout=10 \
-        -o ExitOnForwardFailure=yes \
-        "$builder" "
+  if ssh -o ConnectTimeout=5 "$builder" "[ -f '$rcfile' ]" 2>/dev/null; then
+    # Flush any tail we missed, then read the exit code and stop.
+    ssh -o ConnectTimeout=5 "$builder" "cat '$logfile' 2>/dev/null" || true
+    rc="$(ssh -o ConnectTimeout=5 "$builder" "cat '$rcfile' 2>/dev/null" || echo 1)"
+    break
+  fi
+  # Hold the -L port-forward for the caller's health checks while we
+  # stream the serial log. `tail -F` never reaches EOF on its own, so
+  # the remote side also watches for the rc file and kills tail the
+  # moment the guest exits -- otherwise the stream would block forever
+  # after the guest is gone and we'd never re-check the rc file. On a
+  # network drop this remote watcher gets SIGHUP and dies too, so the
+  # loop reconnects and replays.
+  ssh -L "${ssh_port}:localhost:${ssh_port}" \
+    -o ServerAliveInterval=10 -o ServerAliveCountMax=3 -o ConnectTimeout=10 \
+    -o ExitOnForwardFailure=yes \
+    "$builder" "
             tail -n +1 -F '$logfile' 2>/dev/null &
             _tp=\$!
             while [ ! -f '$rcfile' ]; do sleep 0.5; done
             kill \$_tp 2>/dev/null
         " || true
-    sleep 1
+  sleep 1
 done
 
 exit "${rc:-1}"

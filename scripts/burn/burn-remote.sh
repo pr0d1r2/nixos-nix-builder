@@ -8,17 +8,17 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 if [ "${NIX_BUILDER_BURN_LOCAL:-}" = "1" ]; then
-    echo "burn-remote: local-only mode, skipping." >&2
-    exit 2
+  echo "burn-remote: local-only mode, skipping." >&2
+  exit 2
 fi
 
 BUILDER="$(bash "$REPO_ROOT/scripts/lib/find-builder.sh" 2>/dev/null)" || {
-    echo "burn-remote: no reachable builder, falling back to local." >&2
-    exit 2
+  echo "burn-remote: no reachable builder, falling back to local." >&2
+  exit 2
 }
 
 REMOTE_DIR="$(ssh "$BUILDER" \
-    'if [ -d /mnt/storage ]; then echo /mnt/storage/nix-builder-burn; else echo /tmp/nix-builder-burn; fi')"
+  'if [ -d /mnt/storage ]; then echo /mnt/storage/nix-builder-burn; else echo /tmp/nix-builder-burn; fi')"
 # shellcheck disable=SC2029
 ssh "$BUILDER" "mkdir -p '$REMOTE_DIR/scripts/burn'"
 rsync -az --delete "$REPO_ROOT/scripts/burn/" "$BUILDER:$REMOTE_DIR/scripts/burn/"

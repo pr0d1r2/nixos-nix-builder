@@ -13,6 +13,6 @@ export LEFTHOOK_SKILL_REGISTERED_STRIP="agent/set/"
 LEFTHOOK_HASH=$(md5 -q lefthook.yml 2>/dev/null || md5sum lefthook.yml | cut -d' ' -f1)
 LEFTHOOK_HASH_FILE=".git/.lefthook-hash"
 if [ ! -f "$LEFTHOOK_HASH_FILE" ] || [ "$(cat "$LEFTHOOK_HASH_FILE")" != "$LEFTHOOK_HASH" ]; then
-    lefthook install
-    echo "$LEFTHOOK_HASH" >"$LEFTHOOK_HASH_FILE"
+  lefthook install
+  echo "$LEFTHOOK_HASH" >"$LEFTHOOK_HASH_FILE"
 fi
