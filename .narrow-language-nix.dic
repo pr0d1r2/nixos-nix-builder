@@ -131,6 +131,7 @@ gid
 git
 github
 gitleaks
+glob
 grace
 group
 groups
@@ -297,6 +298,7 @@ size
 skill
 sleep
 source
+spec
 split
 stable
 start
@@ -325,6 +327,7 @@ taplo
 target
 targets
 tcpports
+tests
 text
 tez
 the

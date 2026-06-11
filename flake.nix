@@ -295,6 +295,9 @@
           ci = devPkgs.mkShell {
             buildInputs = hookPackages;
             LEFTHOOK_EXCLUDE = "changelog-touched";
+            LEFTHOOK_TDD_SPEC_DIR = "tests/unit";
+            LEFTHOOK_TDD_PATHS = ":(glob)scripts/**/*.sh :(glob)fragments/*.sh :(glob)nix/dev/*.sh";
+            LEFTHOOK_TDD_EXCLUDE = "scripts/lefthook/*";
           };
         }
       );
