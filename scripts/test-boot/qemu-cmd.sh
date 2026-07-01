@@ -39,8 +39,8 @@ if [ -n "$boot_dir" ] && [ -f "$boot_dir/bzImage" ]; then
     # clean (bare metal has no serial-getty). Idempotent -- the extracted
     # grub cmdline no longer bakes console=, but an older ISO might.
     case "$CMDLINE" in
-        *console=ttyS0*) ;;
-        *) CMDLINE="$CMDLINE console=tty0 console=ttyS0,115200n8" ;;
+    *console=ttyS0*) ;;
+    *) CMDLINE="$CMDLINE console=tty0 console=ttyS0,115200n8" ;;
     esac
     CMDLINE="$CMDLINE nixbuilder.hostname=nix-builder-qemu"
     APPEND_LINE="-append \"$CMDLINE\""
