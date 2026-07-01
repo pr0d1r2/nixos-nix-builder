@@ -48,11 +48,20 @@ pre-commit:
     narrow-language-javascript-freeze:
       skip: true
       run: "true"
+    narrow-language-markdown-add:
+      skip: true
+      run: "true"
+    narrow-language-nix-add:
+      skip: true
+      run: "true"
     narrow-language-other:
       glob: '{justfile,*.yml,*.yaml,*.toml,**/*.tcl,*.json,*.jsonc,*.envrc}'
       env:
         NARROW_LANGUAGE_DICT: .narrow-language-other.dic
         NARROW_LANGUAGE_EXCLUDE_FILES: "LICENSE"
+    narrow-language-other-add:
+      skip: true
+      run: "true"
     narrow-language-python:
       skip: true
     narrow-language-python-compact:
@@ -75,6 +84,9 @@ pre-commit:
       skip: true
       run: "true"
     narrow-language-scss-freeze:
+      skip: true
+      run: "true"
+    narrow-language-shell-add:
       skip: true
       run: "true"
     narrow-language-terraform:
@@ -149,11 +161,20 @@ pre-push:
     narrow-language-javascript-freeze:
       skip: true
       run: "true"
+    narrow-language-markdown-add:
+      skip: true
+      run: "true"
+    narrow-language-nix-add:
+      skip: true
+      run: "true"
     narrow-language-other:
       glob: '{justfile,*.yml,*.yaml,*.toml,**/*.tcl,*.json,*.jsonc,*.envrc}'
       env:
         NARROW_LANGUAGE_DICT: .narrow-language-other.dic
         NARROW_LANGUAGE_EXCLUDE_FILES: "LICENSE"
+    narrow-language-other-add:
+      skip: true
+      run: "true"
     narrow-language-python:
       skip: true
     narrow-language-python-compact:
@@ -176,6 +197,9 @@ pre-push:
       skip: true
       run: "true"
     narrow-language-scss-freeze:
+      skip: true
+      run: "true"
+    narrow-language-shell-add:
       skip: true
       run: "true"
     narrow-language-terraform:
