@@ -24,7 +24,7 @@ bats_require_minimum_version 1.5.0
 }
 
 @test "sweeps stale workdirs before starting" {
-    grep -q 'for d in /mnt/storage/tmp/nix-builder-qemu-test-' scripts/test-boot/smoke-remote.sh
+    grep -q 'for d in /mnt/storage/tmp/nix-builder-qemu-test-' scripts/test-boot/smoke-remote.sh # nolocalpath
 }
 
 @test "skips workdirs a live QEMU still has open" {

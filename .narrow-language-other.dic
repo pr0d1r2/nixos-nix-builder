@@ -5,7 +5,6 @@ actions
 activates
 active
 add
-aed
 after
 against
 agent
@@ -240,6 +239,7 @@ head
 headless
 health
 healthy
+home
 host
 hostname
 hosts
@@ -273,6 +273,7 @@ jsonc
 jump
 just
 justfile
+keep
 kernel
 key
 keys
@@ -357,6 +358,7 @@ nixfmt
 nixfs
 nixpkgs
 node
+nolocalpath
 non
 nonewline
 not

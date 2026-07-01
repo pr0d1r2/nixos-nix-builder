@@ -38,5 +38,6 @@ teardown() {
 }
 
 @test "defaults to iso directory" {
+    # shellcheck disable=SC2016
     grep -q 'DIR="${1:-iso}"' scripts/burn/list-isos.sh
 }

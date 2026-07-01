@@ -18,7 +18,7 @@ BUILDER="$(bash "$REPO_ROOT/scripts/lib/find-builder.sh" 2>/dev/null)" || {
 }
 
 REMOTE_DIR="$(ssh "$BUILDER" \
-    'if [ -d /mnt/storage ]; then echo /mnt/storage/nix-builder-burn; else echo /tmp/nix-builder-burn; fi')"
+    'if [ -d /mnt/storage ]; then echo /mnt/storage/nix-builder-burn; else echo /tmp/nix-builder-burn; fi')" # nolocalpath
 # shellcheck disable=SC2029
 ssh "$BUILDER" "mkdir -p '$REMOTE_DIR/scripts/burn'"
 rsync -az --delete "$REPO_ROOT/scripts/burn/" "$BUILDER:$REMOTE_DIR/scripts/burn/"

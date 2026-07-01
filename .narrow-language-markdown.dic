@@ -208,6 +208,7 @@ check
 checked
 checker
 checking
+checkout
 checks
 chmod
 chown
@@ -346,6 +347,7 @@ debug
 debugging
 decision
 decisions
+declaration
 declarative
 declares
 declaring
@@ -372,6 +374,7 @@ dependent
 deployable
 deployed
 deploying
+deprecation
 describe
 describing
 description
@@ -463,6 +466,7 @@ efi
 else
 embedded
 embeds
+emits
 empty
 enable
 enabled
@@ -514,6 +518,7 @@ exempt
 exhaust
 exist
 existence
+existent
 existing
 exists
 exit
@@ -577,6 +582,7 @@ firewall
 firmware
 first
 fits
+five
 fix
 fixed
 fixes
@@ -809,7 +815,9 @@ job
 jobs
 json
 jsonc
+july
 jump
+june
 just
 justfile
 keep
@@ -1543,6 +1551,7 @@ task
 tasks
 taskset
 tell
+temp
 template
 tense
 term
@@ -1653,6 +1662,7 @@ unlocked
 unmount
 unreachable
 unreleased
+unsandboxed
 unsquashfs
 unstable
 untimed
@@ -1663,6 +1673,7 @@ updated
 updating
 upload
 upper
+upstream
 url
 urls
 usage
@@ -1714,6 +1725,7 @@ want
 wants
 warm
 warms
+warnings
 was
 watch
 watched

@@ -18,7 +18,7 @@ teardown() {
     run env NIX_BUILDER_BURN_FAKE_BACKEND="$TEST_DIR/fake-usb" \
         bash scripts/burn/list-usb.sh
     [ "$status" -eq 0 ]
-    [[ "$output" =~ "/dev/sda|128G|Kingston" ]]
+    [[ "$output" =~ /dev/sda\|128G\|Kingston ]]
 }
 
 @test "exits 1 when no devices found" {

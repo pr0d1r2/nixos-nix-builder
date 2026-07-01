@@ -13,7 +13,7 @@ trap 'rc=$?; echo "smoke-remote: FAILED at scripts/test-boot/smoke-remote.sh:${L
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 BUILDER="$(bash "$REPO_ROOT/scripts/lib/find-builder.sh")"
 SHORT_SHA="$(git -C "$REPO_ROOT" rev-parse --short=7 HEAD)"
-WORK_DIR="/mnt/storage/tmp/nix-builder-qemu-test-${SHORT_SHA}"
+WORK_DIR="/mnt/storage/tmp/nix-builder-qemu-test-${SHORT_SHA}" # nolocalpath
 STORE_DIR="$(ssh "$BUILDER" sh <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
 
 # Sweep stale smoke artifacts from prior runs before starting. WORK_DIRs
@@ -25,11 +25,10 @@ STORE_DIR="$(ssh "$BUILDER" sh <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
 # recreates its own WORK_DIR below.
 ssh "$BUILDER" '
     shopt -s nullglob
-    for d in /mnt/storage/tmp/nix-builder-qemu-test-*; do
+    for d in /mnt/storage/tmp/nix-builder-qemu-test-*; do # nolocalpath
         pgrep -af qemu-system-x86_64 | grep -qF "$d" && continue
         sha=${d##*-}
-        rm -rf "$d" "/tmp/nix-builder-smoke-$sha.tmux.sock" \
-            "/tmp/nix-builder-smoke-$sha.serial.log" "/tmp/nix-builder-smoke-$sha.rc"
+        rm -rf "$d" "/tmp/nix-builder-smoke-$sha.tmux.sock" "/tmp/nix-builder-smoke-$sha.serial.log" "/tmp/nix-builder-smoke-$sha.rc" # nolocalpath
     done
 ' 2>/dev/null || true
 

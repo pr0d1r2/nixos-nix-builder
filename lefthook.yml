@@ -111,6 +111,9 @@ pre-commit:
         LEFTHOOK_SKILL_REGISTERED_FILE: CLAUDE.md
         LEFTHOOK_SKILL_REGISTERED_PREFIX: "@agent/set/"
         LEFTHOOK_SKILL_REGISTERED_STRIP: "agent/set/"
+    tdd-order-bats:
+      env:
+        LEFTHOOK_TDD_SPEC_DIR: tests/unit
     trailing-whitespace: {}
     typos: {}
     unicode-lint: {}
@@ -230,6 +233,9 @@ pre-push:
         LEFTHOOK_SKILL_REGISTERED_FILE: CLAUDE.md
         LEFTHOOK_SKILL_REGISTERED_PREFIX: "@agent/set/"
         LEFTHOOK_SKILL_REGISTERED_STRIP: "agent/set/"
+    tdd-order-bats:
+      env:
+        LEFTHOOK_TDD_SPEC_DIR: tests/unit
     smoke-conditional:
       run: timeout 1800 bash scripts/lefthook/smoke-conditional.sh
     live-conditional:

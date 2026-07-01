@@ -44,7 +44,7 @@ SESSION="nix-builder-boot"
 # open, so a running boot guest is never disturbed. mkdir below recreates
 # a fresh WORK_DIR.
 # shellcheck disable=SC2029
-ssh "$builder_ssh" "pgrep -af qemu-system-x86_64 | grep -qF '$WORK_DIR' || rm -rf '$WORK_DIR' /tmp/nix-builder-boot.tmux.sock /tmp/nix-builder-boot.serial.log /tmp/nix-builder-boot.rc 2>/dev/null" || true
+ssh "$builder_ssh" "pgrep -af qemu-system-x86_64 | grep -qF '$WORK_DIR' || rm -rf '$WORK_DIR' /tmp/nix-builder-boot.tmux.sock /tmp/nix-builder-boot.serial.log /tmp/nix-builder-boot.rc 2>/dev/null" || true # nolocalpath
 
 # shellcheck disable=SC2029
 ssh "$builder_ssh" "mkdir -p '$WORK_DIR/scripts'"

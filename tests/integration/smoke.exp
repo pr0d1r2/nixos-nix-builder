@@ -9,7 +9,7 @@ set timeout 600
 set env(TERM) dumb
 
 log_user 0
-set log_path "/tmp/nix-builder-smoke-[clock format [clock seconds] -format %Y%m%d-%H%M%S].log"
+set log_path "/tmp/nix-builder-smoke-[clock format [clock seconds] -format %Y%m%d-%H%M%S].log" ;# nolocalpath
 log_file -a -noappend $log_path
 
 set repo_root [file normalize [file join [file dirname [info script]] ".." ".."]]
