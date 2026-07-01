@@ -1,9 +1,14 @@
 { lib, ... }:
 
 let
-  raw = builtins.readFile ../secrets/authorized_keys;
+  authKeysPath = ../secrets/authorized_keys;
+  raw =
+    if builtins.pathExists authKeysPath then builtins.readFile authKeysPath else "";
   lines = lib.splitString "\n" raw;
   keys = builtins.filter (l: l != "" && !lib.hasPrefix "#" l) lines;
+
+  hostKeyPath = ../secrets/ssh_host_ed25519_key;
+  hostKeyPubPath = ../secrets/ssh_host_ed25519_key.pub;
 in
 {
   services.openssh = {
@@ -26,16 +31,19 @@ in
     };
   };
 
-  environment.etc = {
-    "ssh/ssh_host_ed25519_key" = {
-      source = ../secrets/ssh_host_ed25519_key;
-      mode = "0600";
+  environment.etc =
+    lib.optionalAttrs (builtins.pathExists hostKeyPath) {
+      "ssh/ssh_host_ed25519_key" = {
+        source = hostKeyPath;
+        mode = "0600";
+      };
+    }
+    // lib.optionalAttrs (builtins.pathExists hostKeyPubPath) {
+      "ssh/ssh_host_ed25519_key.pub" = {
+        source = hostKeyPubPath;
+        mode = "0644";
+      };
     };
-    "ssh/ssh_host_ed25519_key.pub" = {
-      source = ../secrets/ssh_host_ed25519_key.pub;
-      mode = "0644";
-    };
-  };
 
   users.users.root.openssh.authorizedKeys.keys = keys;
 }

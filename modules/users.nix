@@ -1,7 +1,9 @@
 { lib, pkgs, ... }:
 
 let
-  raw = builtins.readFile ../secrets/authorized_keys;
+  authKeysPath = ../secrets/authorized_keys;
+  raw =
+    if builtins.pathExists authKeysPath then builtins.readFile authKeysPath else "";
   lines = lib.splitString "\n" raw;
   keys = builtins.filter (l: l != "" && !lib.hasPrefix "#" l) lines;
 in

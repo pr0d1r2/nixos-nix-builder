@@ -1,11 +1,16 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
+let
+  signingKeyPath = ../secrets/signing-key.sec;
+in
 {
   environment.systemPackages = [ pkgs.nix-serve ];
 
-  environment.etc."nix/signing-key.sec" = {
-    source = ../secrets/signing-key.sec;
-    mode = "0600";
+  environment.etc = lib.optionalAttrs (builtins.pathExists signingKeyPath) {
+    "nix/signing-key.sec" = {
+      source = signingKeyPath;
+      mode = "0600";
+    };
   };
 
   systemd.services.nix-serve = {
