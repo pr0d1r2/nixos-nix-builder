@@ -16,8 +16,14 @@ SCRIPT
     rm -rf "$tmp"
 }
 
-@test "outputs a directory path" {
-    run sh scripts/build/iso_store_dir.sh
+@test "falls back to tmp when no storage dirs exist" {
+    tmp="$(mktemp -d)"
+    run sh -c "
+        cd '$tmp' && source /dev/stdin <<'SCRIPT'
+$(sed 's|/mnt/storage-fast|'"$tmp"'/mnt/no-storage-fast|g;s|/mnt/storage|'"$tmp"'/mnt/no-storage|g;s|/tmp/|'"$tmp"'/tmp/|g' scripts/build/iso_store_dir.sh)
+SCRIPT
+    "
     [ "$status" -eq 0 ]
-    [ -n "$output" ]
+    [[ "$output" =~ nix-builder-iso ]]
+    rm -rf "$tmp"
 }
