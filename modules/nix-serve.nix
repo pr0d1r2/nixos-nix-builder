@@ -1,11 +1,17 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
+let
+  signingKeyPath = ../secrets/signing-key.sec;
+  hasSigningKey = builtins.pathExists signingKeyPath;
+in
 {
   environment.systemPackages = [ pkgs.nix-serve ];
 
-  environment.etc."nix/signing-key.sec" = {
-    source = ../secrets/signing-key.sec;
-    mode = "0600";
+  environment.etc = lib.optionalAttrs hasSigningKey {
+    "nix/signing-key.sec" = {
+      source = signingKeyPath;
+      mode = "0600";
+    };
   };
 
   systemd.services.nix-serve = {
@@ -18,7 +24,9 @@
 
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${pkgs.nix-serve}/bin/nix-serve -p 5000 --sign-key-path /etc/nix/signing-key.sec";
+      ExecStart =
+        "${pkgs.nix-serve}/bin/nix-serve -p 5000"
+        + lib.optionalString hasSigningKey " --sign-key-path /etc/nix/signing-key.sec";
       Restart = "always";
       RestartSec = 5;
     };
