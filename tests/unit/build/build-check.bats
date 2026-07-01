@@ -2,8 +2,8 @@
 
 @test "exits 1 when no ISO exists" {
     tmp="$(mktemp -d)"
+    export HOME="$tmp"
     mkdir -p "$tmp/iso"
-    # Create a minimal git repo
     git -C "$tmp" init -q
     cp scripts/build/build-check.sh "$tmp/scripts/build/build-check.sh" 2>/dev/null || {
         mkdir -p "$tmp/scripts/build" "$tmp/scripts/lib"
