@@ -16,7 +16,6 @@
     nix-lefthook-bats-changed = {
       url = "github:pr0d1r2/nix-lefthook-bats-changed";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nix-lefthook-bats-failures-only.follows = "nix-lefthook-bats-failures-only";
     };
     nix-lefthook-bats-failures-only = {
       url = "github:pr0d1r2/nix-lefthook-bats-failures-only";
