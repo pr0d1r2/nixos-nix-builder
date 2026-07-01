@@ -1,5 +1,7 @@
 #!/usr/bin/env bats
 
+bats_require_minimum_version 1.5.0
+
 @test "script references tier and target variables" {
     run grep -c 'tier' fragments/storage-mount-target.sh
     [ "$status" -eq 0 ]
