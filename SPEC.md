@@ -257,3 +257,6 @@ Bootable NixOS USB pendrive. Turns any modern x86_64 host into headless nix buil
 | B7 | 2026-05-26 | `create-drives.sh` leaks losetup device if `mkfs.ext4` fails — no trap cleanup | T40: add trap |
 | B8 | 2026-05-26 | `iso/.keep` + `secrets/.keep` gitignored — dirs missing after clone | T49: `git add -f` |
 | B9 | 2026-05-26 | `.nix-embedded-shell-allowlist` missing `modules/nix-serve.nix` (inline ExecStart) | T48: add to allowlist |
+| B11 | 2026-07-01 | `iso_store_dir.bats` test runs unsandboxed — fails on hosts where `/mnt/storage` exists but is not writable | fixed: sandbox test with temp dir |
+| B12 | 2026-07-01 | `flake.nix` overrides non-existent `nix-lefthook-bats-failures-only` input on `nix-lefthook-bats-changed` — upstream renamed to `-src` | fixed: remove stale follows override |
+| B13 | 2026-07-01 | 5 bats test files use `run !` syntax without `bats_require_minimum_version 1.5.0` — emits BW02 deprecation warnings | fixed: add version declaration |

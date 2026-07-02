@@ -1,5 +1,7 @@
 #!/usr/bin/env bats
 
+bats_require_minimum_version 1.5.0
+
 @test "exits with error when no arguments" {
     run bash scripts/test-boot/extract-kernel.sh
     [ "$status" -ne 0 ]

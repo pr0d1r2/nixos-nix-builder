@@ -13,9 +13,9 @@ trap 'rc=$?; echo "smoke-local: FAILED at scripts/test-boot/smoke-local.sh:${LIN
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SHORT_SHA="$(git -C "$REPO_ROOT" rev-parse --short=7 HEAD 2>/dev/null || echo "unknown")"
 if [ -d /mnt/storage ]; then
-    WORK_DIR="/mnt/storage/tmp/nix-builder-qemu-test-${SHORT_SHA}"
+    WORK_DIR="/mnt/storage/tmp/nix-builder-qemu-test-${SHORT_SHA}" # nolocalpath
 else
-    WORK_DIR="/tmp/nix-builder-qemu-test-${SHORT_SHA}"
+    WORK_DIR="/tmp/nix-builder-qemu-test-${SHORT_SHA}" # nolocalpath
 fi
 
 ISO="${1:-}"

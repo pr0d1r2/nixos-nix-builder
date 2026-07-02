@@ -1,5 +1,7 @@
 #!/usr/bin/env bats
 
+bats_require_minimum_version 1.5.0
+
 @test "exits 2 with wrong argument count" {
     run bash scripts/test-boot/boot-remote.sh
     [ "$status" -eq 2 ]

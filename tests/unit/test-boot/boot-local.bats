@@ -6,6 +6,6 @@
 }
 
 @test "exits 2 with too few arguments" {
-    run bash scripts/test-boot/boot-local.sh /tmp /tmp/test.iso
+    run bash scripts/test-boot/boot-local.sh /tmp /tmp/test.iso # nolocalpath
     [ "$status" -eq 2 ]
 }

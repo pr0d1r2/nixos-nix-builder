@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Update all flake inputs (nix-lefthook-* from May 25 to June/July 2026, nixpkgs-lock to latest)
+- Update GitHub Actions: checkout v4 to v7, create-pull-request v7 to v8, nix-lefthook-ci-action to latest SHA
+- Remove stale flake override for renamed upstream input (nix-lefthook-bats-changed)
+- Fix iso_store_dir test to sandbox filesystem access (failed on hosts with existing /mnt/storage)
+- Add bats_require_minimum_version 1.5.0 to five test files using run flags
+
 - Inject the QEMU serial console at runtime (qemu-cmd) so the ISO can stay clean (C24) -- fixes smoke after boot.nix dropped the baked console=
 - Enable both Intel and AMD CPU microcode in the ISO so it works on T440p (Intel) and Ryzen (AMD) without changing the image
 - Use NixOS default tmpfs size (50% RAM) instead of hardcoded 16G — fits 16 GB and 32 GB hosts alike

@@ -2,6 +2,7 @@
 
 setup() {
     TEST_DIR="$(mktemp -d)"
+    export HOME="$TEST_DIR"
     mkdir -p "$TEST_DIR/scripts/burn"
     cp scripts/burn/burn-check.sh "$TEST_DIR/scripts/burn/"
     cd "$TEST_DIR" || return

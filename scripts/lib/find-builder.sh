@@ -20,7 +20,7 @@ for attempt in $(seq 1 "$RETRIES"); do
         host="${builder#*@}"
         host_short="${host%%.*}"
         case "$hn" in
-            "$host_short" | "$host_short".*) continue ;;
+        "$host_short" | "$host_short".*) continue ;;
         esac
         if ssh -o BatchMode=yes -o ConnectTimeout=5 "$builder" true 2>/dev/null; then
             echo "$builder"

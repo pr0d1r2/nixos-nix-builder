@@ -13,7 +13,7 @@ proc ssh_ensure_mux {} {
     if {$_ssh_ctl_path ne "" && [file exists $_ssh_ctl_path]} {
         return
     }
-    set _ssh_ctl_path "/tmp/smoke-ssh-mux-[pid]"
+    set _ssh_ctl_path "/tmp/smoke-ssh-mux-[pid]" ;# nolocalpath
     set cmd [list ssh -o BatchMode=yes -o ConnectTimeout=10 \
         -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
         -o ServerAliveInterval=15 -o ServerAliveCountMax=3 \

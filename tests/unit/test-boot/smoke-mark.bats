@@ -2,6 +2,7 @@
 
 setup() {
     TEST_DIR="$(mktemp -d)"
+    export HOME="$TEST_DIR"
     mkdir -p "$TEST_DIR/scripts/test-boot"
     cp scripts/test-boot/smoke-mark.sh "$TEST_DIR/scripts/test-boot/"
     cd "$TEST_DIR" || return

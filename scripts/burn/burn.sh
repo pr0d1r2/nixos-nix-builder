@@ -23,10 +23,10 @@ head_idx=-1
 if [ -n "$HEAD_SHA" ]; then
     for i in "${!isos[@]}"; do
         case "${isos[$i]}" in
-            *"$HEAD_SHA"*)
-                head_idx=$i
-                break
-                ;;
+        *"$HEAD_SHA"*)
+            head_idx=$i
+            break
+            ;;
         esac
     done
 fi
@@ -95,13 +95,13 @@ iso_bytes="$(wc -c <"$ISO_PATH" | tr -d '[:space:]')"
 dev_bytes=""
 if [ -z "${NIX_BUILDER_BURN_FAKE_BACKEND:-}" ]; then
     case "$(uname -s)" in
-        Linux)
-            dev_bytes="$(lsblk -bn -d -o SIZE "$DEV" 2>/dev/null || true)"
-            ;;
-        Darwin)
-            dev_bytes="$(diskutil info -plist "${DEV#/dev/}" 2>/dev/null |
-                python3 -c 'import plistlib,sys; print(plistlib.loads(sys.stdin.buffer.read()).get("TotalSize",0))')"
-            ;;
+    Linux)
+        dev_bytes="$(lsblk -bn -d -o SIZE "$DEV" 2>/dev/null || true)"
+        ;;
+    Darwin)
+        dev_bytes="$(diskutil info -plist "${DEV#/dev/}" 2>/dev/null |
+            python3 -c 'import plistlib,sys; print(plistlib.loads(sys.stdin.buffer.read()).get("TotalSize",0))')"
+        ;;
     esac
 fi
 if [ -n "$dev_bytes" ] && [ "$iso_bytes" -gt "$dev_bytes" ]; then
@@ -133,31 +133,31 @@ EOF
 fi
 
 case "$(uname -s)" in
-    Linux)
-        SUDO=""
-        if [ "$EUID" -ne 0 ] && [ ! -w "$DEV" ]; then
-            SUDO="sudo"
-        fi
-        if command -v pv >/dev/null 2>&1; then
-            # shellcheck disable=SC2086
-            $SUDO sh -c "pv -tpab -s '$iso_bytes' '$ISO_PATH' | dd of='$DEV' bs=4M iflag=fullblock oflag=direct conv=fsync"
-        else
-            nix shell --extra-experimental-features 'nix-command flakes' nixpkgs#pv -c \
-                $SUDO sh -c "pv -tpab -s '$iso_bytes' '$ISO_PATH' | dd of='$DEV' bs=4M iflag=fullblock oflag=direct conv=fsync"
-        fi
+Linux)
+    SUDO=""
+    if [ "$EUID" -ne 0 ] && [ ! -w "$DEV" ]; then
+        SUDO="sudo"
+    fi
+    if command -v pv >/dev/null 2>&1; then
         # shellcheck disable=SC2086
-        $SUDO sync
-        ;;
-    Darwin)
-        RAW_DEV="${DEV//\/dev\//\/dev\/r}"
-        sudo diskutil unmountDisk "$DEV"
-        sudo sh -c "pv -tpab -s '$iso_bytes' '$ISO_PATH' | dd of='$RAW_DEV' bs=1M"
-        sync
-        ;;
-    *)
-        echo "burn: unsupported host $(uname -s)" >&2
-        exit 1
-        ;;
+        $SUDO sh -c "pv -tpab -s '$iso_bytes' '$ISO_PATH' | dd of='$DEV' bs=4M iflag=fullblock oflag=direct conv=fsync"
+    else
+        nix shell --extra-experimental-features 'nix-command flakes' nixpkgs#pv -c \
+            $SUDO sh -c "pv -tpab -s '$iso_bytes' '$ISO_PATH' | dd of='$DEV' bs=4M iflag=fullblock oflag=direct conv=fsync"
+    fi
+    # shellcheck disable=SC2086
+    $SUDO sync
+    ;;
+Darwin)
+    RAW_DEV="${DEV//\/dev\//\/dev\/r}"
+    sudo diskutil unmountDisk "$DEV"
+    sudo sh -c "pv -tpab -s '$iso_bytes' '$ISO_PATH' | dd of='$RAW_DEV' bs=1M"
+    sync
+    ;;
+*)
+    echo "burn: unsupported host $(uname -s)" >&2
+    exit 1
+    ;;
 esac
 
 echo

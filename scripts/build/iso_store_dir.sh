@@ -11,7 +11,7 @@ if [ -d /mnt/storage-fast ]; then
 elif [ -d /mnt/storage ]; then
     store=/mnt/storage/nix-builder-iso
 else
-    store=/tmp/nix-builder-iso
+    store=/tmp/nix-builder-iso # nolocalpath
 fi
 
 mkdir -p "$store"
