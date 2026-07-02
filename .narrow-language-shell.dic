@@ -743,6 +743,7 @@ runs
 runtime
 safe
 same
+sandbox
 sanity
 sata
 saved
@@ -795,7 +796,6 @@ signing
 sigs
 sigterm
 silently
-simulate
 single
 sit
 sits
@@ -835,6 +835,7 @@ stdout
 stick
 still
 stop
+stor
 storage
 store
 stream

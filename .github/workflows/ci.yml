@@ -15,5 +15,6 @@ jobs:
         with:
           skip-build: true
           keep-home: true
+          extra-env: "HOME=${{ env.HOME }}"
         env:
           LEFTHOOK_EXCLUDE: changelog-touched

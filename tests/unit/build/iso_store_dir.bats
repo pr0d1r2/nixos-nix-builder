@@ -47,6 +47,6 @@ $(sandbox_script "$tmp")
 SCRIPT
     "
     [ "$status" -eq 0 ]
-    [[ "$output" = *"$tmp/tmp/nix-builder-iso"* ]]
+    [[ "$output" = *"$tmp/tmp/nix-builder-iso"* ]] # nolocalpath
     rm -rf "$tmp"
 }
