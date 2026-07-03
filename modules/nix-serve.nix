@@ -29,6 +29,9 @@ in
         + lib.optionalString hasSigningKey " --sign-key-path /etc/nix/signing-key.sec";
       Restart = "always";
       RestartSec = 5;
+      NoNewPrivileges = true;
+      ProtectHome = true;
+      PrivateTmp = true;
     };
   };
 }
