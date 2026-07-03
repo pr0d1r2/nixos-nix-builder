@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Update all flake inputs (nix-lefthook-* from May 25 to June/July 2026, nixpkgs-lock to latest)
+- Update all flake inputs to latest (nix-lefthook-git-no-local-paths, nix-lefthook-unicode-lint updated to 2026-07-02)
 - Update GitHub Actions: checkout v4 to v7, create-pull-request v7 to v8, nix-lefthook-ci-action to latest SHA
 - Remove stale flake override for renamed upstream input (nix-lefthook-bats-changed)
 - Fix iso_store_dir test to sandbox filesystem access (failed on hosts with existing /mnt/storage)
