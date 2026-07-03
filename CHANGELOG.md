@@ -4,6 +4,7 @@
 
 - Update all flake inputs to latest (nix-lefthook-git-no-local-paths, nix-lefthook-unicode-lint updated to 2026-07-02)
 - Remove dead `virtualisation.libvirtd.enable = false` from qemu.nix (already the default)
+- Add explicit uid/gid 999 to nixos user and group (V13 compliance)
 - Update GitHub Actions: checkout v4 to v7, create-pull-request v7 to v8, nix-lefthook-ci-action to latest SHA
 - Remove stale flake override for renamed upstream input (nix-lefthook-bats-changed)
 - Fix iso_store_dir test to sandbox filesystem access (failed on hosts with existing /mnt/storage)
