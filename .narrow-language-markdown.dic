@@ -342,6 +342,7 @@ darwin
 data
 date
 day
+dead
 deadnix
 debug
 debugging
@@ -866,6 +867,7 @@ lexical
 lib
 libraries
 library
+libvirtd
 license
 licensed
 life
@@ -1712,6 +1714,7 @@ violation
 violations
 virtio
 virtual
+virtualisation
 visible
 vocabulary
 voice
