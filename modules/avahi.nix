@@ -28,6 +28,10 @@
       ExecStart = "${pkgs.bash}/bin/bash ${../fragments/avahi-alias-nix-serve.sh}";
       Restart = "on-failure";
       RestartSec = 5;
+      DynamicUser = true;
+      NoNewPrivileges = true;
+      ProtectHome = true;
+      PrivateTmp = true;
     };
   };
 }

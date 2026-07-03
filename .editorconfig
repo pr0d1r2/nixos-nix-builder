@@ -28,3 +28,15 @@ trim_trailing_whitespace = false
 [*.yml]
 indent_style = space
 indent_size = 2
+
+[*.{exp,tcl}]
+indent_style = space
+indent_size = 4
+
+[justfile]
+indent_style = space
+indent_size = 4
+
+[*.jsonc]
+indent_style = space
+indent_size = 2

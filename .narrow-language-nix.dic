@@ -79,6 +79,7 @@ disk
 distro
 docked
 domain
+dynamic
 echo
 editorconfig
 else
@@ -142,6 +143,7 @@ hashes
 headless
 hibernate
 hinfo
+home
 hook
 host
 hostname
@@ -180,7 +182,6 @@ lefthook
 legacy
 let
 lib
-libvirtd
 lid
 lines
 link
@@ -218,6 +219,7 @@ narrow
 network
 networking
 networkmanager
+new
 newline
 nix
 nixfmt
@@ -257,7 +259,10 @@ poweroff
 pre
 prefix
 prepend
+private
+privileges
 prohibit
+protect
 pub
 public
 publish
@@ -365,7 +370,6 @@ utc
 utf
 util
 via
-virtualisation
 wanted
 wants
 warsaw

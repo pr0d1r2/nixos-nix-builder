@@ -88,6 +88,7 @@ aspect
 assert
 assertion
 asserts
+assign
 assigned
 asymmetry
 attached
@@ -261,6 +262,7 @@ compiler
 complementary
 complete
 completing
+compliance
 complicated
 compound
 compressed
@@ -342,6 +344,7 @@ darwin
 data
 date
 day
+dead
 deadnix
 debug
 debugging
@@ -409,6 +412,7 @@ differs
 dir
 direct
 direction
+directives
 directly
 directories
 directory
@@ -682,6 +686,7 @@ guests
 gui
 guidance
 guidelines
+had
 hand
 handler
 handles
@@ -717,6 +722,7 @@ history
 hold
 holding
 holds
+home
 honor
 hook
 hooks
@@ -815,9 +821,7 @@ job
 jobs
 json
 jsonc
-july
 jump
-june
 just
 justfile
 keep
@@ -840,6 +844,7 @@ knowledge
 known
 kyson
 label
+lacked
 lacks
 lan
 land
@@ -868,6 +873,7 @@ lexical
 lib
 libraries
 library
+libvirtd
 license
 licensed
 life
@@ -1187,6 +1193,7 @@ print
 printf
 prints
 private
+privileges
 probability
 problem
 proceed
@@ -1204,6 +1211,7 @@ promoting
 prompt
 prompts
 propagate
+protect
 protocol
 provided
 provides
@@ -1226,6 +1234,7 @@ quite
 ram
 ramdisk
 ramonly
+ran
 range
 rather
 raw
@@ -1325,6 +1334,7 @@ reuses
 review
 rides
 right
+risked
 road
 roles
 root
@@ -1714,6 +1724,7 @@ violation
 violations
 virtio
 virtual
+virtualisation
 visible
 vocabulary
 voice

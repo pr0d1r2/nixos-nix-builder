@@ -29,9 +29,10 @@ in
     users.nixos = {
       isNormalUser = lib.mkForce false;
       isSystemUser = lib.mkForce true;
+      uid = 999;
       group = "nixos";
     };
-    groups.nixos = { };
+    groups.nixos.gid = 999;
   };
 
   services.getty.autologinUser = lib.mkForce "builder";

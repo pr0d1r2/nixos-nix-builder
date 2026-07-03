@@ -260,3 +260,6 @@ Bootable NixOS USB pendrive. Turns any modern x86_64 host into headless nix buil
 | B11 | 2026-07-01 | `iso_store_dir.bats` test runs unsandboxed — fails on hosts where `/mnt/storage` exists but is not writable | fixed: sandbox test with temp dir |
 | B12 | 2026-07-01 | `flake.nix` overrides non-existent `nix-lefthook-bats-failures-only` input on `nix-lefthook-bats-changed` — upstream renamed to `-src` | fixed: remove stale follows override |
 | B13 | 2026-07-01 | 5 bats test files use `run !` syntax without `bats_require_minimum_version 1.5.0` — emits BW02 deprecation warnings | fixed: add version declaration |
+| B14 | 2026-07-03 | `nixos` user/group lacked explicit uid/gid — V13 violation, auto-assigned values risked collision | fixed: assign uid/gid 999 |
+| B15 | 2026-07-03 | nix-serve + avahi-alias services ran w/o systemd hardening (⊥ NoNewPrivileges, ⊥ ProtectHome) | fixed: add hardening directives |
+| B16 | 2026-07-03 | `qemu.nix` had dead `virtualisation.libvirtd.enable = false` (already default) | fixed: remove |

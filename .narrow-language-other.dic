@@ -29,7 +29,6 @@ asserted
 assertions
 auth
 authentication
-author
 auto
 avahi
 available
@@ -79,7 +78,6 @@ checking
 checkout
 checks
 chmod
-chore
 claude
 clean
 cleanup
@@ -89,7 +87,6 @@ command
 commands
 commit
 commits
-committer
 compact
 complete
 conditional
@@ -115,7 +112,6 @@ cpu
 create
 crit
 critical
-cron
 curl
 current
 daemon
@@ -141,7 +137,6 @@ dirs
 disable
 disabled
 disk
-dispatch
 display
 dmesg
 doc
@@ -169,7 +164,6 @@ error
 errors
 etc
 eval
-evans
 exceed
 exclude
 exec
@@ -226,7 +220,6 @@ github
 gitleaks
 glob
 global
-gmail
 got
 grep
 group
@@ -280,7 +273,6 @@ key
 keys
 known
 label
-labels
 lacks
 language
 lappend
@@ -322,7 +314,6 @@ maintenance
 management
 manager
 manual
-marcin
 mark
 markdown
 markdownlint
@@ -332,7 +323,6 @@ master
 match
 max
 meaningful
-merge
 merged
 message
 microcode
@@ -363,7 +353,6 @@ nolocalpath
 non
 nonewline
 not
-nowicki
 null
 numbered
 nvme
@@ -394,7 +383,6 @@ periodic
 permissions
 persist
 persistent
-peter
 picker
 pid
 pin
@@ -556,7 +544,6 @@ timeout
 timer
 timers
 timesyncd
-title
 tolerate
 toml
 total
