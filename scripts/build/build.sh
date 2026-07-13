@@ -58,20 +58,20 @@ HOST_OS="$(uname -s)"
 HOST_ARCH="$(uname -m)"
 
 case "$HOST_OS-$HOST_ARCH" in
-  Linux-x86_64)
-    nix build \
-      --extra-experimental-features 'nix-command flakes' \
-      '.#nixosConfigurations.nixos-nix-builder.config.system.build.isoImage' \
-      --out-link "$REPO_ROOT/iso/.result"
-    ;;
-  Darwin-*)
-    bash "$REPO_ROOT/scripts/build/build-remote.sh" \
-      "$REPO_ROOT" "$NIXOS_REL" "$DATE" "$TIME" "$GITSHA" "$FILENAME"
-    ;;
-  *)
-    echo "build: unsupported host $HOST_OS-$HOST_ARCH." >&2
-    exit 1
-    ;;
+Linux-x86_64)
+  nix build \
+    --extra-experimental-features 'nix-command flakes' \
+    '.#nixosConfigurations.nixos-nix-builder.config.system.build.isoImage' \
+    --out-link "$REPO_ROOT/iso/.result"
+  ;;
+Darwin-*)
+  bash "$REPO_ROOT/scripts/build/build-remote.sh" \
+    "$REPO_ROOT" "$NIXOS_REL" "$DATE" "$TIME" "$GITSHA" "$FILENAME"
+  ;;
+*)
+  echo "build: unsupported host $HOST_OS-$HOST_ARCH." >&2
+  exit 1
+  ;;
 esac
 
 # Remote-first: a Darwin host builds on the builder and the ISO stays
