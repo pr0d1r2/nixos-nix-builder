@@ -10,8 +10,8 @@ set -Eeuo pipefail
 trap 'rc=$?; echo "boot: FAILED at scripts/test-boot/boot-local.sh:${LINENO} (exit $rc): ${BASH_COMMAND}" >&2' ERR
 
 if [ $# -ne 3 ]; then
-    echo "Usage: boot-local.sh <repo-root> <iso-path> <ssh-port>" >&2
-    exit 2
+  echo "Usage: boot-local.sh <repo-root> <iso-path> <ssh-port>" >&2
+  exit 2
 fi
 
 REPO_ROOT="$1"
@@ -25,9 +25,9 @@ bash "$REPO_ROOT/scripts/test-boot/create-drives.sh" "$drives_dir" >/dev/null
 
 bootinfo_path="${ISO_PATH%.iso}.bootinfo"
 if [ -f "$bootinfo_path" ]; then
-    # shellcheck source=/dev/null
-    . "$bootinfo_path"
-    export QEMU_KERNEL QEMU_INITRD QEMU_INIT QEMU_KERNEL_PARAMS
+  # shellcheck source=/dev/null
+  . "$bootinfo_path"
+  export QEMU_KERNEL QEMU_INITRD QEMU_INIT QEMU_KERNEL_PARAMS
 fi
 
 echo "boot: booting ISO in QEMU locally"

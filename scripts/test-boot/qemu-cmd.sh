@@ -12,8 +12,8 @@
 set -Eeuo pipefail
 
 if [ $# -lt 2 ] || [ $# -gt 3 ]; then
-    echo "Usage: qemu-cmd.sh <iso-path> <work-dir> [boot-dir]" >&2
-    exit 2
+  echo "Usage: qemu-cmd.sh <iso-path> <work-dir> [boot-dir]" >&2
+  exit 2
 fi
 
 iso="$1"
@@ -28,39 +28,39 @@ RUN_SCRIPT="$work_dir/run-qemu.sh"
 BOOT_ARGS=""
 APPEND_LINE=""
 if [ -n "$boot_dir" ] && [ -f "$boot_dir/bzImage" ]; then
-    BOOT_ARGS="-kernel $boot_dir/bzImage -initrd $boot_dir/initrd"
-    CMDLINE=""
-    if [ -f "$boot_dir/cmdline" ]; then
-        CMDLINE="$(cat "$boot_dir/cmdline")"
-    elif [ -f "$boot_dir/init-path" ]; then
-        CMDLINE="init=$(cat "$boot_dir/init-path") loglevel=4"
-    fi
-    # C24: inject the serial console at QEMU runtime so the ISO stays
-    # clean (bare metal has no serial-getty). Idempotent -- the extracted
-    # grub cmdline no longer bakes console=, but an older ISO might.
-    case "$CMDLINE" in
-    *console=ttyS0*) ;;
-    *) CMDLINE="$CMDLINE console=tty0 console=ttyS0,115200n8" ;;
-    esac
-    CMDLINE="$CMDLINE nixbuilder.hostname=nix-builder-qemu"
-    APPEND_LINE="-append \"$CMDLINE\""
+  BOOT_ARGS="-kernel $boot_dir/bzImage -initrd $boot_dir/initrd"
+  CMDLINE=""
+  if [ -f "$boot_dir/cmdline" ]; then
+    CMDLINE="$(cat "$boot_dir/cmdline")"
+  elif [ -f "$boot_dir/init-path" ]; then
+    CMDLINE="init=$(cat "$boot_dir/init-path") loglevel=4"
+  fi
+  # C24: inject the serial console at QEMU runtime so the ISO stays
+  # clean (bare metal has no serial-getty). Idempotent -- the extracted
+  # grub cmdline no longer bakes console=, but an older ISO might.
+  case "$CMDLINE" in
+  *console=ttyS0*) ;;
+  *) CMDLINE="$CMDLINE console=tty0 console=ttyS0,115200n8" ;;
+  esac
+  CMDLINE="$CMDLINE nixbuilder.hostname=nix-builder-qemu"
+  APPEND_LINE="-append \"$CMDLINE\""
 else
-    BOOT_ARGS="-boot d"
+  BOOT_ARGS="-boot d"
 fi
 
 DRIVE_ARGS=""
 if [ -f "$work_dir/nvme1.img" ]; then
-    DRIVE_ARGS="$DRIVE_ARGS -drive file=$work_dir/nvme1.img,if=none,id=nvme-d1,format=raw"
-    DRIVE_ARGS="$DRIVE_ARGS -device nvme,serial=NVMETEST1,drive=nvme-d1"
+  DRIVE_ARGS="$DRIVE_ARGS -drive file=$work_dir/nvme1.img,if=none,id=nvme-d1,format=raw"
+  DRIVE_ARGS="$DRIVE_ARGS -device nvme,serial=NVMETEST1,drive=nvme-d1"
 fi
 if [ -f "$work_dir/nvme2.img" ]; then
-    DRIVE_ARGS="$DRIVE_ARGS -drive file=$work_dir/nvme2.img,if=none,id=nvme-d2,format=raw"
-    DRIVE_ARGS="$DRIVE_ARGS -device nvme,serial=NVMETEST2,drive=nvme-d2"
+  DRIVE_ARGS="$DRIVE_ARGS -drive file=$work_dir/nvme2.img,if=none,id=nvme-d2,format=raw"
+  DRIVE_ARGS="$DRIVE_ARGS -device nvme,serial=NVMETEST2,drive=nvme-d2"
 fi
 if [ -f "$work_dir/sata1.img" ]; then
-    DRIVE_ARGS="$DRIVE_ARGS -device ahci,id=ahci0"
-    DRIVE_ARGS="$DRIVE_ARGS -drive file=$work_dir/sata1.img,if=none,id=sata-d1,format=raw"
-    DRIVE_ARGS="$DRIVE_ARGS -device ide-hd,drive=sata-d1,bus=ahci0.0"
+  DRIVE_ARGS="$DRIVE_ARGS -device ahci,id=ahci0"
+  DRIVE_ARGS="$DRIVE_ARGS -drive file=$work_dir/sata1.img,if=none,id=sata-d1,format=raw"
+  DRIVE_ARGS="$DRIVE_ARGS -device ide-hd,drive=sata-d1,bus=ahci0.0"
 fi
 
 cat >"$RUN_SCRIPT" <<QEOF

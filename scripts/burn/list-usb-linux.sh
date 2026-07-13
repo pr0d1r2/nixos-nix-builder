@@ -15,18 +15,18 @@ awk '$1 ~ "^/dev/" {
 }' /proc/mounts >>"$busy_disks_file" 2>/dev/null || true
 
 for loop_dir in /sys/block/loop*/loop; do
-    [ -f "$loop_dir/backing_file" ] || continue
-    bf="$(cat "$loop_dir/backing_file" 2>/dev/null || true)"
-    [ -z "$bf" ] && continue
-    src="$(df --output=source "$bf" 2>/dev/null | tail -n1)"
-    [ -b "$src" ] || continue
-    lsblk -nso NAME "$src" 2>/dev/null | tail -n1 | tr -d ' '
+  [ -f "$loop_dir/backing_file" ] || continue
+  bf="$(cat "$loop_dir/backing_file" 2>/dev/null || true)"
+  [ -z "$bf" ] && continue
+  src="$(df --output=source "$bf" 2>/dev/null | tail -n1)"
+  [ -b "$src" ] || continue
+  lsblk -nso NAME "$src" 2>/dev/null | tail -n1 | tr -d ' '
 done >>"$busy_disks_file" 2>/dev/null || true
 
 busy="$(sort -u "$busy_disks_file" | tr '\n' ' ')"
 
 lsblk -d -n -p -b -o NAME,TRAN,SIZE,MODEL 2>/dev/null |
-    awk -v busy="$busy" '
+  awk -v busy="$busy" '
         BEGIN {
             n = split(busy, b, " ")
             for (i = 1; i <= n; i++) if (b[i] != "") busy_set[b[i]] = 1

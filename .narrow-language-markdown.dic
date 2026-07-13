@@ -141,6 +141,7 @@ blocked
 blocks
 blue
 bodies
+body
 book
 boot
 bootable
@@ -755,6 +756,7 @@ inbound
 incl
 include
 including
+indent
 incompatible
 independent
 index
@@ -826,6 +828,7 @@ just
 justfile
 keep
 keeping
+kept
 keeps
 kernel
 key
@@ -1268,6 +1271,7 @@ record
 red
 redirect
 redistributable
+reformat
 reduces
 redundant
 ref

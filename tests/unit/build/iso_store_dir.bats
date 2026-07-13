@@ -6,11 +6,11 @@ sandbox_script() {
         -e 's|/mnt/storage-fast|__FAST__|g' \
         -e 's|/mnt/storage|__STOR__|g' \
         -e 's|/tmp/|__TMP__|g' \
-        scripts/build/iso_store_dir.sh \
-    | sed \
-        -e "s|__FAST__|${tmp}/mnt/storage-fast|g" \
-        -e "s|__STOR__|${tmp}/mnt/storage|g" \
-        -e "s|__TMP__|${tmp}/tmp/|g"
+        scripts/build/iso_store_dir.sh |
+        sed \
+            -e "s|__FAST__|${tmp}/mnt/storage-fast|g" \
+            -e "s|__STOR__|${tmp}/mnt/storage|g" \
+            -e "s|__TMP__|${tmp}/tmp/|g"
 }
 
 @test "prefers /mnt/storage-fast when available" {

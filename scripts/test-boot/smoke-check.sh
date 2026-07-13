@@ -9,8 +9,8 @@ SHORT_SHA="$(git -C "$REPO_ROOT" rev-parse --short=7 HEAD)"
 MARKER="$REPO_ROOT/.smoke-passed-$SHORT_SHA"
 
 if [ -f "$MARKER" ]; then
-    echo "smoke: already passed for $SHORT_SHA ($(cat "$MARKER"))" >&2
-    exit 0
+  echo "smoke: already passed for $SHORT_SHA ($(cat "$MARKER"))" >&2
+  exit 0
 fi
 
 exit 1

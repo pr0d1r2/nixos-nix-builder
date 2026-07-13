@@ -263,3 +263,4 @@ Bootable NixOS USB pendrive. Turns any modern x86_64 host into headless nix buil
 | B14 | 2026-07-03 | `nixos` user/group lacked explicit uid/gid — V13 violation, auto-assigned values risked collision | fixed: assign uid/gid 999 |
 | B15 | 2026-07-03 | nix-serve + avahi-alias services ran w/o systemd hardening (⊥ NoNewPrivileges, ⊥ ProtectHome) | fixed: add hardening directives |
 | B16 | 2026-07-03 | `qemu.nix` had dead `virtualisation.libvirtd.enable = false` (already default) | fixed: remove |
+| B17 | 2026-07-13 | `.editorconfig` set `*.sh` indent_size to 2 but shell files kept 4-space case body indent — shfmt CI check failed | fixed: reformat with `shfmt -w` |

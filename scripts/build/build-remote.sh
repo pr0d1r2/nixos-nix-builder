@@ -8,8 +8,8 @@ set -Eeuo pipefail
 trap 'rc=$?; echo "build-remote: FAILED at scripts/build/build-remote.sh:${LINENO} (exit $rc): ${BASH_COMMAND}" >&2' ERR
 
 if [ $# -ne 6 ]; then
-    echo "Usage: build-remote.sh <repo_root> <nixos_rel> <date> <time> <gitsha> <filename>" >&2
-    exit 2
+  echo "Usage: build-remote.sh <repo_root> <nixos_rel> <date> <time> <gitsha> <filename>" >&2
+  exit 2
 fi
 
 REPO_ROOT="$1"
@@ -22,7 +22,7 @@ FILENAME="$6"
 builder="$(bash "$(dirname "${BASH_SOURCE[0]}")/../lib/find-builder.sh")"
 
 remote_parent="$(ssh "$builder" \
-    'if [ -d /mnt/storage ]; then echo /mnt/storage; else echo /tmp; fi')"
+  'if [ -d /mnt/storage ]; then echo /mnt/storage; else echo /tmp; fi')"
 remote_dir="$remote_parent/nix-builder-${NIXOS_REL}-${DATE}-${TIME}-${GITSHA:0:7}"
 
 echo "build: remote nix build on $builder at $remote_dir"
@@ -33,11 +33,11 @@ trap "ssh '$builder' 'rm -rf -- \"$remote_dir\"' || true" EXIT
 # shellcheck disable=SC2029
 ssh "$builder" "mkdir -p '$remote_dir'"
 rsync -rlptDz --delete --no-owner --no-group \
-    --exclude '/.git/' \
-    --exclude '/iso/' \
-    --exclude '/result' \
-    --exclude '/.result' \
-    "$REPO_ROOT/" "$builder:$remote_dir/"
+  --exclude '/.git/' \
+  --exclude '/iso/' \
+  --exclude '/result' \
+  --exclude '/.result' \
+  "$REPO_ROOT/" "$builder:$remote_dir/"
 
 # shellcheck disable=SC2029
 ssh "$builder" "cd '$remote_dir' && git init -q && git add -f . 2>/dev/null && git -c user.name=build -c user.email=build commit -q -m 'build ${GITSHA:0:7}' 2>/dev/null"
