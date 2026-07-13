@@ -15,13 +15,13 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 HOST="${NIX_BUILDER_HOST:-nix-builder.local}"
 
 if ! bash "$REPO_ROOT/scripts/lib/ping-wait.sh" "$HOST" 2>/dev/null; then
-    echo "smoke-conditional: builder unreachable, skipping"
-    exit 0
+  echo "smoke-conditional: builder unreachable, skipping"
+  exit 0
 fi
 
 if bash "$REPO_ROOT/scripts/test-boot/smoke-check.sh" 2>/dev/null; then
-    echo "smoke-conditional: already passed for HEAD, skipping"
-    exit 0
+  echo "smoke-conditional: already passed for HEAD, skipping"
+  exit 0
 fi
 
 echo "smoke-conditional: builder reachable + smoke not passed, running"

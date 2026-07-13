@@ -7,5 +7,5 @@ set -euo pipefail
 file="$1"
 
 if [ -f "$file" ]; then
-    cat "$file"
+  cat "$file"
 fi

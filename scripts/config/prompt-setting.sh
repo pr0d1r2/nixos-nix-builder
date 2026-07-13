@@ -12,24 +12,24 @@ default="${3:-}"
 current="$(bash "$SCRIPT_DIR/read-existing.sh" "$file")"
 
 if [ -n "$current" ]; then
-    printf '%s [%s]: ' "$label" "$current" >&2
+  printf '%s [%s]: ' "$label" "$current" >&2
 elif [ -n "$default" ]; then
-    printf '%s (default: %s): ' "$label" "$default" >&2
+  printf '%s (default: %s): ' "$label" "$default" >&2
 else
-    printf '%s: ' "$label" >&2
+  printf '%s: ' "$label" >&2
 fi
 
 read -r input
 
 if [ -z "$input" ]; then
-    if [ -n "$current" ]; then
-        input="$current"
-    elif [ -n "$default" ]; then
-        input="$default"
-    else
-        echo "config: $label is required" >&2
-        exit 1
-    fi
+  if [ -n "$current" ]; then
+    input="$current"
+  elif [ -n "$default" ]; then
+    input="$default"
+  else
+    echo "config: $label is required" >&2
+    exit 1
+  fi
 fi
 
 printf '%s' "$input" >"$file"

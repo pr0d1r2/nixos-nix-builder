@@ -9,10 +9,10 @@ CONFIG_DIR="$REPO_ROOT/config/user"
 missing=0
 
 for setting in timezone locale keymap fstype; do
-    if [ ! -f "$CONFIG_DIR/$setting" ]; then
-        echo "config: missing $CONFIG_DIR/$setting" >&2
-        missing=1
-    fi
+  if [ ! -f "$CONFIG_DIR/$setting" ]; then
+    echo "config: missing $CONFIG_DIR/$setting" >&2
+    missing=1
+  fi
 done
 
 exit "$missing"

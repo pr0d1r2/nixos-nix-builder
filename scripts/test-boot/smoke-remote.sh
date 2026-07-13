@@ -34,32 +34,32 @@ ssh "$BUILDER" '
 
 ISO="${1:-}"
 if [ -z "$ISO" ]; then
-    # shellcheck disable=SC2012
-    ISO="$(ls -t "$REPO_ROOT/iso/"*"${SHORT_SHA}"*.iso 2>/dev/null | head -n1 || true)"
+  # shellcheck disable=SC2012
+  ISO="$(ls -t "$REPO_ROOT/iso/"*"${SHORT_SHA}"*.iso 2>/dev/null | head -n1 || true)"
 fi
 
 # shellcheck disable=SC2029
 REMOTE_ISO="$(ssh "$BUILDER" "ls -t '$STORE_DIR/'*'${SHORT_SHA}'*.iso 2>/dev/null | head -n1" || true)"
 
 if [ -n "$REMOTE_ISO" ]; then
-    ISO_NAME="$(basename "$REMOTE_ISO")"
-    echo "smoke-remote: reusing $BUILDER:$REMOTE_ISO (already staged)" >&2
+  ISO_NAME="$(basename "$REMOTE_ISO")"
+  echo "smoke-remote: reusing $BUILDER:$REMOTE_ISO (already staged)" >&2
 elif [ -n "$ISO" ] && [ -f "$ISO" ]; then
-    ISO_NAME="$(basename "$ISO")"
-    REMOTE_ISO="$STORE_DIR/$ISO_NAME"
-    echo "smoke-remote: uploading $ISO_NAME to builder..." >&2
-    rsync -z --progress "$ISO" "$BUILDER:$REMOTE_ISO" >&2
+  ISO_NAME="$(basename "$ISO")"
+  REMOTE_ISO="$STORE_DIR/$ISO_NAME"
+  echo "smoke-remote: uploading $ISO_NAME to builder..." >&2
+  rsync -z --progress "$ISO" "$BUILDER:$REMOTE_ISO" >&2
 else
-    echo "smoke-remote: no ISO for SHA $SHORT_SHA -- building..."
-    NIX_BUILDER_BURN_BUILD=1 bash "$REPO_ROOT/scripts/build/build.sh"
-    # shellcheck disable=SC2029
-    REMOTE_ISO="$(ssh "$BUILDER" "ls -t '$STORE_DIR/'*'${SHORT_SHA}'*.iso 2>/dev/null | head -n1" || true)"
-    if [ -z "$REMOTE_ISO" ]; then
-        echo "smoke-remote: build did not produce an ISO on builder." >&2
-        exit 1
-    fi
-    ISO_NAME="$(basename "$REMOTE_ISO")"
-    echo "smoke-remote: built $ISO_NAME on builder" >&2
+  echo "smoke-remote: no ISO for SHA $SHORT_SHA -- building..."
+  NIX_BUILDER_BURN_BUILD=1 bash "$REPO_ROOT/scripts/build/build.sh"
+  # shellcheck disable=SC2029
+  REMOTE_ISO="$(ssh "$BUILDER" "ls -t '$STORE_DIR/'*'${SHORT_SHA}'*.iso 2>/dev/null | head -n1" || true)"
+  if [ -z "$REMOTE_ISO" ]; then
+    echo "smoke-remote: build did not produce an ISO on builder." >&2
+    exit 1
+  fi
+  ISO_NAME="$(basename "$REMOTE_ISO")"
+  echo "smoke-remote: built $ISO_NAME on builder" >&2
 fi
 
 echo "smoke-remote: ISO = $ISO_NAME (on builder)" >&2
@@ -68,12 +68,12 @@ echo "smoke-remote: syncing scripts to builder..." >&2
 # shellcheck disable=SC2029
 ssh "$BUILDER" "mkdir -p '$WORK_DIR/scripts'" >&2
 rsync -rlptDz --delete \
-    "$REPO_ROOT/scripts/test-boot/" "$BUILDER:$WORK_DIR/scripts/" >&2
+  "$REPO_ROOT/scripts/test-boot/" "$BUILDER:$WORK_DIR/scripts/" >&2
 
 QEMU_WRAP=""
 if ! ssh "$BUILDER" "command -v qemu-system-x86_64 >/dev/null 2>&1"; then
-    echo "smoke-remote: qemu not in system PATH, using nix-shell fallback..." >&2
-    QEMU_WRAP="nix-shell -p qemu --run"
+  echo "smoke-remote: qemu not in system PATH, using nix-shell fallback..." >&2
+  QEMU_WRAP="nix-shell -p qemu --run"
 fi
 
 # shellcheck disable=SC2029
@@ -81,14 +81,14 @@ ssh "$BUILDER" "rm -rf '$WORK_DIR/boot'" || true
 
 echo "smoke-remote: creating drives + extracting kernel + generating QEMU script..." >&2
 if [ -n "$QEMU_WRAP" ]; then
-    # shellcheck disable=SC2029
-    ssh "$BUILDER" "nix-shell -p qemu --run \
+  # shellcheck disable=SC2029
+  ssh "$BUILDER" "nix-shell -p qemu --run \
         \"bash '$WORK_DIR/scripts/create-drives.sh' '$WORK_DIR' && \
         bash '$WORK_DIR/scripts/extract-kernel.sh' '$REMOTE_ISO' '$WORK_DIR/boot' && \
         bash '$WORK_DIR/scripts/qemu-cmd.sh' '$REMOTE_ISO' '$WORK_DIR' '$WORK_DIR/boot'\"" >&2
 else
-    # shellcheck disable=SC2029
-    ssh "$BUILDER" "\
+  # shellcheck disable=SC2029
+  ssh "$BUILDER" "\
         bash '$WORK_DIR/scripts/create-drives.sh' '$WORK_DIR' && \
         bash '$WORK_DIR/scripts/extract-kernel.sh' '$REMOTE_ISO' '$WORK_DIR/boot' && \
         bash '$WORK_DIR/scripts/qemu-cmd.sh' '$REMOTE_ISO' '$WORK_DIR' '$WORK_DIR/boot'" >&2
@@ -108,4 +108,4 @@ echo >&2
 # health checks. Shutdown is over SSH (smoke.exp), so the stream is
 # read-only.
 exec bash "$REPO_ROOT/scripts/test-boot/qemu-remote-tmux.sh" \
-    "$BUILDER" "$SESSION" 2222 "$WORK_DIR/run-qemu.sh"
+  "$BUILDER" "$SESSION" 2222 "$WORK_DIR/run-qemu.sh"
