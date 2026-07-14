@@ -265,3 +265,4 @@ Bootable NixOS USB pendrive. Turns any modern x86_64 host into headless nix buil
 | B16 | 2026-07-03 | `qemu.nix` had dead `virtualisation.libvirtd.enable = false` (already default) | fixed: remove |
 | B17 | 2026-07-13 | `.editorconfig` set `*.sh` indent_size to 2 but shell files kept 4-space case body indent — shfmt CI check failed | fixed: reformat with `shfmt -w` |
 | B18 | 2026-07-14 | `lefthook.yml` added `markdownlint-agentic` command but `flake.nix` never declared `nix-lefthook-markdownlint-agentic` input — CI failed with `lefthook-markdownlint-agentic: No such file or directory` (exit 127) | fixed: declare input + add package to dev shell, relock |
+| B19 | 2026-07-14 | `lefthook.yml` `exclude` used a regex string, which lefthook ignores under `--all-files` — `markdownlint-agentic` linted the exempt `SPEC.md` and MD013 failed on its >500-char constraint lines | fixed: express `exclude` as a glob list (per lefthook/glob skill) |
