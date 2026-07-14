@@ -89,6 +89,10 @@
       url = "github:pr0d1r2/nix-lefthook-markdownlint";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-lefthook-markdownlint-agentic = {
+      url = "github:pr0d1r2/nix-lefthook-markdownlint-agentic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-lefthook-missing-final-newline = {
       url = "github:pr0d1r2/nix-lefthook-missing-final-newline";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -256,6 +260,7 @@
               inputs.nix-lefthook-linter-coverage.packages.${system}.default
               inputs.nix-lefthook-linter-coverage-full.packages.${system}.default
               inputs.nix-lefthook-markdownlint.packages.${system}.default
+              inputs.nix-lefthook-markdownlint-agentic.packages.${system}.default
               inputs.nix-lefthook-missing-final-newline.packages.${system}.default
               inputs.nix-lefthook-narrow-language.packages.${system}.default
               inputs.nix-lefthook-nix-flake-check.packages.${system}.default
