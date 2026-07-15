@@ -8,3 +8,8 @@
 .smoke-passed-*
 .burn-done-*
 .claude/scheduled_tasks.lock
+result
+result-*
+.markdownlint.yml
+.yamllint.yml
+lefthook.yml
