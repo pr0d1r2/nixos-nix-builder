@@ -1,20 +1,12 @@
 ---
 name: CI
 
-on:
+"on":
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
+    branches: [main]
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: pr0d1r2/nix-lefthook-ci-action@ce9a118b05e90e186dba48a82067adeed185f7d4
-        with:
-          skip-build: true
-          keep-home: true
-          extra-env: "HOME=${{ env.HOME }}"
-        env:
-          LEFTHOOK_EXCLUDE: changelog-touched
+  guardrails:
+    uses: pr0d1r2/set-and-setting/.github/workflows/guardrails.yml@main
