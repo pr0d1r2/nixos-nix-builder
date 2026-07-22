@@ -33,6 +33,10 @@
       fragments = [
         "base"
         "nix"
+        "shell"
+        "ascii"
+        "markdown"
+        "yaml"
       ];
 
       system = "x86_64-linux";
@@ -86,12 +90,10 @@
           program = "${
             pkgs.writeShellApplication {
               name = "confirm";
-              runtimeInputs = [
-                pkgs.coreutils
+              runtimeInputs = (set-and-setting.lib.materializationFor { inherit pkgs fragments; }).packages ++ [
                 pkgs.diffutils
                 pkgs.findutils
                 pkgs.gawk
-                pkgs.git
                 pkgs.gnugrep
               ];
               runtimeEnv = {

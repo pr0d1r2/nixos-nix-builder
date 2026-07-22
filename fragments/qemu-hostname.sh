@@ -7,9 +7,9 @@ FW_CFG="/sys/firmware/qemu_fw_cfg/by_name/opt/nixos-nix-builder/hostname/raw"
 OVERRIDE=""
 for param in $CMDLINE; do
   case "$param" in
-  nixbuilder.hostname=?*)
-    OVERRIDE="${param#nixbuilder.hostname=}"
-    ;;
+    nixbuilder.hostname=?*)
+      OVERRIDE="${param#nixbuilder.hostname=}"
+      ;;
   esac
 done
 
