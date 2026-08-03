@@ -45,10 +45,11 @@ in
     in
     set-and-setting.lib.mkDevShells {
       inherit pkgs;
-      basePackages = mat.packages;
+      basePackages = mat.packages ++ [ pkgs.bats ];
       defaultShellHook = ''
         ${self.packages.${sys}.setting}/bin/sync-setting .
         cp -f ${mat.files}/lefthook.yml lefthook.yml
+        ${builtins.readFile ./dev/shell.sh}
       '';
     }
   );
@@ -64,6 +65,20 @@ in
         inherit pkgs;
         projectRoot = ./..;
       };
+      unit-tests =
+        pkgs.runCommand "unit-tests"
+          {
+            nativeBuildInputs = [
+              pkgs.bats
+              pkgs.git
+              pkgs.shellcheck
+            ];
+          }
+          ''
+            cd ${./..}
+            bats --recursive tests/unit
+            touch $out
+          '';
       default = pkgs.runCommand "checks" { } "touch $out";
     }
   );

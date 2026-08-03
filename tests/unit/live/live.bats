@@ -7,7 +7,7 @@ setup() {
     SCRIPT="$SCRIPT_DIR/scripts/live/live.sh"
 
     FAKE_BIN="$(mktemp -d)"
-    printf '#!/usr/bin/env bash\necho "called expect $@"\nexit 0\n' >"$FAKE_BIN/expect"
+    printf '#!/bin/sh\necho "called expect $@"\nexit 0\n' >"$FAKE_BIN/expect"
     chmod +x "$FAKE_BIN/expect"
     export PATH="$FAKE_BIN:$PATH"
 }
