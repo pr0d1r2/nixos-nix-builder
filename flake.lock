@@ -2701,11 +2701,11 @@
     "nix-lefthook-markdownlint-agentic-src_12": {
       "flake": false,
       "locked": {
-        "lastModified": 1785585919,
-        "narHash": "sha256-FZ2+tamtY6v/n3cbAlXhHXfXYnM5HbzvjCdzkBD7/dA=",
+        "lastModified": 1785682093,
+        "narHash": "sha256-MgFJRBdZrZSU5wDJxQYbof1IJMviX+d52rDZDAngb4w=",
         "owner": "pr0d1r2",
         "repo": "nix-lefthook-markdownlint-agentic",
-        "rev": "790b12d72552e5936360a96097901d967403359c",
+        "rev": "932c3fbc5cc818542bdf4df6907705168a445b68",
         "type": "github"
       },
       "original": {
@@ -3277,11 +3277,11 @@
     "nix-lefthook-narrow-language-src_12": {
       "flake": false,
       "locked": {
-        "lastModified": 1785582715,
-        "narHash": "sha256-VvOgJ8g/yusdrsv98nRS+YcIfPdLw9I5Ui0FRfWNlSg=",
+        "lastModified": 1785684663,
+        "narHash": "sha256-/CvGhq+obGn81FZaoVuassGCX+Yg6w8VyOMqYnjquKc=",
         "owner": "pr0d1r2",
         "repo": "nix-lefthook-narrow-language",
-        "rev": "83e6d93df6a50f3b1a3f2d4d0d74a65283c1417d",
+        "rev": "dfe6638dca439c5489f509ee9c9f720bc835f630",
         "type": "github"
       },
       "original": {
@@ -3853,11 +3853,11 @@
     "nix-lefthook-nix-no-embedded-shell-src_12": {
       "flake": false,
       "locked": {
-        "lastModified": 1785585275,
-        "narHash": "sha256-QTEljilJ9MlvQ8zFuLqlMRF1cor7QKJIaY3+Sfi4lNw=",
+        "lastModified": 1785682733,
+        "narHash": "sha256-oSimhKZ+UVzRHHAVDsXcAri+mgbIQmgtrIK3nuJB7Ts=",
         "owner": "pr0d1r2",
         "repo": "nix-lefthook-nix-no-embedded-shell",
-        "rev": "9623a1550575e0e1a53f4948815ec0f7426e6a94",
+        "rev": "b289c0b61dfcfc1cccbda451a970b8bc1e7baa78",
         "type": "github"
       },
       "original": {
@@ -7009,11 +7009,11 @@
         "nixpkgs-lock": "nixpkgs-lock_17"
       },
       "locked": {
-        "lastModified": 1785748255,
-        "narHash": "sha256-r75/5+y4ftciji5b4UbDYGFMtFErVgyzB2U/Y9vWKCU=",
+        "lastModified": 1785764336,
+        "narHash": "sha256-Ds1V4The299S9tS5Rkepqwpx6XFQCFNg0q3Qj56kaT0=",
         "owner": "pr0d1r2",
         "repo": "set-and-setting",
-        "rev": "8d22c9e845eabb148fcd2466594002431cfde35c",
+        "rev": "d6dbfa0b313e7a88fc933089229be26a26fc8337",
         "type": "github"
       },
       "original": {
