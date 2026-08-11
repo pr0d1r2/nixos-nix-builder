@@ -14,23 +14,5 @@
     set-and-setting.inputs.nixpkgs-lock.follows = "nixpkgs-lock";
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      set-and-setting,
-      ...
-    }:
-    set-and-setting.lib.mkConsumerFlake {
-      inherit self nixpkgs set-and-setting;
-      fragments = [
-        "base"
-        "nix"
-        "shell"
-        "ascii"
-        "markdown"
-        "yaml"
-      ];
-      src = ./.;
-    };
+  outputs = inputs: import ./nix/outputs.nix inputs;
 }
