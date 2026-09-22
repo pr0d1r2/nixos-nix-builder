@@ -23,6 +23,7 @@
     }:
     set-and-setting.lib.mkConsumerFlake {
       inherit self nixpkgs set-and-setting;
+      extraPackages = pkgs: { inherit (pkgs) actionlint; };
       lib = set-and-setting.lib // {
         checksFor =
           args:
