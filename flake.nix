@@ -25,6 +25,13 @@
       inherit self nixpkgs set-and-setting;
       extraPackages = pkgs: { inherit (pkgs) actionlint; };
       lib = set-and-setting.lib // {
+        mkDevShells = args:
+          set-and-setting.lib.mkDevShells (
+            args
+            // {
+              basePackages = args.basePackages ++ [ args.pkgs.actionlint ];
+            }
+          );
         checksFor =
           args:
           (set-and-setting.lib.checksFor (
