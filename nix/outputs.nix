@@ -17,6 +17,7 @@ let
   fragments = [
     "base"
     "actions"
+    "bats"
     "nix"
     "shell"
     "ascii"
