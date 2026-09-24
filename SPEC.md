@@ -6,7 +6,7 @@ Bootable NixOS USB pendrive. Turns any modern x86_64 host into headless nix buil
 
 ## §C CONSTRAINTS
 
-- C1: NixOS flake, minimal installer ISO base (`installation-cd-minimal.nix`), pinned `nixos-25.11`
+- C1: NixOS flake, minimal installer ISO base (`installation-cd-minimal.nix`), pinned `nixos-26.05`
 - C2: headless — no X11, no GPU driver, no desktop, no display manager
 - C3: target = any modern x86_64 host w/ enough resources (references: T440p low-end 4c/8t 16 GB | Ryzen 3800X mid-range 8c/16t 32 GB); microcode auto per CPU (C36) — superseded by C35
 - C4: storage tiers: NVMe > SATA, largest ext4 wins per tier, symlinked `/mnt/storage`
