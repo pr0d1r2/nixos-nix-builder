@@ -58,7 +58,7 @@
         "markdown"
         "yaml"
       ];
-      extraPackages = pkgs: { actionlint = pkgs.actionlint; };
+      extraPackages = pkgs: { inherit (pkgs) actionlint; };
       src = ./.;
     };
 }
