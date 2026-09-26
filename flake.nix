@@ -24,6 +24,14 @@
     set-and-setting.lib.mkConsumerFlake {
       inherit self nixpkgs set-and-setting;
       lib = set-and-setting.lib // {
+        mkDevShells =
+          args:
+          set-and-setting.lib.mkDevShells (
+            args
+            // {
+              basePackages = args.basePackages ++ [ args.pkgs.actionlint ];
+            }
+          );
         checksFor =
           args:
           (set-and-setting.lib.checksFor (
@@ -58,6 +66,7 @@
         "markdown"
         "yaml"
       ];
+      extraPackages = pkgs: { inherit (pkgs) actionlint; };
       src = ./.;
     };
 }
