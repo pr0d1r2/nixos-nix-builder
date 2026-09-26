@@ -21,9 +21,10 @@
       set-and-setting,
       ...
     }:
-    set-and-setting.lib.mkConsumerFlake {
-      inherit self nixpkgs set-and-setting;
-      lib = set-and-setting.lib // {
+    let
+      consumer = set-and-setting.lib.mkConsumerFlake {
+        inherit self nixpkgs set-and-setting;
+        lib = set-and-setting.lib // {
         checksFor =
           args:
           (set-and-setting.lib.checksFor (
@@ -49,15 +50,27 @@
                 '';
           };
       };
-      fragments = [
-        "base"
-        "actions"
-        "nix"
-        "shell"
-        "ascii"
-        "markdown"
-        "yaml"
-      ];
-      src = ./.;
-    };
+        fragments = [
+          "base"
+          "actions"
+          "nix"
+          "shell"
+          "ascii"
+          "markdown"
+          "yaml"
+        ];
+        src = ./.;
+      };
+    in
+      consumer
+      // {
+        devShells = nixpkgs.lib.mapAttrs (
+          _system: shells:
+          nixpkgs.lib.mapAttrs (
+            _name: shell: shell.overrideAttrs (old: {
+              nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ nixpkgs.legacyPackages.${_system}.bats ];
+            })
+          ) shells
+        ) consumer.devShells;
+      };
 }
