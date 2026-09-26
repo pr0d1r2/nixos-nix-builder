@@ -58,6 +58,7 @@
         "markdown"
         "yaml"
       ];
+      extraPackages = pkgs: { actionlint = pkgs.actionlint; };
       src = ./.;
     };
 }
