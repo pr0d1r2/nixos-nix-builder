@@ -68,7 +68,7 @@ Bootable NixOS USB pendrive. Turns any modern x86_64 host into headless nix buil
 - I.storage: systemd oneshots mount NVMe → `/mnt/storage-nvme`, SATA → `/mnt/storage-sata`; `storage-link` symlinks `/mnt/storage` → fastest
 - I.overlay: `nix-store-overlay` bind-mounts `/mnt/storage/nix-store-{upper,work}` over tmpfs `/nix/.rw-store/{store,work}` — before nix-daemon starts
 - I.config: `just config` → interactive timezone/locale/keymap/fstype prompts
-- I.devshell: `nix develop` — provides just, bats, shellcheck, lefthook
+- I.devshell: `nix develop` — provides just, bats, shellcheck, actionlint, lefthook
 - I.remote-build: macOS `just build` → rsync to builder → `nix build` → ISO back
 - I.smoke: `just smoke` → QEMU boot test w/ virtual NVMe + SATA, validates storage detection
 
@@ -272,3 +272,4 @@ Bootable NixOS USB pendrive. Turns any modern x86_64 host into headless nix buil
 | B22 | 2026-08-18 | GitHub Actions workflow introduced the detected `actions` lefthook fragment, but both flake fragment declarations omitted it; CI fidelity failed | fixed: declare `actions` in the consumer manifest and output materialization |
 | B23 | 2026-08-18 | pinned actionlint check helper passed a scalar workflow regex to nixpkgs' list-valued `sourceByRegex` API, so enabling the `actions` fragment made flake evaluation fail | fixed: retain the `actions` fragment and provide a local actionlint check with explicit workflow discovery while filtering the incompatible helper input |
 | B24 | 2026-08-18 | upstream linter-coverage check requires `config/linter-coverage-exemptions.yml`, but the repository did not provide the required ledger | fixed: add the empty exemptions ledger; all tracked files remain covered by the configured `all` checks |
+| B25 | 2026-09-26 | the consumer flake's generated development shells omitted `bats`, so the guardrails unit-test command ended with `bats: command not found` (exit 127) | add pinned nixpkgs `bats` to every generated development shell |
