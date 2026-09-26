@@ -21,56 +21,19 @@
       set-and-setting,
       ...
     }:
-    let
-      consumer = set-and-setting.lib.mkConsumerFlake {
+    (import ./nix/outputs.nix {
+      inherit self nixpkgs set-and-setting;
+    })
+    // {
+      devShells = nixpkgs.lib.mapAttrs (
+        system: shells:
+        nixpkgs.lib.mapAttrs (
+          _name: shell: shell.overrideAttrs (old: {
+            nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ nixpkgs.legacyPackages.${system}.actionlint ];
+          })
+        ) shells
+      ) (import ./nix/outputs.nix {
         inherit self nixpkgs set-and-setting;
-        lib = set-and-setting.lib // {
-        checksFor =
-          args:
-          (set-and-setting.lib.checksFor (
-            args
-            // {
-              fragments = builtins.filter (fragment: fragment != "actions") args.fragments;
-            }
-          ))
-          // {
-            actionlint =
-              args.pkgs.runCommand "actionlint-check"
-                {
-                  nativeBuildInputs = [
-                    args.pkgs.actionlint
-                    args.pkgs.findutils
-                  ];
-                }
-                ''
-                  cd ${args.src}
-                  mapfile -t workflows < <(find .github/workflows -type f \( -name '*.yml' -o -name '*.yaml' \) | sort)
-                  actionlint "''${workflows[@]}"
-                  touch $out
-                '';
-          };
-      };
-        fragments = [
-          "base"
-          "actions"
-          "nix"
-          "shell"
-          "ascii"
-          "markdown"
-          "yaml"
-        ];
-        src = ./.;
-      };
-    in
-      consumer
-      // {
-        devShells = nixpkgs.lib.mapAttrs (
-          _system: shells:
-          nixpkgs.lib.mapAttrs (
-            _name: shell: shell.overrideAttrs (old: {
-              nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ nixpkgs.legacyPackages.${_system}.bats ];
-            })
-          ) shells
-        ) consumer.devShells;
-      };
+      }).devShells;
+    };
 }

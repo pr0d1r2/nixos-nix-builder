@@ -68,7 +68,7 @@ Bootable NixOS USB pendrive. Turns any modern x86_64 host into headless nix buil
 - I.storage: systemd oneshots mount NVMe → `/mnt/storage-nvme`, SATA → `/mnt/storage-sata`; `storage-link` symlinks `/mnt/storage` → fastest
 - I.overlay: `nix-store-overlay` bind-mounts `/mnt/storage/nix-store-{upper,work}` over tmpfs `/nix/.rw-store/{store,work}` — before nix-daemon starts
 - I.config: `just config` → interactive timezone/locale/keymap/fstype prompts
-- I.devshell: `nix develop` — provides just, bats, shellcheck, lefthook
+- I.devshell: `nix develop` — provides just, bats, shellcheck, actionlint, lefthook
 - I.remote-build: macOS `just build` → rsync to builder → `nix build` → ISO back
 - I.smoke: `just smoke` → QEMU boot test w/ virtual NVMe + SATA, validates storage detection
 
