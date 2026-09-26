@@ -25,15 +25,21 @@
       inherit self nixpkgs set-and-setting;
     })
     // {
-      devShells = nixpkgs.lib.mapAttrs (
-        system: shells:
-        nixpkgs.lib.mapAttrs (
-          _name: shell: shell.overrideAttrs (old: {
-            nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ nixpkgs.legacyPackages.${system}.actionlint ];
-          })
-        ) shells
-      ) (import ./nix/outputs.nix {
-        inherit self nixpkgs set-and-setting;
-      }).devShells;
+      devShells =
+        nixpkgs.lib.mapAttrs
+          (
+            system: shells:
+            nixpkgs.lib.mapAttrs (
+              _name: shell:
+              shell.overrideAttrs (old: {
+                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+                  nixpkgs.legacyPackages.${system}.actionlint
+                ];
+              })
+            ) shells
+          )
+          (import ./nix/outputs.nix {
+            inherit self nixpkgs set-and-setting;
+          }).devShells;
     };
 }
