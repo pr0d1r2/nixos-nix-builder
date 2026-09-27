@@ -1,5 +1,5 @@
 {
-  description = "CHANGEME";
+  description = "nixos-nix-builder";
 
   nixConfig = {
     extra-substituters = [ "https://pr0d1r2.cachix.org" ];
