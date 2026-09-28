@@ -20,6 +20,7 @@ let
     "nix"
     "shell"
     "ascii"
+    "bats"
     "markdown"
     "yaml"
   ];
@@ -43,10 +44,14 @@ in
     let
       mat = set-and-setting.lib.materializationFor { inherit pkgs fragments; };
       sys = pkgs.stdenv.hostPlatform.system;
+      tddOrder = builtins.head (
+        builtins.filter (p: pkgs.lib.hasPrefix "lefthook-tdd-order-bats" p.name)
+          (set-and-setting.lib.lefthookWrappersFor pkgs)
+      );
     in
     set-and-setting.lib.mkDevShells {
       inherit pkgs;
-      basePackages = mat.packages ++ [ pkgs.bats ];
+      basePackages = mat.packages ++ [ pkgs.bats tddOrder ];
       defaultShellHook = ''
         ${self.packages.${sys}.setting}/bin/sync-setting .
         cp -f ${mat.files}/lefthook.yml lefthook.yml

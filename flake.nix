@@ -58,6 +58,12 @@
         "markdown"
         "yaml"
       ];
+      extraPackages = pkgs: {
+        lefthook-tdd-order-bats = builtins.head (
+          builtins.filter (p: pkgs.lib.hasPrefix "lefthook-tdd-order-bats" p.name)
+            (set-and-setting.lib.lefthookWrappersFor pkgs)
+        );
+      };
       src = ./.;
     };
 }
