@@ -62,6 +62,7 @@ gate refuses is not pushed and no pull request is opened for it.
 Run it yourself:
 
 ```sh
+nix develop
 lefthook run pre-commit --all-files
 ```
 
