@@ -33,7 +33,7 @@
         "yaml"
       ];
       extraPackages = pkgs: {
-        actionlint = pkgs.actionlint;
+        inherit (pkgs) actionlint;
       };
       src = ./.;
     };

@@ -47,7 +47,10 @@ in
     in
     set-and-setting.lib.mkDevShells {
       inherit pkgs;
-      basePackages = mat.packages ++ [ pkgs.actionlint pkgs.bats ];
+      basePackages = mat.packages ++ [
+        pkgs.actionlint
+        pkgs.bats
+      ];
       defaultShellHook = ''
         ${self.packages.${sys}.setting}/bin/sync-setting .
         cp -f ${mat.files}/lefthook.yml lefthook.yml
