@@ -19,10 +19,13 @@ let
     "actions"
     "nix"
     "shell"
+    "just"
+    "tcl"
     "ascii"
     "bats"
     "markdown"
     "yaml"
+    "toml"
   ];
 
   system = "x86_64-linux";

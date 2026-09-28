@@ -28,9 +28,13 @@
         "actions"
         "nix"
         "shell"
+        "just"
+        "tcl"
         "ascii"
+        "bats"
         "markdown"
         "yaml"
+        "toml"
       ];
       extraPackages = pkgs: {
         inherit (pkgs) actionlint;
