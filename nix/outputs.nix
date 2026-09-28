@@ -19,9 +19,13 @@ let
     "actions"
     "nix"
     "shell"
+    "just"
+    "tcl"
     "ascii"
+    "bats"
     "markdown"
     "yaml"
+    "toml"
   ];
 
   system = "x86_64-linux";
@@ -46,7 +50,10 @@ in
     in
     set-and-setting.lib.mkDevShells {
       inherit pkgs;
-      basePackages = mat.packages ++ [ pkgs.bats ];
+      basePackages = mat.packages ++ [
+        pkgs.actionlint
+        pkgs.bats
+      ];
       defaultShellHook = ''
         ${self.packages.${sys}.setting}/bin/sync-setting .
         cp -f ${mat.files}/lefthook.yml lefthook.yml
