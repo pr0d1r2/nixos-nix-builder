@@ -40,5 +40,8 @@
         inherit (pkgs) actionlint;
       };
       src = ./.;
+    }
+    // import ./nix/outputs.nix {
+      inherit self nixpkgs set-and-setting;
     };
 }
