@@ -10,7 +10,10 @@ cd "$REPO_ROOT"
 ISO_DIR="${1:-iso}"
 
 # --- pick ISO ----------------------------------------------------------------
-mapfile -t isos < <(bash "$REPO_ROOT/scripts/burn/list-isos.sh" "$ISO_DIR")
+if ! iso_output="$(bash "$REPO_ROOT/scripts/burn/list-isos.sh" "$ISO_DIR")"; then
+  exit 1
+fi
+mapfile -t isos <<<"$iso_output"
 
 HEAD_SHA="${NIX_BUILDER_HEAD_SHA:-}"
 if [ -z "$HEAD_SHA" ] &&

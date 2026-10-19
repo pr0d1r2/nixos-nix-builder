@@ -54,7 +54,7 @@ ssh "$builder" "cd '$remote_dir' && nix build \
 # builder store. Downloading 1.7G per build only filled the Mac disk.
 echo "build: ISO kept on builder -- not downloaded to this host"
 
-store_dir="$(ssh "$builder" sh <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
+store_dir="$(ssh "$builder" bash <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
 # shellcheck disable=SC2029
 ssh "$builder" "rm -f '$store_dir'/nixos-nix-builder-*.iso"
 # shellcheck disable=SC2029
