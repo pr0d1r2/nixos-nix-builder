@@ -23,7 +23,7 @@ REMOTE_DIR="$(ssh "$BUILDER" \
 ssh "$BUILDER" "mkdir -p '$REMOTE_DIR/scripts/burn'"
 rsync -az --delete "$REPO_ROOT/scripts/burn/" "$BUILDER:$REMOTE_DIR/scripts/burn/"
 
-ISO_DIR="$(ssh "$BUILDER" sh <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
+ISO_DIR="$(ssh "$BUILDER" bash <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
 
 HEAD_SHA="$(git -C "$REPO_ROOT" rev-parse --short=7 HEAD 2>/dev/null || true)"
 
