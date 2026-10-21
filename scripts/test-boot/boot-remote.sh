@@ -25,7 +25,8 @@ builder_ssh="root@${BUILDER}"
 
 # Resolve the newest ISO already staged in the builder store. Nothing is
 # uploaded -- `just build` leaves the ISO on the builder.
-store_dir="$(ssh "$builder_ssh" bash <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
+iso_store_dir_script="$REPO_ROOT/scripts/build/iso_store_dir.sh"
+store_dir=$(ssh "$builder_ssh" bash <"$iso_store_dir_script")
 # shellcheck disable=SC2029
 remote_iso="$(ssh "$builder_ssh" "ls -t '$store_dir/'*.iso 2>/dev/null | head -n1" || true)"
 if [ -z "$remote_iso" ]; then

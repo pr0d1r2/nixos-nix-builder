@@ -14,9 +14,10 @@ if [ -n "$ISO" ]; then
 fi
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  builder="$(bash "$REPO_ROOT/scripts/lib/find-builder.sh" 2>/dev/null || true)"
+  builder=$(bash "$REPO_ROOT/scripts/lib/find-builder.sh" 2>/dev/null || true)
   if [ -n "$builder" ]; then
-    store_dir="$(ssh "$builder" bash <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
+    iso_store_dir_script="$REPO_ROOT/scripts/build/iso_store_dir.sh"
+    store_dir=$(ssh "$builder" bash <"$iso_store_dir_script")
     # shellcheck disable=SC2029
     remote_iso="$(ssh "$builder" "ls -t '$store_dir/'*'${SHORT_SHA}'*.iso 2>/dev/null | head -n1" || true)"
     if [ -n "$remote_iso" ]; then

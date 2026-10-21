@@ -32,12 +32,13 @@ if [ -n "$EXISTING" ]; then
 fi
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  builder="$(bash "$REPO_ROOT/scripts/lib/find-builder.sh" 2>/dev/null || true)"
+  builder=$(bash "$REPO_ROOT/scripts/lib/find-builder.sh" 2>/dev/null || true)
   if [ -z "$builder" ]; then
     echo "build: no builder reachable -- cannot build on macOS without an x86_64-linux builder." >&2
     exit 1
   fi
-  store_dir="$(ssh "$builder" sh <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
+  iso_store_dir_script="$REPO_ROOT/scripts/build/iso_store_dir.sh"
+  store_dir=$(ssh "$builder" sh <"$iso_store_dir_script")
   # shellcheck disable=SC2029
   remote_iso="$(ssh "$builder" "ls -t '$store_dir/'*'${SHORT_SHA}'*.iso 2>/dev/null | head -n1" || true)"
   if [ -n "$remote_iso" ]; then
@@ -50,8 +51,8 @@ TS="$(date -u +%Y%m%d-%H%M)"
 DATE="${TS%-*}"
 TIME="${TS#*-}"
 
-FILENAME="$(bash "$REPO_ROOT/scripts/build/version.sh" \
-  "$NIXOS_REL" "$DATE" "$TIME" "$GITSHA" "$TARGET_ARCH" "$TARGET_OS")"
+FILENAME=$(bash "$REPO_ROOT/scripts/build/version.sh" \
+  "$NIXOS_REL" "$DATE" "$TIME" "$GITSHA" "$TARGET_ARCH" "$TARGET_OS")
 TARGET="$REPO_ROOT/iso/$FILENAME"
 
 HOST_OS="$(uname -s)"

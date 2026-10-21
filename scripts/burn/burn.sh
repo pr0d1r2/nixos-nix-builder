@@ -10,7 +10,7 @@ cd "$REPO_ROOT"
 ISO_DIR="${1:-iso}"
 
 # --- pick ISO ----------------------------------------------------------------
-if ! iso_output="$(bash "$REPO_ROOT/scripts/burn/list-isos.sh" "$ISO_DIR")"; then
+if ! iso_output=$(bash "$REPO_ROOT/scripts/burn/list-isos.sh" "$ISO_DIR"); then
   exit 1
 fi
 mapfile -t isos <<<"$iso_output"

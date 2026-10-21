@@ -35,5 +35,6 @@ echo "boot: SSH available at: ssh root@localhost -p $SSH_PORT"
 echo "boot: serial console below (Ctrl-C to exit)"
 echo
 rc=0
-nix-shell -p qemu nix-serve --run "trap 'kill 0; wait' EXIT HUP INT TERM; nix-serve -p 5000 & $(bash "$REPO_ROOT/scripts/test-boot/qemu-cmd.sh" "$ISO_PATH" "$SSH_PORT" "$drives_dir") & wait" || rc=$?
+qemu_cmd=$(bash "$REPO_ROOT/scripts/test-boot/qemu-cmd.sh" "$ISO_PATH" "$SSH_PORT" "$drives_dir")
+nix-shell -p qemu nix-serve --run "trap 'kill 0; wait' EXIT HUP INT TERM; nix-serve -p 5000 & $qemu_cmd & wait" || rc=$?
 exit "$rc"
