@@ -35,6 +35,11 @@ teardown() {
     grep -q 'hostfwd=tcp:127.0.0.1:2222-:22' "$WORK_DIR/run-qemu.sh"
 }
 
+@test "uses custom SSH port when QEMU_SSH_PORT is set" {
+    QEMU_SSH_PORT="3333" bash scripts/test-boot/qemu-cmd.sh /tmp/test.iso "$WORK_DIR" # nolocalpath
+    grep -q 'hostfwd=tcp:127.0.0.1:3333-:22' "$WORK_DIR/run-qemu.sh"
+}
+
 @test "uses virtio-net-pci" {
     bash scripts/test-boot/qemu-cmd.sh /tmp/test.iso "$WORK_DIR" # nolocalpath
     grep -q 'virtio-net-pci' "$WORK_DIR/run-qemu.sh"
