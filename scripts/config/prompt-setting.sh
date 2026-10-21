@@ -9,7 +9,7 @@ file="$1"
 label="$2"
 default="${3:-}"
 
-current="$(bash "$SCRIPT_DIR/read-existing.sh" "$file")"
+current=$(bash "$SCRIPT_DIR/read-existing.sh" "$file")
 
 if [ -n "$current" ]; then
   printf '%s [%s]: ' "$label" "$current" >&2

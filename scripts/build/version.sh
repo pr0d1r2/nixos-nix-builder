@@ -6,7 +6,7 @@ set -euo pipefail
 
 if [ $# -ne 6 ]; then
   cat <<'USAGE' >&2
-Usage: version.sh NIXOS_REL YYYYMMDD HHMM GITSHA ARCH OS
+Usage: NIXOS_REL YYYYMMDD HHMM GITSHA ARCH OS
 
 Prints the canonical ISO filename. GITSHA is truncated to 7 chars.
 USAGE

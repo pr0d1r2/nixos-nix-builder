@@ -36,7 +36,7 @@ mkdir -p "$WORK_DIR"
 echo "smoke-local: creating virtual drives..." >&2
 bash "$REPO_ROOT/scripts/test-boot/create-drives.sh" "$WORK_DIR" >&2
 
-QEMU_CMD="$(bash "$REPO_ROOT/scripts/test-boot/qemu-cmd.sh" "$ISO" 2222 "$WORK_DIR")"
+QEMU_CMD=$(bash "$REPO_ROOT/scripts/test-boot/qemu-cmd.sh" "$ISO" 2222 "$WORK_DIR")
 
 {
   echo '#!/usr/bin/env bash'

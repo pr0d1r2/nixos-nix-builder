@@ -12,7 +12,7 @@ if [ "${NIX_BUILDER_BURN_LOCAL:-}" = "1" ]; then
   exit 2
 fi
 
-BUILDER="$(bash "$REPO_ROOT/scripts/lib/find-builder.sh" 2>/dev/null)" || {
+BUILDER=$(bash "$REPO_ROOT/scripts/lib/find-builder.sh" 2>/dev/null) || {
   echo "burn-remote: no reachable builder, falling back to local." >&2
   exit 2
 }
@@ -23,7 +23,8 @@ REMOTE_DIR="$(ssh "$BUILDER" \
 ssh "$BUILDER" "mkdir -p '$REMOTE_DIR/scripts/burn'"
 rsync -az --delete "$REPO_ROOT/scripts/burn/" "$BUILDER:$REMOTE_DIR/scripts/burn/"
 
-ISO_DIR="$(ssh "$BUILDER" bash <"$REPO_ROOT/scripts/build/iso_store_dir.sh")"
+iso_store_dir_script="$REPO_ROOT/scripts/build/iso_store_dir.sh"
+ISO_DIR=$(ssh "$BUILDER" bash <"$iso_store_dir_script")
 
 HEAD_SHA="$(git -C "$REPO_ROOT" rev-parse --short=7 HEAD 2>/dev/null || true)"
 
