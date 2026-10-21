@@ -22,6 +22,7 @@ boot_dir="${3:-}"
 
 MEMORY="${QEMU_MEMORY:-16G}"
 CPUS="${QEMU_SMP:-8}"
+SSH_PORT="${QEMU_SSH_PORT:-2222}"
 QEMU_BIN="$(command -v qemu-system-x86_64)"
 RUN_SCRIPT="$work_dir/run-qemu.sh"
 
@@ -77,7 +78,7 @@ $QEMU_BIN \\
     -fw_cfg name=opt/nixos-nix-builder/fw_test_gw,string=10.0.2.2 \\
     -fw_cfg name=opt/nixos-nix-builder/nix_cache_url,string=http://10.0.2.2:5000 \\
     -fw_cfg name=opt/nixos-nix-builder/hostname,string=nix-builder-qemu \\
-    -net nic,model=virtio-net-pci -net user,hostfwd=tcp:127.0.0.1:2222-:22
+    -net nic,model=virtio-net-pci -net user,hostfwd=tcp:127.0.0.1:$SSH_PORT-:22
 QEOF
 
 echo "$RUN_SCRIPT"
